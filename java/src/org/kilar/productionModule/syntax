@@ -1,0 +1,28 @@
+#out{
+//case dose not make a sense. This is comment
+	goblin : ar'tar, migot, ginuv, hjiz; //goblin.ar'tar = 1, foblin.migot = 2...
+	elf : feanor, galadriel, isildur, elrond; //elf.feanor = 4, elf.galadriel = 5...
+}
+
+#in{
+	//the same
+	height: high, middle, low;
+}
+
+#rules{
+	if( height.high ){
+		elf.feanor 0.7;
+		elf.galadriel 0.6;
+		if(...)
+			goblin.migot 0.3;
+		
+	} elif (height.low){
+		//
+	}
+	else{
+		//
+	}
+	
+}
+Штобб, или ярушкин. построение нечётких сетей.
+LVQ, нейронные сети RBF.
