@@ -5,7 +5,9 @@ package org.kilar.hybridIS.abstractions;
  *
  */
 public abstract class ProductionIS extends Module{
-	public ProductionIS() {
+	public ProductionIS(String name) {
+		super(name);
 		type = ModuleType.Production;
+		
 	}
 }

@@ -11,4 +11,17 @@ enum ModuleType {
 public abstract class Module implements CertaintyCalculator {
 	protected int inputLength, outputLength;
 	protected ModuleType type;
+	protected String name;
+
+	public Module(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 };

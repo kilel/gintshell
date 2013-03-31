@@ -10,13 +10,22 @@ import org.kilar.hybridIS.abstractions.NeuralIS;
  */
 public class NeuralISScilab extends NeuralIS {
 
-	/* (non-Javadoc)
-	 * @see org.kilar.hybridIS.abstractions.CertaintyCalculator#calculate(java.util.List)
-	 */
+	public NeuralISScilab(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<Double> calculate(List<Double> input) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void train(List<List<Double>> trainingInput,
+			List<Double> trainingOutput) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

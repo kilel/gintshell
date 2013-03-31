@@ -10,6 +10,11 @@ import org.kilar.hybridIS.abstractions.FuzzyIS;
  */
 public class FuzzyISScilab extends FuzzyIS {
 
+	public FuzzyISScilab(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
 	/* (non-Javadoc)
 	 * @see org.kilar.hybridIS.abstractions.CertaintyCalculator#calculate(java.util.List)
 	 */
