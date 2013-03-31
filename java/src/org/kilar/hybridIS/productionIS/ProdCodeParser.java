@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.kilar.productionModule;
+package org.kilar.hybridIS.productionIS;
 
 /**
  * @author hkyten

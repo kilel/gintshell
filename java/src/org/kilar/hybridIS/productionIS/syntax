@@ -2,6 +2,8 @@
 //case dose not make a sense. This is comment
 	goblin : ar'tar, migot, ginuv, hjiz; //goblin.ar'tar = 1, foblin.migot = 2...
 	elf : feanor, galadriel, isildur, elrond; //elf.feanor = 4, elf.galadriel = 5...
+	alaento, riggor;
+	Gandalf;
 }
 
 #in{
@@ -24,5 +26,5 @@
 	}
 	
 }
-Штобб, или ярушкин. построение нечётких сетей.
-LVQ, нейронные сети RBF.
+//Штобб, или ярушкин. построение нечётких сетей.
+//LVQ, нейронные сети RBF.
