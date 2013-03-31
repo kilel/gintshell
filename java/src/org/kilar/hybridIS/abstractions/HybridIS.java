@@ -14,6 +14,7 @@ public class HybridIS extends Module {
 	public HybridIS(List<Module> modules, Integrator integrator) {
 		this.modules = modules;
 		this.integrator = integrator;
+		type = ModuleType.Hybrid;
 	}
 
 	@Override

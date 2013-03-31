@@ -5,5 +5,7 @@ package org.kilar.hybridIS.abstractions;
  *
  */
 public abstract class NeuralIS extends Module{
-
+	public NeuralIS() {
+		type = ModuleType.Neural;
+	}
 }
