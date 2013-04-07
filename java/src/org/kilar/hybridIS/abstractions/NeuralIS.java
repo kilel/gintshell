@@ -5,8 +5,8 @@ import java.util.List;
  *
  */
 public abstract class NeuralIS extends Module{
-	public NeuralIS(String name) {
-		super(name);
+	public NeuralIS(String name, int inputLength, int outputLength) {
+		super(name, inputLength, outputLength);
 		type = ModuleType.Neural;
 	}
 	public abstract void train(List<List<Double>> trainingInput, List<Double> trainingOutput);

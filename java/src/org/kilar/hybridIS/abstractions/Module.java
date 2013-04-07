@@ -13,8 +13,10 @@ public abstract class Module implements CertaintyCalculator {
 	protected ModuleType type;
 	protected String name;
 
-	public Module(String name) {
+	public Module(String name, int inputLength, int outputLength) {
 		this.name = name;
+		this.inputLength = inputLength;
+		this.outputLength = outputLength;
 	}
 
 	public String getName() {

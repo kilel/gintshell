@@ -71,9 +71,9 @@ public class Project implements CertaintyCalculator{
 
 
 	@Override
-	public List<Double> calculate(List<Double> input) {
-		HybridIS hybrid = new HybridIS(getName(), modules, integrator);
-		List<Double> result = hybrid.calculate(input);
+	public List<Double> calculate(List<Double> input, int inputLength, int outputLength) {
+		HybridIS hybrid = new HybridIS(getName(), inputLength, outputLength, modules, integrator);
+		List<Double> result = hybrid.calculate(input, inputLength, outputLength);
 		
 		return result;
 	}

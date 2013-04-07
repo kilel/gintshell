@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/usr/share/scilab/modules/javasci/jar/org.scilab.modules.javasci.jar"/>
-	<classpathentry kind="lib" path="/usr/share/scilab/modules/types/jar/org.scilab.modules.types.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/scilab-5.4.0/modules/javasci/jar/org.scilab.modules.javasci.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/scilab-5.4.0/modules/types/jar/org.scilab.modules.types.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

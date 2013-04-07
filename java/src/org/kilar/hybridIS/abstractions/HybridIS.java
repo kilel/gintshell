@@ -11,8 +11,8 @@ public class HybridIS extends Module {
 	protected List<Module> modules;
 	protected Integrator integrator;
 
-	public HybridIS(String name, List<Module> modules, Integrator integrator) {
-		super(name);
+	public HybridIS(String name, int inputLength, int outputLength, List<Module> modules, Integrator integrator) {
+		super(name, inputLength, outputLength);
 		this.modules = modules;
 		this.integrator = integrator;
 		type = ModuleType.Hybrid;
@@ -20,10 +20,10 @@ public class HybridIS extends Module {
 	}
 
 	@Override
-	public List<Double> calculate(List<Double> input) {
+	public List<Double> calculate(List<Double> input, int inputLength, int outputLength) {
 		List<List<Double>> integratorInput = new ArrayList<List<Double>>();
 		for (Module module : modules) {
-			integratorInput.add(module.calculate(input));
+			integratorInput.add(module.calculate(input, inputLength, outputLength));
 		}
 		List<Double> ret = integrator.calculate(integratorInput, modules);
 		return ret;

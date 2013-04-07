@@ -10,8 +10,8 @@ import org.kilar.hybridIS.abstractions.FuzzyIS;
  */
 public class FuzzyISScilab extends FuzzyIS {
 
-	public FuzzyISScilab(String name) {
-		super(name);
+	public FuzzyISScilab(String name, int inputLength, int outputLength) {
+		super(name, inputLength, outputLength);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,7 +19,7 @@ public class FuzzyISScilab extends FuzzyIS {
 	 * @see org.kilar.hybridIS.abstractions.CertaintyCalculator#calculate(java.util.List)
 	 */
 	@Override
-	public List<Double> calculate(List<Double> input) {
+	public List<Double> calculate(List<Double> input, int inputLength, int outputLength) {
 		// TODO Auto-generated method stub
 		return null;
 	}
