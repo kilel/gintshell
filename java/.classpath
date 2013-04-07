@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/usr/share/scilab/modules/javasci/jar/org.scilab.modules.javasci.jar"/>
 	<classpathentry kind="lib" path="/usr/share/scilab/modules/types/jar/org.scilab.modules.types.jar"/>
+	<classpathentry kind="lib" path="forms-1.3.0.jar" sourcepath="forms-1.3.0-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

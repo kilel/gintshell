@@ -13,10 +13,10 @@
 
 #rules{
 	if( height.high ){
-		elf.feanor 0.7;
-		elf.galadriel 0.6;
+		elf.feanor = 0.7;
+		elf.galadriel =  0.6;
 		if(...)
-			goblin.migot 0.3;
+			goblin.migot = 0.3;
 		
 	} elif (height.low){
 		//
@@ -28,3 +28,9 @@
 }
 //Штобб, или ярушкин. построение нечётких сетей.
 //LVQ, нейронные сети RBF.
+
+
+Лексемы языка: 
+{Лексемы}
+выход = знач;
+if(входы) лексема
