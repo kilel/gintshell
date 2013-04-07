@@ -1,5 +1,6 @@
 package org.kilar.hybridIS.general;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -17,9 +18,12 @@ public class Project implements CertaintyCalculator{
 	private List<Module> modules;
 	private Map<String, Integer> inputDataNames, outputDataNames;
 	
+	
 	public Project(String name) {
 		setName(name);
 		modules = new LinkedList<Module>();
+		inputDataNames = new HashMap<>();
+		outputDataNames = new HashMap<>();
 	}
 
 	public void addModule(Module module) {
