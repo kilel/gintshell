@@ -1,5 +1,8 @@
 package org.kilar.hybridIS.productionIS;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.kilar.hybridIS.general.Logger;
 
 public class ProdCodeUtils {
@@ -13,6 +16,19 @@ public class ProdCodeUtils {
 		}
 
 		return code;
+	}
+	
+	/**
+	 * Adds b[i] to a[i] in way: a[i] = a[i] + b[i] - a[i]*b[i];
+	 */
+	public static  List<Double> sumValues(List<Double> a, List<Double> b){
+		
+		int n = a.size();
+		for(int i = 0; i < n; ++i){
+			double ta = a.get(i), tb = b.get(i);
+			a.set(i,ta + tb - ta*tb);
+		}
+		return a;
 	}
 
 	public static int getOtherBracket(String code, int position) {
