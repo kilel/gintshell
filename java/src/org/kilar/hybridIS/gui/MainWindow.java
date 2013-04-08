@@ -7,8 +7,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -229,6 +227,8 @@ public class MainWindow {
 				List<String> out = new ArrayList<String>();
 				in.add("java");
 				in.add("proxy");
+				out.add("out1");
+				out.add("out2");
 				ProdCodeParser parser = new ProdCodeParser(codeArea.getText(), in, out);
 				parser.split();
 				consoleOutput.setText(Logger.get());
