@@ -1,0 +1,8 @@
+ {
+    "name":"Test prod",
+    "inputLength" : "31",
+    "outputLength" : "455",
+    "config":{
+	"code":"lalala"
+    }
+}

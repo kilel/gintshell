@@ -1,5 +1,8 @@
 package org.kilar.hybridIS.general;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,22 +11,60 @@ import java.util.Map;
 
 import org.kilar.hybridIS.abstractions.*;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
 /**
  * @author hkyten
  * 
  */
 public class Project implements CertaintyCalculator{
-	private String name;
+	private String path;
+	private ProjectConfig config;
 	private Integrator integrator;
 	private List<Module> modules;
-	private Map<String, Integer> inputDataNames, outputDataNames;
 	
+	/**
+	 * existing project opening
+	 * @param path
+	 */
+	public Project(String path) {
+		this.path = path;
+		Logger.info("Пытаюсь прочитать структуру проекта...");
+		File f = new File(path, "config");
+		if(!f.exists()){
+			Logger.error("Не найден конфигурационный файл, ошибка открытыя поекта по пути\n" + path);
+			return;
+		}
+		Gson g = new Gson();
+		
+		try {
+			config = g.fromJson(new FileReader(f), ProjectConfig.class);
+		} catch (JsonSyntaxException e) {
+			Logger.error("Ошибка парсинга конфигурационного файла, ошибка открытыя поекта по пути\n" + path);
+		} catch (JsonIOException e) {
+			Logger.error("Ошибка чтения конфигурационного файла, ошибка открытыя поекта по пути\n" + path);
+		} catch (FileNotFoundException e) {
+			// checked 
+		}
+		//TODO read modules and etc
+		Logger.info("Проект успешно открыт");
+	}
 	
-	public Project(String name) {
+	/**
+	 * new project constructor
+	 * @param name
+	 * @param path
+	 */
+	public Project(String name, String path, int inSize, int outSize) {
 		setName(name);
+		this.path = path;
 		modules = new LinkedList<Module>();
-		inputDataNames = new HashMap<>();
-		outputDataNames = new HashMap<>();
+		config.setInNames(new String[0]);
+		config.setOutNames(new String[0]);
+		config.setOutputLength(outSize);
+		config.setInputLength(inSize);
 	}
 
 	public void addModule(Module module) {
@@ -66,14 +107,37 @@ public class Project implements CertaintyCalculator{
 	}
 
 	public String getName() {
-		return name;
+		return config.getName();
 	}
 
 	public void setName(String newName) {
-		this.name = newName;
+		config.setName(newName);
 	}
 
-
+	public ProjectConfig getConfig(){
+		return config;
+	}
+	
+	public List<Module> getModules(){
+		return modules;
+	}
+	
+	public String[] getInDataNames(){
+		return config.getInNames();
+	}
+	
+	public String[] getOutDataNames(){
+		return config.getOutNames();
+	}
+	
+	public int getInputLength(){
+		return config.getInputLength();
+	}
+	
+	public int getOutputLength(){
+		return config.getOutputLength();
+	}
+	
 	@Override
 	public List<Double> calculate(List<Double> input, int inputLength, int outputLength) {
 		HybridIS hybrid = new HybridIS(getName(), inputLength, outputLength, modules, integrator);

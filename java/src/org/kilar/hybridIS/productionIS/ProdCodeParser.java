@@ -16,7 +16,8 @@ public class ProdCodeParser {
 	private String code;
 	private int len;
 	private List<Double> inValues, outValues;
-	final double INVALID_VALUE = 42;
+	private final double INVALID_VALUE = 42;
+	private boolean isValidationCheckGoes = false; 
 
 	
 	public ProdCodeParser(String code, List<String> input, List<String> output){
@@ -27,14 +28,19 @@ public class ProdCodeParser {
 	}
 	
 	public boolean isValid(){
+		Logger.info("Проверка продукционного модуля");
 		List<Double> in = new ArrayList<>();
+		isValidationCheckGoes = true;
 		int n = inputNames.size();
 		for(int i = 0; i < n; ++i)
 			in.add(0d);
 		try{
 			calculate(in);
+			Logger.info("Синтаксическая проверка пройдена успешно\n");
+			isValidationCheckGoes = false;
 			return true;
 		} catch (Exception e){
+			isValidationCheckGoes = false;
 			return false;
 		}
 	}
@@ -43,7 +49,7 @@ public class ProdCodeParser {
 		int size = spl.size();
 		if(size == 2){ //if only one block in this sector
 			int i = spl.get(0);
-			i = ProdCodeUtils.getNextNonSpace(code, i, spl.get(1));
+			//i = ProdCodeUtils.getNextNonSpace(code, i, spl.get(1));
 			if(code.charAt(i) == '{'){
 				return calcBlock(i, scale);
 			} else if(code.substring(i, i + 2).equals("if")){
@@ -68,6 +74,7 @@ public class ProdCodeParser {
 	
 	
 	public List<Double> calculate(List<Double> input) throws Exception {
+		
 		inValues = input;
 		for(double d : input){
 			if(Math.abs(d) > 1d){
@@ -75,12 +82,14 @@ public class ProdCodeParser {
 				throw new Exception();
 			}
 		}
-		return calculate(0, len, 1d);
+		int i = ProdCodeUtils.getNextNonSpace(code, -1, len);
+		outValues = calculate(i, len, 1d);
+		return outValues; 
 	}
 	
 	private List<Double> calcBlock(int start, double scale) throws Exception {
 		int end = ProdCodeUtils.getOtherBracket(code, start);
-		return calculate(start, end, scale);
+		return calculate(start+1, end-1, scale);
 	}
 	
 	private List<Double> calcIf(int start, double scale) throws Exception {
@@ -90,8 +99,11 @@ public class ProdCodeParser {
 		i = ProdCodeUtils.getOtherBracket(code, i);
 		i = ProdCodeUtils.getNextNonSpace(code, i, len);
 		int endIf = getLexemaEnd(i);
-		if(sc > 0)
+		if(isValidationCheckGoes){
+			calculate(i, endIf, Math.min(scale, sc));
+		} else	if(sc > 0){
 			return calculate(i, endIf, Math.min(scale, sc));
+		}
 		//else
 		i++;
 		i = ProdCodeUtils.getNextNonSpace(code, i, len);
@@ -99,7 +111,11 @@ public class ProdCodeParser {
 			i+=3;
 			i = ProdCodeUtils.getNextNonSpace(code, i, len);
 			int endElse = getLexemaEnd(i);
-			return calculate(i, endElse, Math.min(scale, -sc));
+			if(isValidationCheckGoes){
+				calculate(i, endElse, Math.min(scale, -sc));
+			} else {
+				return calculate(i, endElse, Math.min(scale, -sc));
+			}
 		}
 		
 		return getNewOutVector();
@@ -134,6 +150,8 @@ public class ProdCodeParser {
 		List<Integer> ret = new ArrayList<>();
 		// code = prepareCode(code);
 		int len = code.length();
+		while(code.charAt(start) < 33)
+			++start;
 		for (int i = start; i < end; ++i) {
 			int next = getLexemaEnd(i);
 			if(next == -1){
@@ -172,6 +190,12 @@ public class ProdCodeParser {
 		return -1;
 	}
 	
+	/**
+	 * tries to find end of statement "input = dValue ;" expression
+	 * @param position start parse from
+	 * @param inputName name of statement
+	 * @return ';' index
+	 */
 	private int getEndStatement(int position, String inputName){
 		String in = inputName;
 		int len = code.length();
@@ -251,6 +275,7 @@ public class ProdCodeParser {
 		throw new Exception();
 	}
 	/**
+	 * @input start -- start parsing index, 
 	 * Term = Term || term | Term && Term | (Term) | inputName 
 	 * <br>
 	 * tip: (TERM && TERM)
@@ -270,7 +295,7 @@ public class ProdCodeParser {
 				++start;
 			res = getInputValue(code.substring(s, start));
 		}
-		return (new Pair<Integer, Double>(start, res));
+		return (new Pair<Integer, Double>(start - 1, res));
 	}
 	
 	private double calcCondition(int start) throws Exception{
@@ -282,6 +307,7 @@ public class ProdCodeParser {
 		position = pair.first;
 		
 		while(true){
+			position = pair.first;
 			position = ProdCodeUtils.getNextNonSpace(code, position, len);
 			operation = code.charAt(position);
 			if(operation == ')')
@@ -309,7 +335,7 @@ public class ProdCodeParser {
 				throw new Exception();
 			}
 			position++;
-			position = ProdCodeUtils.getNextNonSpace(code, position, len);
+			//position = ProdCodeUtils.getNextNonSpace(code, position, len);
 			// now can read next term
 			pair = getTerm(position);
 			if(operation == '|')
@@ -327,6 +353,17 @@ public class ProdCodeParser {
 			Logger.error("Невозможно вычислить условие, строка " + ProdCodeUtils.getNumStr(code, start));
 			return false;
 		}
-		
 	}
+	
+	@Override
+	public String toString(){
+		String out = "\n";
+		for(int i = 0; i < outputNames.size(); ++i){
+			out += outputNames.get(i) + " : " + outValues.get(i) + "\n";
+		}
+		return out;
+	
+	}
+		
+	
 }

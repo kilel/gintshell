@@ -1,0 +1,10 @@
+ {
+    "name":"Test neural2",
+    "inputLength" : "31",
+    "outputLength" : "455",
+    "config":{
+	"layers":["31", "3", "455"],
+	"trainingSet":""
+	...
+    }
+}

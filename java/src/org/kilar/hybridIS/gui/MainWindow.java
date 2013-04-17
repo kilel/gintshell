@@ -21,16 +21,37 @@ import javax.swing.KeyStroke;
 import javax.swing.SpringLayout;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreePath;
 
+import org.kilar.hybridIS.abstractions.Module;
 import org.kilar.hybridIS.general.Logger;
+import org.kilar.hybridIS.general.Project;
+import org.kilar.hybridIS.general.ProjectConfig;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.kilar.hybridIS.productionIS.*;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
+import sun.org.mozilla.javascript.internal.json.JsonParser;
+
 import java.awt.Component;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+
 import javax.swing.JLabel;
 import javax.swing.event.CaretListener;
 import javax.swing.event.CaretEvent;
@@ -43,12 +64,16 @@ public class MainWindow {
 	private JTextArea consoleInput;
 	private JMenuItem menuItem_2;
 	private JMenuBar menuBar;
-	private JTree tree;
 	private JTextArea codeArea;
 	private JPanel panel;
 	private JScrollPane scrollPane_2;
 	private JTextArea text;
 	private JLabel labelNumStr;
+	
+	private JTree tree;
+	private DefaultMutableTreeNode root;
+	private Project project;
+	
 
 	/**
 	 * Launch the application.
@@ -71,8 +96,86 @@ public class MainWindow {
 	 */
 	public MainWindow() {
 		initialize();
+		initProjects();
 	}
 
+	private void updateLog(){
+		consoleOutput.setText(Logger.get());
+	}
+	private void refreshTree(){
+		
+	}
+	/**
+	 * Loads projects to the tree, if can
+	 */
+	private void initProjects(){
+		//projects = new ArrayList<>();
+		Gson gson = new Gson();
+		//[TODO]
+		File projConfig;
+		Logger.info("Поиск последних проектов...");
+		projConfig = new File("gintshell.config");
+		try{
+			Scanner scanner = new Scanner(projConfig);
+			while(scanner.hasNextLine()){
+				String path = scanner.nextLine();
+				path = path.trim();
+				File f = new File(path);
+				if(f.exists()){
+					openProject(path.trim());
+					break;
+				}
+			}
+			scanner.close();
+		} catch (FileNotFoundException e){
+			try {
+				projConfig.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (Exception e ){
+			//[TODO]
+		}
+		
+		tree.expandPath(new TreePath(root));
+	}
+	
+	private void openProject(String path){
+		project = new Project(path);
+		for(Module module : project.getModules()){
+			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(module.getName());
+			root.add(newNode);
+		}
+	}
+	
+	private void addChildsToNode(DefaultMutableTreeNode node, File file){
+		ArrayList<String> directories = new ArrayList<>(), files = new ArrayList<>();
+		for(File child : file.listFiles()){
+			if(child.isDirectory()){
+				directories.add(child.getAbsolutePath());
+			} else {
+				files.add(child.getAbsolutePath());
+			}
+		}
+		Object[] dirs = directories.toArray(), fi = files.toArray();
+		Arrays.sort(dirs);
+		Arrays.sort(fi);
+		File t;
+		for(Object d : dirs){
+			t = new File((String) d);
+			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(t.getName());
+			node.add(newNode);
+			if(t.listFiles().length == 0){
+				newNode.add(new DefaultMutableTreeNode());
+			}
+			addChildsToNode(newNode, t);
+		}
+		for(Object f : fi){
+			t = new File((String) f);
+			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(t.getName());
+			node.add(newNode);
+		}
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -80,7 +183,7 @@ public class MainWindow {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(SystemColor.window);
 		frame.setBackground(Color.WHITE);
-		frame.setTitle("Гибридная Информационная Система (оболочка gintshell)");
+		frame.setTitle("Гибридная Информационная Система - gintshell");
 		frame.setBounds(100, 100, 740, 497);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
@@ -105,25 +208,8 @@ public class MainWindow {
 
 		tree = new JTree();
 		scrollPane.setViewportView(tree);
-		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Проекты") {
-			{
-				DefaultMutableTreeNode node_1;
-				node_1 = new DefaultMutableTreeNode("temp one");
-				node_1.add(new DefaultMutableTreeNode("integrator"));
-				node_1.add(new DefaultMutableTreeNode("module 1"));
-				node_1.add(new DefaultMutableTreeNode("moudle 2"));
-				node_1.add(new DefaultMutableTreeNode("project.properties"));
-				add(node_1);
-				node_1 = new DefaultMutableTreeNode("temp two");
-				node_1.add(new DefaultMutableTreeNode("integrator"));
-				node_1.add(new DefaultMutableTreeNode("module 1"));
-				node_1.add(new DefaultMutableTreeNode("module 2"));
-				node_1.add(new DefaultMutableTreeNode("module 3"));
-				node_1.add(new DefaultMutableTreeNode("test data 1"));
-				node_1.add(new DefaultMutableTreeNode("project.properties"));
-				add(node_1);
-			}
-		}));
+		root = new DefaultMutableTreeNode("Проекты");
+		tree.setModel(new DefaultTreeModel(root	));
 
 		JSplitPane splitPane_1 = new JSplitPane();
 		splitPane_1.setOneTouchExpandable(true);
@@ -169,7 +255,6 @@ public class MainWindow {
 		codeArea.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
 				labelNumStr.setText("         Строка: " + ( ProdCodeUtils.getNumStr(codeArea.getText(), codeArea.getCaretPosition())));
-				//[TODO]
 			}
 		});
 		codeArea.setDoubleBuffered(true);
@@ -191,6 +276,16 @@ public class MainWindow {
 		menu.add(menuNew);
 
 		JMenuItem menuNewProject = new JMenuItem("Проект");
+		menuNewProject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO adding a new project
+				NewProjectDialog fc = new NewProjectDialog(frame);
+				fc.showDialog();
+				
+				
+				
+			}
+		});
 		menuNewProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		menuNew.add(menuNewProject);
@@ -225,13 +320,24 @@ public class MainWindow {
 				Logger.clear();
 				List<String> in = new ArrayList<String>();
 				List<String> out = new ArrayList<String>();
+				List<Double> inVal = new ArrayList<>();
+				inVal.add(0.5);
+				inVal.add(0.3);
 				in.add("java");
 				in.add("proxy");
 				out.add("out1");
 				out.add("out2");
-				ProdCodeParser parser = new ProdCodeParser(codeArea.getText(), in, out);
-				parser.split();
-				consoleOutput.setText(Logger.get());
+				ProdCodeParser analyser = new ProdCodeParser(codeArea.getText(), in, out);
+				analyser.isValid();
+				updateLog();
+				try {
+					analyser.calculate(inVal);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					Logger.error(e1.getLocalizedMessage());
+				}
+				Logger.info(analyser.toString());
+				updateLog();
 				//[TODO]
 			}
 		});

@@ -7,6 +7,7 @@ import org.kilar.hybridIS.abstractions.NeuralIS;
 import org.kilar.hybridIS.general.ScilabAdapter;
 import org.scilab.modules.javasci.JavasciException;
 import org.scilab.modules.javasci.Scilab;
+import org.scilab.modules.types.ScilabTList;
 import org.scilab.modules.types.ScilabType;
 
 /**
@@ -50,7 +51,8 @@ public class NeuralISScilab extends NeuralIS {
 		
 		try {
 			ScilabType out = scilab.get("output");
-			output = (List<Double>) out.getSerializedObject();
+			//output = (List<Double>) out.getSerializedObject();
+			//[TODO] not working
 		} catch (JavasciException e) {
 			e.printStackTrace();
 		}

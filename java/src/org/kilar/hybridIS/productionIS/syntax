@@ -34,3 +34,34 @@
 {Лексемы}
 выход = знач;
 if(входы) лексема
+
+projDir/
+	modules/
+		module1/
+			config
+		module2/
+			config
+		module2/  (productional)
+			config
+			code
+	integrator
+	config
+	
+project config:
+	name 
+
+
+program config:
+	path1  (paths to the projects)
+	path2
+	path3
+	
+
+module config:
+	type   (neural, hybrid, neural, fuzzy)
+	etc..
+	
+neural module config etc:
+	layers in format layer1-layer2-...-layerN
+	other parameters  
+	

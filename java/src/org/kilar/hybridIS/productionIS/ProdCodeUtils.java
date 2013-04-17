@@ -67,9 +67,14 @@ public class ProdCodeUtils {
 	}
 	
 	public static int getNextNonSpace(String code, int pos, int len){
-		++pos;
-		while(pos < len && code.charAt(pos) < 33)
+		if(pos < 0){
+			pos = 0;
+		} else if(code.charAt(pos) > 32){
 			++pos;
+		}
+		while(pos < len && code.charAt(pos) < 33){
+			++pos;
+		}
 		return pos;
 	}
 	
