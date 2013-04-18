@@ -5,8 +5,7 @@ package org.kilar.hybridIS.abstractions;
  * 
  */
 public abstract class FuzzyIS extends Module {
-	public FuzzyIS(String name, int inputLength, int outputLength) {
-		super(name, inputLength, outputLength);
-		type = ModuleType.Fuzzy;
+	public FuzzyIS(ModuleConfig config) {
+		super(config);
 	}
 }

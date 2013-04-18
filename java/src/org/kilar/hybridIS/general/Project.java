@@ -3,6 +3,7 @@ package org.kilar.hybridIS.general;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,10 +32,10 @@ public class Project implements CertaintyCalculator{
 	 */
 	public Project(String path) {
 		this.path = path;
-		Logger.info("Пытаюсь прочитать структуру проекта...");
+		Logger.info("Пытаюсь прочитать структуру проекта " + path);
 		File f = new File(path, "config");
 		if(!f.exists()){
-			Logger.error("Не найден конфигурационный файл, ошибка открытыя поекта по пути\n" + path);
+			Logger.error("Не найден конфигурационный файл");
 			return;
 		}
 		Gson g = new Gson();
@@ -42,9 +43,11 @@ public class Project implements CertaintyCalculator{
 		try {
 			config = g.fromJson(new FileReader(f), ProjectConfig.class);
 		} catch (JsonSyntaxException e) {
-			Logger.error("Ошибка парсинга конфигурационного файла, ошибка открытыя поекта по пути\n" + path);
+			Logger.error("Ошибка парсинга конфигурационного файла");
+			return;
 		} catch (JsonIOException e) {
-			Logger.error("Ошибка чтения конфигурационного файла, ошибка открытыя поекта по пути\n" + path);
+			Logger.error("Ошибка чтения конфигурационного файла");
+			return;
 		} catch (FileNotFoundException e) {
 			// checked 
 		}
@@ -139,10 +142,12 @@ public class Project implements CertaintyCalculator{
 	}
 	
 	@Override
-	public List<Double> calculate(List<Double> input, int inputLength, int outputLength) {
-		HybridIS hybrid = new HybridIS(getName(), inputLength, outputLength, modules, integrator);
-		List<Double> result = hybrid.calculate(input, inputLength, outputLength);
-		
-		return result;
+	public List<Double> calculate(List<Double> input) {
+		List<List<Double>> integratorInput = new ArrayList<List<Double>>();
+		for (Module module : modules) {
+			integratorInput.add(module.calculate(input));
+		}
+		List<Double> ret = integrator.calculate(integratorInput, modules);
+		return ret;
 	}
 }

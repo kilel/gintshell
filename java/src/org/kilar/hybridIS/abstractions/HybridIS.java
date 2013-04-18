@@ -3,6 +3,8 @@ package org.kilar.hybridIS.abstractions;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.kilar.hybridIS.general.Project;
+
 /**
  * @author hkyten
  * 
@@ -10,22 +12,15 @@ import java.util.List;
 public class HybridIS extends Module {
 	protected List<Module> modules;
 	protected Integrator integrator;
+	protected Project project;
 
-	public HybridIS(String name, int inputLength, int outputLength, List<Module> modules, Integrator integrator) {
-		super(name, inputLength, outputLength);
-		this.modules = modules;
-		this.integrator = integrator;
-		type = ModuleType.Hybrid;
-		
+	public HybridIS(ModuleConfig config) {
+		super(config);
+		project = new Project(((ModuleConfigHybrid) config).getProjectDir());
 	}
 
 	@Override
-	public List<Double> calculate(List<Double> input, int inputLength, int outputLength) {
-		List<List<Double>> integratorInput = new ArrayList<List<Double>>();
-		for (Module module : modules) {
-			integratorInput.add(module.calculate(input, inputLength, outputLength));
-		}
-		List<Double> ret = integrator.calculate(integratorInput, modules);
-		return ret;
+	public List<Double> calculate(List<Double> input) {
+		return project.calculate(input);
 	}
 }

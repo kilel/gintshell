@@ -1,29 +1,60 @@
 package org.kilar.hybridIS.abstractions;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import org.kilar.hybridIS.general.Logger;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
 /**
  * @author hkyten
  * 
  */
-enum ModuleType {
-	Production, Fuzzy, Neural, Hybrid
-}
 
 public abstract class Module implements CertaintyCalculator {
-	protected int inputLength, outputLength;
-	protected ModuleType type;
-	protected String name;
+	protected ModuleConfig config;
 
-	public Module(String name, int inputLength, int outputLength) {
-		this.name = name;
-		this.inputLength = inputLength;
-		this.outputLength = outputLength;
+	public Module(String path){
+		Logger.info("Пытаюсь прочитать структуру модуля " + path);
+		File f = new File(path);
+		if(!f.exists()){
+			Logger.error("Не найден файл модуля!");
+			return;
+		}
+		Gson g = new Gson();
+		
+		try {
+			config = g.fromJson(new FileReader(f), ModuleConfig.class);
+		} catch (JsonSyntaxException e) {
+			Logger.error("Ошибка парсинга файла модуля");
+			return;
+		} catch (JsonIOException e) {
+			Logger.error("Ошибка чтения файла модуля");
+			return;
+		} catch (FileNotFoundException e) {
+			// checked 
+		}
+		
+		Logger.info("Базовая конфигурация модуля загружена");
+	}
+	
+	public Module(ModuleConfig config){
+		this.config = config;
 	}
 
 	public String getName() {
-		return name;
+		return config.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		config.setName(name);
+	}
+	
+	public ModuleConfig getConfig(){
+		return config;
 	}
 };

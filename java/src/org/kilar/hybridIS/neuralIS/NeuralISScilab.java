@@ -3,6 +3,7 @@ package org.kilar.hybridIS.neuralIS;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.kilar.hybridIS.abstractions.ModuleType;
 import org.kilar.hybridIS.abstractions.NeuralIS;
 import org.kilar.hybridIS.general.ScilabAdapter;
 import org.scilab.modules.javasci.JavasciException;
@@ -18,9 +19,10 @@ public class NeuralISScilab extends NeuralIS {
 	
 	private Scilab scilab;
 	
-	public NeuralISScilab(String name, int inputLength, int outputLength, List<Integer> sizeOfLayers) {
-		super(name, inputLength, outputLength);
+	public NeuralISScilab(ModuleConfigNeural config) {
+		super(config);
 		if (ScilabAdapter.isExistScilab() == false){
+			//TODO
 			new ScilabAdapter();
 		}
 		scilab = ScilabAdapter.getScilab();
@@ -28,11 +30,11 @@ public class NeuralISScilab extends NeuralIS {
 		String str = null;
 		str += "rand('seed', 0);";
 		str += "N = [";
-		str += Integer.toString(inputLength);
-		for (int size : sizeOfLayers){
+		str += Integer.toString(config.getInputLength());
+		for (int size : config.getLayers()){
 			str += ", " + Integer.toString(size);
 		}
-		str += ", " + Integer.toString(outputLength);
+		str += ", " + Integer.toString(config.getOutputLength());
 		str += "];";
 		str += "W = ann_FF_init(N)";
 		
@@ -40,7 +42,7 @@ public class NeuralISScilab extends NeuralIS {
 	}
 
 	@Override
-	public List<Double> calculate(List<Double> input, int inputLength, int outputLength) {
+	public List<Double> calculate(List<Double> input) {
 		
 		String str = null;
 		List<Double> output = null;
@@ -109,12 +111,18 @@ public class NeuralISScilab extends NeuralIS {
 		
 	}
 	
-	public static void main(){
+	public static void main(String[] argc){
 		List<Integer> list = new ArrayList<Integer>();
 		list.add(3);
 		list.add(5);
 		list.add(5);
-		NeuralISScilab neuralISScilab = new NeuralISScilab("qwert", 5, 5, list);
+		ModuleConfigNeural nc = new ModuleConfigNeural();
+		nc.setName("qwe");
+		nc.setInputLength(3);
+		nc.setOutputLength(3);
+		nc.setLayers(list.toArray(new Integer[0]));
+		nc.setType(ModuleType.Neural);
+		NeuralISScilab neuralISScilab = new NeuralISScilab(nc);
 		//neuralISScilab.train(<<1, 0, 0, 0, 0>, <0, 1, 0, 0, 0>, <0, 0, 1, 0, 0>, <0, 0, 0, 1, 0>, <0, 0, 0, 0, 1>>, <1, 1, 1, 0, 0>);
 		
 	}

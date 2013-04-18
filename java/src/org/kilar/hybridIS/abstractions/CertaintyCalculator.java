@@ -14,5 +14,5 @@ public interface CertaintyCalculator {
 	 * @param input certainty vector
 	 * @return certainty of output variables vector
 	 */
-	public List<Double> calculate(List<Double> input, int inputLength, int outputLength);
+	public List<Double> calculate(List<Double> input);
 }
