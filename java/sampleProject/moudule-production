@@ -1,9 +1,0 @@
- {
-    "name":"Test prod",
-    "type":"production",
-    "inputLength" : "31",
-    "outputLength" : "455",
-    "config":{
-	"code":"if(java) out1 = 0.5;"
-    }
-}

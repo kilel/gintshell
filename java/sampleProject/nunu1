@@ -1,0 +1,8 @@
+ {
+    "name":"Test neural2",
+    "type":"neural",
+    "inputLength" : "2",
+    "outputLength" : "2",
+    
+    "layers":["31", "3", "455"]
+}

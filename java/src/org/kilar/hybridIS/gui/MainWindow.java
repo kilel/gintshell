@@ -141,11 +141,21 @@ public class MainWindow {
 	}
 	
 	private void openProject(String path){
-		project = new Project(path);
+		try {
+			project = new Project(path);
+		} catch (Exception e) {
+			Logger.error("Ошибка создания проекта");
+			updateLog();
+			return;
+		}
+		updateLog();
+		root.setUserObject(project.getName()); 
 		for(Module module : project.getModules()){
 			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(module.getName());
 			root.add(newNode);
 		}
+		root.add(new DefaultMutableTreeNode(project.getIntegratorName()));
+		root.add(new DefaultMutableTreeNode("config"));
 	}
 	
 	private void addChildsToNode(DefaultMutableTreeNode node, File file){
@@ -327,7 +337,7 @@ public class MainWindow {
 				in.add("proxy");
 				out.add("out1");
 				out.add("out2");
-				ProdCodeParser analyser = new ProdCodeParser(codeArea.getText(), in, out);
+				ProdCodeParser analyser = new ProdCodeParser(codeArea.getText(), in.toArray(new String[0]), out.toArray(new String[0]));
 				analyser.isValid();
 				updateLog();
 				try {

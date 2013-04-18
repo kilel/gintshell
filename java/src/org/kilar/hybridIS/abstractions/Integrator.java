@@ -2,6 +2,10 @@ package org.kilar.hybridIS.abstractions;
 
 import java.util.List;
 
+class IntegratorType{
+	static public final String Basic = "basic"; 
+}
+
 /**
  * @author hkyten
  * 
@@ -13,12 +17,12 @@ public abstract class Integrator {
 	 *            list of certainties from modules
 	 * @return integrated certainty
 	 */
-	protected String name = "Abstract integrator";
+	protected IntegratorConfig config;
 	public abstract List<Double> calculate(List<List<Double>> input, List<Module> modules);
-	public Integrator(String name){
-		this.name = name;
+	public Integrator(IntegratorConfig config){
+		this.config = config;
 	}
 	public String getName(){
-		return this.name;
+		return config.getName();
 	}
 }

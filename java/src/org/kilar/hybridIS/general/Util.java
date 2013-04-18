@@ -2,8 +2,17 @@ package org.kilar.hybridIS.general;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Util {
+	
+	public static List<Double> getZeroList(int length){
+		List<Double> out = new ArrayList<>();
+		for(int i = 0; i < length; ++i)
+			out.add(0d);
+		return out;
+	}
 	
 	public static boolean isFileNameValid(String name){
 		if(name.length() == 0){

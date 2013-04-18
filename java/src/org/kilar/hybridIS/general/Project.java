@@ -3,6 +3,7 @@ package org.kilar.hybridIS.general;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,8 +30,9 @@ public class Project implements CertaintyCalculator{
 	/**
 	 * existing project opening
 	 * @param path
+	 * @throws Exception 
 	 */
-	public Project(String path) {
+	public Project(String path) throws Exception {
 		this.path = path;
 		Logger.info("Пытаюсь прочитать структуру проекта " + path);
 		File f = new File(path, "config");
@@ -49,9 +51,28 @@ public class Project implements CertaintyCalculator{
 			Logger.error("Ошибка чтения конфигурационного файла");
 			return;
 		} catch (FileNotFoundException e) {
-			// checked 
+			// checked e.printStackTrace();
 		}
-		//TODO read modules and etc
+		Logger.info("Начинаю инициализацию модулей");
+		modules = new ArrayList<>();
+		for(String moduleName : config.getModules()){
+			File moduleFile = new File(path, moduleName);
+			Module m = ModuleFactory.produce(moduleFile.getPath(), this);
+			if(m == null ){
+				throw new Exception(); 
+			}
+			if(m.getConfig().getInputLength() != config.getInputLength() 
+					|| m.getConfig().getOutputLength() != config.getOutputLength() ){
+				Logger.error("Не совпадает количество входных или выходных параметров!");
+				throw new Exception();
+			}
+			modules.add(m);
+		}
+		Logger.info("Инициализация модулей прошла успешно");
+		integrator = IntegratorFactory.produce(new File(path, config.getIntegrator()).getPath());
+		if(integrator == null){
+			throw new Exception();
+		}
 		Logger.info("Проект успешно открыт");
 	}
 	
@@ -139,6 +160,18 @@ public class Project implements CertaintyCalculator{
 	
 	public int getOutputLength(){
 		return config.getOutputLength();
+	}
+	public void setPath(File value){
+		try {
+			path = value.getCanonicalPath();
+		} catch (IOException e) {
+			Logger.error("Не могу сменить путь проекта на " + value.getPath());
+			return;
+		}
+	}
+	
+	public File getPath(){
+		return new File(path);
 	}
 	
 	@Override

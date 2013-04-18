@@ -6,6 +6,7 @@ import java.util.List;
 import org.kilar.hybridIS.abstractions.ModuleType;
 import org.kilar.hybridIS.abstractions.NeuralIS;
 import org.kilar.hybridIS.general.ScilabAdapter;
+import org.kilar.hybridIS.general.Util;
 import org.scilab.modules.javasci.JavasciException;
 import org.scilab.modules.javasci.Scilab;
 import org.scilab.modules.types.ScilabTList;
@@ -21,10 +22,8 @@ public class NeuralISScilab extends NeuralIS {
 	
 	public NeuralISScilab(ModuleConfigNeural config) {
 		super(config);
-		if (ScilabAdapter.isExistScilab() == false){
-			//TODO
-			new ScilabAdapter();
-		}
+		/*TODO ScilabAdapter.initialize();
+		
 		scilab = ScilabAdapter.getScilab();
 		
 		String str = null;
@@ -39,6 +38,7 @@ public class NeuralISScilab extends NeuralIS {
 		str += "W = ann_FF_init(N)";
 		
 		scilab.exec(str);
+		*/
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class NeuralISScilab extends NeuralIS {
 		
 		str += "";
 		
-		scilab.exec(str);
+		//scilab.exec(str);
 		
 		try {
 			ScilabType out = scilab.get("output");
@@ -59,7 +59,8 @@ public class NeuralISScilab extends NeuralIS {
 			e.printStackTrace();
 		}
 		
-		return output;
+		//return output;
+		return Util.getZeroList(config.getOutputLength());
 	}
 
 	@Override

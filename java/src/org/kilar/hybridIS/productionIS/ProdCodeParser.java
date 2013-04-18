@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.Pair;
+import org.kilar.hybridIS.general.Util;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
@@ -12,7 +13,7 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
  *
  */
 public class ProdCodeParser {
-	private List<String> inputNames, outputNames;
+	private String[] inputNames, outputNames;
 	private String code;
 	private int len;
 	private List<Double> inValues, outValues;
@@ -20,9 +21,9 @@ public class ProdCodeParser {
 	private boolean isValidationCheckGoes = false; 
 
 	
-	public ProdCodeParser(String code, List<String> input, List<String> output){
-		inputNames = input.subList(0, input.size());
-		outputNames = output.subList(0, output.size());
+	public ProdCodeParser(String code, String[] input, String[] output){
+		inputNames = input;
+		outputNames = output;
 		len = code.length();
 		this.code = code;
 	}
@@ -31,7 +32,7 @@ public class ProdCodeParser {
 		Logger.info("Проверка продукционного модуля");
 		List<Double> in = new ArrayList<>();
 		isValidationCheckGoes = true;
-		int n = inputNames.size();
+		int n = inputNames.length;
 		for(int i = 0; i < n; ++i)
 			in.add(0d);
 		try{
@@ -61,7 +62,7 @@ public class ProdCodeParser {
 		//else
 		List<Double> temp = new ArrayList<>(),
 				out = new ArrayList<>();
-		for(int i = 0; i < outputNames.size(); ++i)
+		for(int i = 0; i < outputNames.length; ++i)
 			out.add(0d);
 		
 		for(int i = 0; i < size - 1; ++i){
@@ -122,15 +123,13 @@ public class ProdCodeParser {
 	}
 	
 	private List<Double> getNewOutVector(){
-		List<Double> out = new ArrayList<>();
-		for(int i = 0; i < outputNames.size(); ++i)
-			out.add(0d);
-		return out;
+		return Util.getZeroList(outputNames.length);
 	}
+	
 	private List<Double> calcStatement(int start, double scale) throws Exception {
 		List<Double> out = getNewOutVector();
-		for(int i = 0; i < outputNames.size(); ++i){
-			String name = outputNames.get(i);
+		for(int i = 0; i < outputNames.length; ++i){
+			String name = outputNames[i];
 			if(code.subSequence(start, start + name.length()).equals(name)){
 				start = start + name.length();
 				start = ProdCodeUtils.getNextNonSpace(code, start, len);
@@ -266,8 +265,8 @@ public class ProdCodeParser {
 	
 	private int getInputValueIndex(String in) throws Exception{
 		//[TODO] to map?
-		for(int i = 0; i < inputNames.size(); ++i){
-			if(inputNames.get(i).equals(in)){
+		for(int i = 0; i < inputNames.length; ++i){
+			if(inputNames[i].equals(in)){
 				return i;
 			}
 		}
@@ -358,8 +357,8 @@ public class ProdCodeParser {
 	@Override
 	public String toString(){
 		String out = "\n";
-		for(int i = 0; i < outputNames.size(); ++i){
-			out += outputNames.get(i) + " : " + outValues.get(i) + "\n";
+		for(int i = 0; i < outputNames.length; ++i){
+			out += outputNames[i] + " : " + outValues.get(i) + "\n";
 		}
 		return out;
 	
