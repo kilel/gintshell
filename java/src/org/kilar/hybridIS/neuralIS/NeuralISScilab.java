@@ -22,10 +22,9 @@ public class NeuralISScilab extends NeuralIS {
 	
 	public NeuralISScilab(ModuleConfigNeural config) {
 		super(config);
-		/*TODO ScilabAdapter.initialize();
+		ScilabAdapter.initialize();
 		
 		scilab = ScilabAdapter.getScilab();
-		
 		String str = null;
 		str += "rand('seed', 0);";
 		str += "N = [";
@@ -38,7 +37,7 @@ public class NeuralISScilab extends NeuralIS {
 		str += "W = ann_FF_init(N)";
 		
 		scilab.exec(str);
-		*/
+		
 	}
 
 	@Override
@@ -113,6 +112,7 @@ public class NeuralISScilab extends NeuralIS {
 	}
 	
 	public static void main(String[] argc){
+		//System.loadLibrary("javasci2");
 		List<Integer> list = new ArrayList<Integer>();
 		list.add(3);
 		list.add(5);

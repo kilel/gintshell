@@ -4,7 +4,15 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.3-javadoc.jar"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.3.jar"/>
-	<classpathentry kind="lib" path="libs/org.scilab.modules.javasci.jar"/>
-	<classpathentry kind="lib" path="libs/org.scilab.modules.types.jar"/>
+	<classpathentry kind="lib" path="/home/hkyten/information/scilab-5.4.1/share/scilab/modules/types/jar/org.scilab.modules.types.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/hkyten/information/scilab-5.4.1/lib/scilab"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/hkyten/information/scilab-5.4.1/share/scilab/modules/javasci/jar/org.scilab.modules.javasci.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/hkyten/information/scilab-5.4.1/lib/scilab"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
