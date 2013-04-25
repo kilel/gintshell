@@ -18,6 +18,7 @@ import com.google.gson.JsonSyntaxException;
 
 public abstract class Module implements CertaintyCalculator {
 	protected ModuleConfig config;
+	private Project parent = null;
 	
 	public Module(String path){
 		Logger.info("Пытаюсь прочитать структуру модуля " + path);
@@ -55,7 +56,19 @@ public abstract class Module implements CertaintyCalculator {
 		config.setName(name);
 	}
 	
+	public void setParent(Project value){
+		parent = value;
+	}
+	
 	public ModuleConfig getConfig(){
 		return config;
+	}
+	
+	public String getType(){
+		return config.getType();
+	}
+	
+	public Project getParent(){
+		return parent;
 	}
 };

@@ -1,6 +1,7 @@
  {
     "name":"Test project",
     "integrator":"integr",
+    "dataResource":"running data",
     "inputLength" : "2",
     "outputLength" : "2",
     "modules":["neural", "production", "nunu1"],

@@ -1,22 +1,11 @@
 package org.kilar.hybridIS.abstractions;
 
-import org.kilar.hybridIS.general.Project;
-
 public class ModuleConfig {
 	
 	protected int inputLength;
 	protected int outputLength;
 	protected String name;
 	protected String type;
-	protected Project parent = null;
-	
-	public void setParent(Project value){
-		parent = value;
-	}
-	
-	public Project getParent(){
-		return parent;
-	}
 	
 	public ModuleConfig(){
 		name = "";

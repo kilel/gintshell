@@ -14,6 +14,7 @@ public class ProjectConfig {
 	private String[] outNames;
 	private String[] inNames;
 	private String integrator;
+	private String dataResource;
 	private int inputLength;
 	private int outputLength;
 	
@@ -31,6 +32,10 @@ public class ProjectConfig {
 	
 	public String getName(){
 		return name;
+	}
+	
+	public String getDataResource(){
+		return dataResource;
 	}
 	
 	public String getIntegrator(){
@@ -59,6 +64,10 @@ public class ProjectConfig {
 	
 	public void setName(String value){
 		name = value;
+	}
+	
+	public void geDdataResource(String value){
+		dataResource = value;
 	}
 	
 	public void setIntegrator(String value){

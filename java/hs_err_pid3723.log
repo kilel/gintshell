@@ -1,0 +1,818 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f0315308e46, pid=3723, tid=139651228423936
+#
+# JRE version: 7.0_15-b03
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (23.7-b01 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libc.so.6+0x131e46]  __nss_hosts_lookup+0x4e6
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f031000b800):  JavaThread "main" [_thread_in_native, id=3729, stack(0x00007f0315ccd000,0x00007f0315dce000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x000000000000006c
+
+Registers:
+RAX=0x000000000000002c, RBX=0x00007f0310000878, RCX=0x0000000000000008, RDX=0x0000000000000000
+RSP=0x00007f0315dc93a8, RBP=0x00000000000000fc, RSI=0x00007f0310000088, RDI=0x000000000000006c
+R8 =0x0000000000000000, R9 =0x0000000000000038, R10=0x2d62616c6963732f, R11=0x0000000000000000
+R12=0x00007f0310000088, R13=0x0000000010000098, R14=0x00007f03101ca8b0, R15=0x00000000ffffffff
+RIP=0x00007f0315308e46, EFLAGS=0x0000000000010287, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007f0315dc93a8)
+0x00007f0315dc93a8:   00007f0300d30187 00007f03101cbf40
+0x00007f0315dc93b8:   00007f0310000088 00007f03101cbf40
+0x00007f0315dc93c8:   000000000000002b 00007f02fb7511c0
+0x00007f0315dc93d8:   00007f0300d26a31 00007f0310000088
+0x00007f0315dc93e8:   0000000000000000 00007f0300badf90
+0x00007f0315dc93f8:   00007f03101ad360 00007f03101c9570
+0x00007f0315dc9408:   00007f03101ca8f0 00007f03101d86c0
+0x00007f0315dc9418:   00007f03101c9570 00007f02fb7511c0
+0x00007f0315dc9428:   00007f0300000000 00007f03101c9570
+0x00007f0315dc9438:   0000000000000021 00007f0310000020
+0x00007f0315dc9448:   00007f03101ca8f0 00007f02fb7511f4
+0x00007f0315dc9458:   00007f03101c9570 00007f02fb7511c0
+0x00007f0315dc9468:   00007f03101ca8b0 00000000ffffffff
+0x00007f0315dc9478:   00007f0300d18ff7 00007f0315dc94b0
+0x00007f0315dc9488:   00007f0315dc94c8 00007f0315dc94cc
+0x00007f0315dc9498:   0000000000000008 00000001fb7511f4
+0x00007f0315dc94a8:   00007f03100ae5c0 00007f02fb7511c0
+0x00007f0315dc94b8:   00007f0315be3245 0000000000000001
+0x00007f0315dc94c8:   0000000000000000 0000000000000000
+0x00007f0315dc94d8:   00007f03101ca8f0 00007f02fb7511f4
+0x00007f0315dc94e8:   00007f0315dcc66c 00007f02fb7511c0
+0x00007f0315dc94f8:   00007f03101ca8b0 00000000ffffffff
+0x00007f0315dc9508:   00007f0300d09627 000000000000000d
+0x00007f0315dc9518:   00000000101ad360 00000000000003c8
+0x00007f0315dc9528:   00007f0300cf10d8 0000000000000445
+0x00007f0315dc9538:   00007f0300cefd14 000000007f8be318
+0x00007f0315dc9548:   00007f037f8ae660 00007f0300000000
+0x00007f0315dc9558:   00007f0300000000 6e6f697400000000
+0x00007f0315dc9568:   2d62616c6963732f 696c2f312e342e35
+0x00007f0315dc9578:   7064726968742f62 62696c2f79747261
+0x00007f0315dc9588:   6f732e7000000000 6e6f697400000000
+0x00007f0315dc9598:   2d62616c6963732f 00007f02e56d60e0 
+
+Instructions: (pc=0x00007f0315308e46)
+0x00007f0315308e26:   2e 0f 1f 84 00 00 00 00 00 90 89 f1 89 f8 48 83
+0x00007f0315308e36:   e1 3f 48 83 e0 3f 83 f9 30 77 3f 83 f8 30 77 3a
+0x00007f0315308e46:   f3 0f 6f 0f f3 0f 6f 16 66 0f ef c0 66 0f 74 c1
+0x00007f0315308e56:   66 0f 74 ca 66 0f f8 c8 66 0f d7 d1 81 ea ff ff 
+
+Register to memory mapping:
+
+RAX=0x000000000000002c is an unknown value
+RBX=0x00007f0310000878 is an unknown value
+RCX=0x0000000000000008 is an unknown value
+RDX=0x0000000000000000 is an unknown value
+RSP=0x00007f0315dc93a8 is pointing into the stack for thread: 0x00007f031000b800
+RBP=0x00000000000000fc is an unknown value
+RSI=0x00007f0310000088 is an unknown value
+RDI=0x000000000000006c is an unknown value
+R8 =0x0000000000000000 is an unknown value
+R9 =0x0000000000000038 is an unknown value
+R10=0x2d62616c6963732f is an unknown value
+R11=0x0000000000000000 is an unknown value
+R12=0x00007f0310000088 is an unknown value
+R13=0x0000000010000098 is an unknown value
+R14=0x00007f03101ca8b0 is an unknown value
+R15=0x00000000ffffffff is an unknown value
+
+
+Stack: [0x00007f0315ccd000,0x00007f0315dce000],  sp=0x00007f0315dc93a8,  free space=1008k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libc.so.6+0x131e46]  __nss_hosts_lookup+0x4e6
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  org.scilab.modules.javasci.Call_ScilabJNI.Call_ScilabOpen(Ljava/lang/String;ZLjava/lang/String;I)I+0
+j  org.scilab.modules.javasci.Call_Scilab.Call_ScilabOpen(Ljava/lang/String;ZLjava/lang/String;I)I+4
+j  org.scilab.modules.javasci.Scilab.open()Z+10
+j  org.kilar.hybridIS.general.ScilabAdapter.initialize()V+20
+j  org.kilar.hybridIS.neuralIS.NeuralISScilab.<init>(Lorg/kilar/hybridIS/neuralIS/ModuleConfigNeural;)V+5
+j  org.kilar.hybridIS.neuralIS.NeuralISScilab.main([Ljava/lang/String;)V+93
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007f0310102800 JavaThread "Service Thread" daemon [_thread_blocked, id=3750, stack(0x00007f0303eff000,0x00007f0304000000)]
+  0x00007f0310100000 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=3749, stack(0x00007f0308092000,0x00007f0308193000)]
+  0x00007f03100fd000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=3748, stack(0x00007f0308193000,0x00007f0308294000)]
+  0x00007f02d0001000 JavaThread "JDWP Command Reader" daemon [_thread_in_native, id=3744, stack(0x00007f0308294000,0x00007f0308395000)]
+  0x00007f03100fb000 JavaThread "JDWP Event Helper Thread" daemon [_thread_blocked, id=3743, stack(0x00007f0308395000,0x00007f0308496000)]
+  0x00007f03100f7800 JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_blocked, id=3740, stack(0x00007f0308496000,0x00007f0308597000)]
+  0x00007f03100ea800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=3738, stack(0x00007f030879b000,0x00007f030889c000)]
+  0x00007f031009e800 JavaThread "Finalizer" daemon [_thread_blocked, id=3737, stack(0x00007f030889c000,0x00007f030899d000)]
+  0x00007f031009c000 JavaThread "Reference Handler" daemon [_thread_blocked, id=3736, stack(0x00007f030899d000,0x00007f0308a9e000)]
+=>0x00007f031000b800 JavaThread "main" [_thread_in_native, id=3729, stack(0x00007f0315ccd000,0x00007f0315dce000)]
+
+Other Threads:
+  0x00007f0310094800 VMThread [stack: 0x00007f0308a9e000,0x00007f0308b9f000] [id=3735]
+  0x00007f031010d000 WatcherThread [stack: 0x00007f0303dfe000,0x00007f0303eff000] [id=3751]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 36864K, used 1897K [0x00000007d6d60000, 0x00000007d9680000, 0x0000000800000000)
+  eden space 31616K, 6% used [0x00000007d6d60000,0x00000007d6f3a498,0x00000007d8c40000)
+  from space 5248K, 0% used [0x00000007d9160000,0x00000007d9160000,0x00000007d9680000)
+  to   space 5248K, 0% used [0x00000007d8c40000,0x00000007d8c40000,0x00000007d9160000)
+ ParOldGen       total 84352K, used 0K [0x0000000784800000, 0x0000000789a60000, 0x00000007d6d60000)
+  object space 84352K, 0% used [0x0000000784800000,0x0000000784800000,0x0000000789a60000)
+ PSPermGen       total 21248K, used 2848K [0x000000077f600000, 0x0000000780ac0000, 0x0000000784800000)
+  object space 21248K, 13% used [0x000000077f600000,0x000000077f8c81a0,0x0000000780ac0000)
+
+Card table byte_map: [0x00007f030b32a000,0x00007f030b730000] byte_map_base: 0x00007f030772f000
+
+Polling page: 0x00007f0315ded000
+
+Code Cache  [0x00007f030b730000, 0x00007f030b9a0000, 0x00007f030e730000)
+ total_blobs=178 nmethods=2 adapters=137 free_code_cache=48768Kb largest_free_block=49918336
+
+Compilation events (4 events):
+Event: 1,941 Thread 0x00007f03100fd000    1             java.lang.String::indexOf (70 bytes)
+Event: 1,946 Thread 0x00007f0310100000    2             sun.nio.cs.UTF_8$Encoder::encode (361 bytes)
+Event: 1,960 Thread 0x00007f03100fd000 nmethod 1 0x00007f030b78f750 code [0x00007f030b78f8a0, 0x00007f030b78fa88]
+Event: 1,963 Thread 0x00007f0310100000 nmethod 2 0x00007f030b78ea90 code [0x00007f030b78ec20, 0x00007f030b78f308]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 0,156 Thread 0x00007f031000b800 Threw 0x00000007d6dec628 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,922 Thread 0x00007f031000b800 Threw 0x00000007d6df00d8 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,929 Thread 0x00007f031000b800 Threw 0x00000007d6dfa538 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,933 Thread 0x00007f031000b800 Threw 0x00000007d6dfe090 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,938 Thread 0x00007f031000b800 Threw 0x00000007d6ea0268 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,941 Thread 0x00007f031000b800 Threw 0x00000007d6ea3f38 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,945 Thread 0x00007f031000b800 Threw 0x00000007d6ea79e8 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,948 Thread 0x00007f031000b800 Threw 0x00000007d6eab578 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,953 Thread 0x00007f031000b800 Threw 0x00000007d6eb2b28 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+Event: 1,954 Thread 0x00007f031000b800 Threw 0x00000007d6eb7700 at /HUDSON/workspace/jdk7u15-2-build-linux-amd64-product/jdk7u15/hotspot/src/share/vm/prims/jvm.cpp:1166
+
+Events (10 events):
+Event: 1,967 Executing VM operation: ChangeSingleStep
+Event: 1,967 Executing VM operation: ChangeSingleStep done
+Event: 2,596 Executing VM operation: EnterInterpOnlyMode
+Event: 2,596 Executing VM operation: EnterInterpOnlyMode done
+Event: 2,596 Executing VM operation: GetCurrentLocation
+Event: 2,596 Executing VM operation: GetCurrentLocation done
+Event: 2,596 Executing VM operation: ChangeSingleStep
+Event: 2,596 Executing VM operation: ChangeSingleStep done
+Event: 2,598 Executing VM operation: ChangeSingleStep
+Event: 2,598 Executing VM operation: ChangeSingleStep done
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 08:01 3935860                            /opt/java/jdk1.7.0_15/bin/java
+00600000-00601000 rw-p 00000000 08:01 3935860                            /opt/java/jdk1.7.0_15/bin/java
+0090f000-00930000 rw-p 00000000 00:00 0                                  [heap]
+77f600000-780ac0000 rw-p 00000000 00:00 0 
+780ac0000-784800000 rw-p 00000000 00:00 0 
+784800000-789a60000 rw-p 00000000 00:00 0 
+789a60000-7d6d60000 rw-p 00000000 00:00 0 
+7d6d60000-7d9680000 rw-p 00000000 00:00 0 
+7d9680000-800000000 rw-p 00000000 00:00 0 
+7f02b8000000-7f02b8021000 rw-p 00000000 00:00 0 
+7f02b8021000-7f02bc000000 ---p 00000000 00:00 0 
+7f02c0000000-7f02c009d000 rw-p 00000000 00:00 0 
+7f02c009d000-7f02c4000000 ---p 00000000 00:00 0 
+7f02c4000000-7f02c4021000 rw-p 00000000 00:00 0 
+7f02c4021000-7f02c8000000 ---p 00000000 00:00 0 
+7f02c8000000-7f02c8021000 rw-p 00000000 00:00 0 
+7f02c8021000-7f02cc000000 ---p 00000000 00:00 0 
+7f02cc000000-7f02cc06a000 rw-p 00000000 00:00 0 
+7f02cc06a000-7f02d0000000 ---p 00000000 00:00 0 
+7f02d0000000-7f02d0021000 rw-p 00000000 00:00 0 
+7f02d0021000-7f02d4000000 ---p 00000000 00:00 0 
+7f02d4000000-7f02d4021000 rw-p 00000000 00:00 0 
+7f02d4021000-7f02d8000000 ---p 00000000 00:00 0 
+7f02d8000000-7f02d8021000 rw-p 00000000 00:00 0 
+7f02d8021000-7f02dc000000 ---p 00000000 00:00 0 
+7f02dc000000-7f02dc021000 rw-p 00000000 00:00 0 
+7f02dc021000-7f02e0000000 ---p 00000000 00:00 0 
+7f02e0000000-7f02e0021000 rw-p 00000000 00:00 0 
+7f02e0021000-7f02e4000000 ---p 00000000 00:00 0 
+7f02e54d1000-7f02e54d6000 r-xp 00000000 08:01 2629492                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7f02e54d6000-7f02e56d5000 ---p 00005000 08:01 2629492                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7f02e56d5000-7f02e56d6000 r--p 00004000 08:01 2629492                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7f02e56d6000-7f02e56d7000 rw-p 00005000 08:01 2629492                    /usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0
+7f02e56d7000-7f02e56d9000 r-xp 00000000 08:01 2629481                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7f02e56d9000-7f02e58d9000 ---p 00002000 08:01 2629481                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7f02e58d9000-7f02e58da000 r--p 00002000 08:01 2629481                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7f02e58da000-7f02e58db000 rw-p 00003000 08:01 2629481                    /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0
+7f02e58db000-7f02e5901000 r-xp 00000000 08:01 6950399                    /lib/x86_64-linux-gnu/libexpat.so.1.6.0
+7f02e5901000-7f02e5b01000 ---p 00026000 08:01 6950399                    /lib/x86_64-linux-gnu/libexpat.so.1.6.0
+7f02e5b01000-7f02e5b03000 r--p 00026000 08:01 6950399                    /lib/x86_64-linux-gnu/libexpat.so.1.6.0
+7f02e5b03000-7f02e5b04000 rw-p 00028000 08:01 6950399                    /lib/x86_64-linux-gnu/libexpat.so.1.6.0
+7f02e5b04000-7f02e5b21000 r-xp 00000000 08:01 2630093                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7f02e5b21000-7f02e5d20000 ---p 0001d000 08:01 2630093                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7f02e5d20000-7f02e5d21000 r--p 0001c000 08:01 2630093                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7f02e5d21000-7f02e5d22000 rw-p 0001d000 08:01 2630093                    /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+7f02e5d22000-7f02e5d2b000 r-xp 00000000 08:01 2629514                    /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0
+7f02e5d2b000-7f02e5f2a000 ---p 00009000 08:01 2629514                    /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0
+7f02e5f2a000-7f02e5f2b000 r--p 00008000 08:01 2629514                    /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0
+7f02e5f2b000-7f02e5f2c000 rw-p 00009000 08:01 2629514                    /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0
+7f02e5f2c000-7f02e5f63000 r-xp 00000000 08:01 2629674                    /usr/lib/x86_64-linux-gnu/libfontconfig.so.1.6.2
+7f02e5f63000-7f02e6163000 ---p 00037000 08:01 2629674                    /usr/lib/x86_64-linux-gnu/libfontconfig.so.1.6.2
+7f02e6163000-7f02e6164000 r--p 00037000 08:01 2629674                    /usr/lib/x86_64-linux-gnu/libfontconfig.so.1.6.2
+7f02e6164000-7f02e6165000 rw-p 00038000 08:01 2629674                    /usr/lib/x86_64-linux-gnu/libfontconfig.so.1.6.2
+7f02e6165000-7f02e6166000 rw-p 00000000 00:00 0 
+7f02e6166000-7f02e61fc000 r-xp 00000000 08:01 2624235                    /usr/lib/x86_64-linux-gnu/libfreetype.so.6.9.0
+7f02e61fc000-7f02e63fb000 ---p 00096000 08:01 2624235                    /usr/lib/x86_64-linux-gnu/libfreetype.so.6.9.0
+7f02e63fb000-7f02e6401000 r--p 00095000 08:01 2624235                    /usr/lib/x86_64-linux-gnu/libfreetype.so.6.9.0
+7f02e6401000-7f02e6402000 rw-p 0009b000 08:01 2624235                    /usr/lib/x86_64-linux-gnu/libfreetype.so.6.9.0
+7f02e6402000-7f02e6416000 r-xp 00000000 08:01 2629498                    /usr/lib/x86_64-linux-gnu/libXft.so.2.3.1
+7f02e6416000-7f02e6615000 ---p 00014000 08:01 2629498                    /usr/lib/x86_64-linux-gnu/libXft.so.2.3.1
+7f02e6615000-7f02e6616000 r--p 00013000 08:01 2629498                    /usr/lib/x86_64-linux-gnu/libXft.so.2.3.1
+7f02e6616000-7f02e6617000 rw-p 00014000 08:01 2629498                    /usr/lib/x86_64-linux-gnu/libXft.so.2.3.1
+7f02e6617000-7f02e6627000 r-xp 00000000 08:01 2629494                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7f02e6627000-7f02e6827000 ---p 00010000 08:01 2629494                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7f02e6827000-7f02e6828000 r--p 00010000 08:01 2629494                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7f02e6828000-7f02e6829000 rw-p 00011000 08:01 2629494                    /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0
+7f02e6829000-7f02e682b000 r-xp 00000000 08:01 2629516                    /usr/lib/x86_64-linux-gnu/libXss.so.1.0.0
+7f02e682b000-7f02e6a2b000 ---p 00002000 08:01 2629516                    /usr/lib/x86_64-linux-gnu/libXss.so.1.0.0
+7f02e6a2b000-7f02e6a2c000 r--p 00002000 08:01 2629516                    /usr/lib/x86_64-linux-gnu/libXss.so.1.0.0
+7f02e6a2c000-7f02e6a2d000 rw-p 00003000 08:01 2629516                    /usr/lib/x86_64-linux-gnu/libXss.so.1.0.0
+7f02e6a2d000-7f02e6b61000 r-xp 00000000 08:01 2629479                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7f02e6b61000-7f02e6d61000 ---p 00134000 08:01 2629479                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7f02e6d61000-7f02e6d62000 r--p 00134000 08:01 2629479                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7f02e6d62000-7f02e6d67000 rw-p 00135000 08:01 2629479                    /usr/lib/x86_64-linux-gnu/libX11.so.6.3.0
+7f02e6d67000-7f02e6d7d000 r-xp 00000000 08:01 1316630                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libgcc_s.so.1
+7f02e6d7d000-7f02e6f7d000 ---p 00016000 08:01 1316630                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libgcc_s.so.1
+7f02e6f7d000-7f02e6f7e000 rw-p 00016000 08:01 1316630                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libgcc_s.so.1
+7f02e6f7e000-7f02e6fb9000 r-xp 00000000 08:01 1316626                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libncurses.so.5.7
+7f02e6fb9000-7f02e71b8000 ---p 0003b000 08:01 1316626                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libncurses.so.5.7
+7f02e71b8000-7f02e71bd000 rw-p 0003a000 08:01 1316626                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libncurses.so.5.7
+7f02e71bd000-7f02e7296000 r-xp 00000000 08:01 1316631                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libgfortran.so.3.0.0
+7f02e7296000-7f02e7496000 ---p 000d9000 08:01 1316631                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libgfortran.so.3.0.0
+7f02e7496000-7f02e7498000 rw-p 000d9000 08:01 1316631                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libgfortran.so.3.0.0
+7f02e7498000-7f02e758a000 r-xp 00000000 08:01 1316640                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libstdc++.so.6.0.13
+7f02e758a000-7f02e778a000 ---p 000f2000 08:01 1316640                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libstdc++.so.6.0.13
+7f02e778a000-7f02e7791000 r--p 000f2000 08:01 1316640                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libstdc++.so.6.0.13
+7f02e7791000-7f02e7793000 rw-p 000f9000 08:01 1316640                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libstdc++.so.6.0.13
+7f02e7793000-7f02e77a8000 rw-p 00000000 00:00 0 
+7f02e77a8000-7f02e77a9000 r-xp 00000000 08:01 1316505                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons-disable.so.5.4.1
+7f02e77a9000-7f02e79a8000 ---p 00001000 08:01 1316505                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons-disable.so.5.4.1
+7f02e79a8000-7f02e79a9000 r--p 00000000 08:01 1316505                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons-disable.so.5.4.1
+7f02e79a9000-7f02e79aa000 rw-p 00001000 08:01 1316505                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons-disable.so.5.4.1
+7f02e79aa000-7f02e79ab000 r-xp 00000000 08:01 1316560                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser-disable.so.5.4.1
+7f02e79ab000-7f02e7baa000 ---p 00001000 08:01 1316560                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser-disable.so.5.4.1
+7f02e7baa000-7f02e7bab000 r--p 00000000 08:01 1316560                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser-disable.so.5.4.1
+7f02e7bab000-7f02e7bac000 rw-p 00001000 08:01 1316560                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser-disable.so.5.4.1
+7f02e7bac000-7f02e7bad000 r-xp 00000000 08:01 1316508                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data-disable.so.5.4.1
+7f02e7bad000-7f02e7dac000 ---p 00001000 08:01 1316508                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data-disable.so.5.4.1
+7f02e7dac000-7f02e7dad000 r--p 00000000 08:01 1316508                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data-disable.so.5.4.1
+7f02e7dad000-7f02e7dae000 rw-p 00001000 08:01 1316508                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data-disable.so.5.4.1
+7f02e7dae000-7f02e7daf000 r-xp 00000000 08:01 1316588                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes-disable.so.5.4.1
+7f02e7daf000-7f02e7fae000 ---p 00001000 08:01 1316588                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes-disable.so.5.4.1
+7f02e7fae000-7f02e7faf000 r--p 00000000 08:01 1316588                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes-disable.so.5.4.1
+7f02e7faf000-7f02e7fb0000 rw-p 00001000 08:01 1316588                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes-disable.so.5.4.1
+7f02e7fb0000-7f02ec000000 rw-p 00000000 00:00 0 
+7f02ec000000-7f02ec021000 rw-p 00000000 00:00 0 
+7f02ec021000-7f02f0000000 ---p 00000000 00:00 0 
+7f02f0000000-7f02f0021000 rw-p 00000000 00:00 0 
+7f02f0021000-7f02f4000000 ---p 00000000 00:00 0 
+7f02f4000000-7f02f4021000 rw-p 00000000 00:00 0 
+7f02f4021000-7f02f8000000 ---p 00000000 00:00 0 
+7f02f81de000-7f02f81df000 r-xp 00000000 08:01 1316500                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects-disable.so.5.4.1
+7f02f81df000-7f02f83de000 ---p 00001000 08:01 1316500                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects-disable.so.5.4.1
+7f02f83de000-7f02f83df000 r--p 00000000 08:01 1316500                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects-disable.so.5.4.1
+7f02f83df000-7f02f83e0000 rw-p 00001000 08:01 1316500                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects-disable.so.5.4.1
+7f02f83e0000-7f02f83e1000 r-xp 00000000 08:01 1316495                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixcos-disable.so.5.4.1
+7f02f83e1000-7f02f85e0000 ---p 00001000 08:01 1316495                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixcos-disable.so.5.4.1
+7f02f85e0000-7f02f85e1000 r--p 00000000 08:01 1316495                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixcos-disable.so.5.4.1
+7f02f85e1000-7f02f85e2000 rw-p 00001000 08:01 1316495                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixcos-disable.so.5.4.1
+7f02f85e2000-7f02f85e3000 r-xp 00000000 08:01 1316525                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm-disable.so.5.4.1
+7f02f85e3000-7f02f87e2000 ---p 00001000 08:01 1316525                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm-disable.so.5.4.1
+7f02f87e2000-7f02f87e3000 r--p 00000000 08:01 1316525                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm-disable.so.5.4.1
+7f02f87e3000-7f02f87e4000 rw-p 00001000 08:01 1316525                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm-disable.so.5.4.1
+7f02f87e4000-7f02f87e5000 r-xp 00000000 08:01 1316550                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding-disable.so.5.4.1
+7f02f87e5000-7f02f89e4000 ---p 00001000 08:01 1316550                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding-disable.so.5.4.1
+7f02f89e4000-7f02f89e5000 r--p 00000000 08:01 1316550                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding-disable.so.5.4.1
+7f02f89e5000-7f02f89e6000 rw-p 00001000 08:01 1316550                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding-disable.so.5.4.1
+7f02f89e6000-7f02f89f0000 r-xp 00000000 08:01 1316600                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole-minimal.so.5.4.1
+7f02f89f0000-7f02f8bef000 ---p 0000a000 08:01 1316600                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole-minimal.so.5.4.1
+7f02f8bef000-7f02f8bf0000 r--p 00009000 08:01 1316600                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole-minimal.so.5.4.1
+7f02f8bf0000-7f02f8bf1000 rw-p 0000a000 08:01 1316600                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole-minimal.so.5.4.1
+7f02f8bf1000-7f02f8bf2000 r-xp 00000000 08:01 1316491                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export-disable.so.5.4.1
+7f02f8bf2000-7f02f8df1000 ---p 00001000 08:01 1316491                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export-disable.so.5.4.1
+7f02f8df1000-7f02f8df2000 r--p 00000000 08:01 1316491                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export-disable.so.5.4.1
+7f02f8df2000-7f02f8df3000 rw-p 00001000 08:01 1316491                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export-disable.so.5.4.1
+7f02f8df3000-7f02f8df5000 r-xp 00000000 08:01 1316462                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics-disable.so.5.4.1
+7f02f8df5000-7f02f8ff5000 ---p 00002000 08:01 1316462                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics-disable.so.5.4.1
+7f02f8ff5000-7f02f8ff6000 r--p 00002000 08:01 1316462                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics-disable.so.5.4.1
+7f02f8ff6000-7f02f8ff7000 rw-p 00003000 08:01 1316462                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics-disable.so.5.4.1
+7f02f8ff7000-7f02f8ff9000 r-xp 00000000 08:01 1316486                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui-disable.so.5.4.1
+7f02f8ff9000-7f02f91f8000 ---p 00002000 08:01 1316486                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui-disable.so.5.4.1
+7f02f91f8000-7f02f91f9000 r--p 00001000 08:01 1316486                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui-disable.so.5.4.1
+7f02f91f9000-7f02f91fa000 rw-p 00002000 08:01 1316486                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui-disable.so.5.4.1
+7f02f91fa000-7f02f91fc000 r-xp 00000000 08:01 1316557                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences-cli.so.5.4.1
+7f02f91fc000-7f02f93fb000 ---p 00002000 08:01 1316557                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences-cli.so.5.4.1
+7f02f93fb000-7f02f93fc000 r--p 00001000 08:01 1316557                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences-cli.so.5.4.1
+7f02f93fc000-7f02f93fd000 rw-p 00002000 08:01 1316557                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences-cli.so.5.4.1
+7f02f93fd000-7f02f9425000 r-xp 00000000 08:01 1316530                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciexternal_objects.so.5.4.1
+7f02f9425000-7f02f9625000 ---p 00028000 08:01 1316530                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciexternal_objects.so.5.4.1
+7f02f9625000-7f02f9626000 r--p 00028000 08:01 1316530                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciexternal_objects.so.5.4.1
+7f02f9626000-7f02f9628000 rw-p 00029000 08:01 1316530                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciexternal_objects.so.5.4.1
+7f02f9628000-7f02f965e000 r-xp 00000000 08:01 1316539                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixml.so.5.4.1
+7f02f965e000-7f02f985e000 ---p 00036000 08:01 1316539                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixml.so.5.4.1
+7f02f985e000-7f02f985f000 r--p 00036000 08:01 1316539                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixml.so.5.4.1
+7f02f985f000-7f02f9861000 rw-p 00037000 08:01 1316539                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscixml.so.5.4.1
+7f02f9861000-7f02f987b000 r-xp 00000000 08:01 1316593                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscistatistics.so.5.4.1
+7f02f987b000-7f02f9a7a000 ---p 0001a000 08:01 1316593                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscistatistics.so.5.4.1
+7f02f9a7a000-7f02f9a7b000 r--p 00019000 08:01 1316593                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscistatistics.so.5.4.1
+7f02f9a7b000-7f02f9a7c000 rw-p 0001a000 08:01 1316593                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscistatistics.so.5.4.1
+7f02f9a7c000-7f02f9b36000 rw-p 00000000 00:00 0 
+7f02f9b36000-7f02f9c33000 r-xp 00000000 08:01 1316611                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libfftw3.so.3.2.3
+7f02f9c33000-7f02f9e33000 ---p 000fd000 08:01 1316611                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libfftw3.so.3.2.3
+7f02f9e33000-7f02f9e3a000 rw-p 000fd000 08:01 1316611                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libfftw3.so.3.2.3
+7f02f9e3a000-7f02f9e50000 r-xp 00000000 08:01 1316632                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libz.so.1.2.3.3
+7f02f9e50000-7f02fa050000 ---p 00016000 08:01 1316632                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libz.so.1.2.3.3
+7f02fa050000-7f02fa051000 rw-p 00016000 08:01 1316632                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libz.so.1.2.3.3
+7f02fa051000-7f02fa403000 r-xp 00000000 08:01 1316642                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libhdf5.so
+7f02fa403000-7f02fa603000 ---p 003b2000 08:01 1316642                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libhdf5.so
+7f02fa603000-7f02fa60d000 rw-p 003b2000 08:01 1316642                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libhdf5.so
+7f02fa60d000-7f02fa60f000 rw-p 00000000 00:00 0 
+7f02fa60f000-7f02fa626000 r-xp 00000000 08:01 1316482                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihdf5.so.5.4.1
+7f02fa626000-7f02fa825000 ---p 00017000 08:01 1316482                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihdf5.so.5.4.1
+7f02fa825000-7f02fa826000 r--p 00016000 08:01 1316482                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihdf5.so.5.4.1
+7f02fa826000-7f02fa827000 rw-p 00017000 08:01 1316482                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihdf5.so.5.4.1
+7f02fa827000-7f02fa856000 r-xp 00000000 08:01 1316634                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libpcre.so.7.8.0
+7f02fa856000-7f02faa55000 ---p 0002f000 08:01 1316634                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libpcre.so.7.8.0
+7f02faa55000-7f02faa56000 rw-p 0002e000 08:01 1316634                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libpcre.so.7.8.0
+7f02faa56000-7f02faa58000 r-xp 00000000 08:01 1316649                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libpcreposix.so.7.8.0
+7f02faa58000-7f02fac57000 ---p 00002000 08:01 1316649                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libpcreposix.so.7.8.0
+7f02fac57000-7f02fac58000 rw-p 00001000 08:01 1316649                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libpcreposix.so.7.8.0
+7f02fac58000-7f02fac67000 r-xp 00000000 08:01 1316553                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_manager.so.5.4.1
+7f02fac67000-7f02fae66000 ---p 0000f000 08:01 1316553                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_manager.so.5.4.1
+7f02fae66000-7f02fae67000 r--p 0000e000 08:01 1316553                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_manager.so.5.4.1
+7f02fae67000-7f02fae68000 rw-p 0000f000 08:01 1316553                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_manager.so.5.4.1
+7f02fae68000-7f02fae72000 r-xp 00000000 08:01 1316451                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicompletion.so.5.4.1
+7f02fae72000-7f02fb072000 ---p 0000a000 08:01 1316451                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicompletion.so.5.4.1
+7f02fb072000-7f02fb073000 r--p 0000a000 08:01 1316451                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicompletion.so.5.4.1
+7f02fb073000-7f02fb074000 rw-p 0000b000 08:01 1316451                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicompletion.so.5.4.1
+7f02fb074000-7f02fb085000 r-xp 00000000 08:01 1316568                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscispecial_functions.so.5.4.1
+7f02fb085000-7f02fb284000 ---p 00011000 08:01 1316568                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscispecial_functions.so.5.4.1
+7f02fb284000-7f02fb285000 r--p 00010000 08:01 1316568                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscispecial_functions.so.5.4.1
+7f02fb285000-7f02fb286000 rw-p 00011000 08:01 1316568                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscispecial_functions.so.5.4.1
+7f02fb286000-7f02fb340000 rw-p 00000000 00:00 0 
+7f02fb340000-7f02fb346000 r-xp 00000000 08:01 1316504                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilocalization.so.5.4.1
+7f02fb346000-7f02fb545000 ---p 00006000 08:01 1316504                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilocalization.so.5.4.1
+7f02fb545000-7f02fb546000 r--p 00005000 08:01 1316504                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilocalization.so.5.4.1
+7f02fb546000-7f02fb54d000 rw-p 00006000 08:01 1316504                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilocalization.so.5.4.1
+7f02fb54d000-7f02fb551000 r-xp 00000000 08:01 1316449                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicall_scilab.so.5.4.1
+7f02fb551000-7f02fb750000 ---p 00004000 08:01 1316449                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicall_scilab.so.5.4.1
+7f02fb750000-7f02fb751000 r--p 00003000 08:01 1316449                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicall_scilab.so.5.4.1
+7f02fb751000-7f02fb752000 rw-p 00004000 08:01 1316449                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicall_scilab.so.5.4.1
+7f02fb752000-7f02fb8a3000 r-xp 00000000 08:01 1316621                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libxml2.so.2.7.6
+7f02fb8a3000-7f02fbaa2000 ---p 00151000 08:01 1316621                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libxml2.so.2.7.6
+7f02fbaa2000-7f02fbaac000 rw-p 00150000 08:01 1316621                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libxml2.so.2.7.6
+7f02fbaac000-7f02fbaad000 rw-p 00000000 00:00 0 
+7f02fbaad000-7f02fbab6000 r-xp 00000000 08:01 1316452                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscifunctions.so.5.4.1
+7f02fbab6000-7f02fbcb5000 ---p 00009000 08:01 1316452                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscifunctions.so.5.4.1
+7f02fbcb5000-7f02fbcb6000 r--p 00008000 08:01 1316452                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscifunctions.so.5.4.1
+7f02fbcb6000-7f02fbcb7000 rw-p 00009000 08:01 1316452                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscifunctions.so.5.4.1
+7f02fbcb7000-7f02fbd71000 rw-p 00000000 00:00 0 
+7f02fbd71000-7f02fbdff000 r-xp 00000000 08:01 1316633                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libblas.so.3gf.0
+7f02fbdff000-7f02fbfff000 ---p 0008e000 08:01 1316633                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libblas.so.3gf.0
+7f02fbfff000-7f02fc000000 rw-p 0008e000 08:01 1316633                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libblas.so.3gf.0
+7f02fc000000-7f02fc021000 rw-p 00000000 00:00 0 
+7f02fc021000-7f0300000000 ---p 00000000 00:00 0 
+7f030000d000-7f030000f000 rw-p 00000000 00:00 0 
+7f030000f000-7f0300016000 r--s 00000000 08:01 2756674                    /usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache
+7f0300016000-7f03000ce000 r--p 00000000 08:01 1313807                    /home/hkyten/information/scilab-5.4.1/share/locale/ru_RU/LC_MESSAGES/scilab.mo
+7f03000ce000-7f030087f000 r-xp 00000000 08:01 1316647                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/liblapack.so.3gf.0
+7f030087f000-7f0300a7e000 ---p 007b1000 08:01 1316647                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/liblapack.so.3gf.0
+7f0300a7e000-7f0300a7f000 r--p 007b0000 08:01 1316647                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/liblapack.so.3gf.0
+7f0300a7f000-7f0300a83000 rw-p 007b1000 08:01 1316647                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/liblapack.so.3gf.0
+7f0300a83000-7f0300b90000 rw-p 00000000 00:00 0 
+7f0300b90000-7f0300f9c000 r-xp 00000000 08:01 1316533                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab-cli.so.0.0.0
+7f0300f9c000-7f030119c000 ---p 0040c000 08:01 1316533                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab-cli.so.0.0.0
+7f030119c000-7f030119f000 r--p 0040c000 08:01 1316533                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab-cli.so.0.0.0
+7f030119f000-7f03011ab000 rw-p 0040f000 08:01 1316533                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab-cli.so.0.0.0
+7f03011ab000-7f03012fc000 rw-p 00000000 00:00 0 
+7f03012fc000-7f0301304000 r-xp 00000000 08:01 1316487                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm.so.5.4.1
+7f0301304000-7f0301503000 ---p 00008000 08:01 1316487                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm.so.5.4.1
+7f0301503000-7f0301504000 r--p 00007000 08:01 1316487                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm.so.5.4.1
+7f0301504000-7f0301505000 rw-p 00008000 08:01 1316487                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscijvm.so.5.4.1
+7f0301505000-7f030150e000 r-xp 00000000 08:01 1316527                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons.so.5.4.1
+7f030150e000-7f030170d000 ---p 00009000 08:01 1316527                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons.so.5.4.1
+7f030170d000-7f030170e000 r--p 00008000 08:01 1316527                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons.so.5.4.1
+7f030170e000-7f030170f000 rw-p 00009000 08:01 1316527                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscicommons.so.5.4.1
+7f030170f000-7f0301720000 r-xp 00000000 08:01 1316590                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitypes.so.5.4.1
+7f0301720000-7f030191f000 ---p 00011000 08:01 1316590                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitypes.so.5.4.1
+7f030191f000-7f0301920000 r--p 00010000 08:01 1316590                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitypes.so.5.4.1
+7f0301920000-7f0301921000 rw-p 00011000 08:01 1316590                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitypes.so.5.4.1
+7f0301921000-7f0301928000 r-xp 00000000 08:01 1316577                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences.so.5.4.1
+7f0301928000-7f0301b27000 ---p 00007000 08:01 1316577                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences.so.5.4.1
+7f0301b27000-7f0301b28000 r--p 00006000 08:01 1316577                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences.so.5.4.1
+7f0301b28000-7f0301b29000 rw-p 00007000 08:01 1316577                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscipreferences.so.5.4.1
+7f0301b29000-7f0301c36000 r-xp 00000000 08:01 1316624                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libtcl8.5.3.so
+7f0301c36000-7f0301e36000 ---p 0010d000 08:01 1316624                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libtcl8.5.3.so
+7f0301e36000-7f0301e45000 rw-p 0010d000 08:01 1316624                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libtcl8.5.3.so
+7f0301e45000-7f0301e46000 rw-p 00000000 00:00 0 
+7f0301e46000-7f0301f6f000 r-xp 00000000 08:01 1316612                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libtk8.5.3.so
+7f0301f6f000-7f030216f000 ---p 00129000 08:01 1316612                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libtk8.5.3.so
+7f030216f000-7f030218c000 rw-p 00129000 08:01 1316612                    /home/hkyten/information/scilab-5.4.1/lib/thirdparty/libtk8.5.3.so
+7f030218c000-7f030218d000 rw-p 00000000 00:00 0 
+7f030218d000-7f0302197000 r-xp 00000000 08:01 1316540                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitclsci.so.5.4.1
+7f0302197000-7f0302396000 ---p 0000a000 08:01 1316540                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitclsci.so.5.4.1
+7f0302396000-7f0302397000 r--p 00009000 08:01 1316540                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitclsci.so.5.4.1
+7f0302397000-7f0302398000 rw-p 0000a000 08:01 1316540                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscitclsci.so.5.4.1
+7f0302398000-7f030239e000 r-xp 00000000 08:01 1316503                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser.so.5.4.1
+7f030239e000-7f030259d000 ---p 00006000 08:01 1316503                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser.so.5.4.1
+7f030259d000-7f030259e000 r--p 00005000 08:01 1316503                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser.so.5.4.1
+7f030259e000-7f030259f000 rw-p 00006000 08:01 1316503                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscihistory_browser.so.5.4.1
+7f030259f000-7f03025b7000 r-xp 00000000 08:01 1316603                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data.so.5.4.1
+7f03025b7000-7f03027b6000 ---p 00018000 08:01 1316603                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data.so.5.4.1
+7f03027b6000-7f03027b7000 r--p 00017000 08:01 1316603                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data.so.5.4.1
+7f03027b7000-7f03027b8000 rw-p 00018000 08:01 1316603                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciui_data.so.5.4.1
+7f03027b8000-7f03027c1000 r-xp 00000000 08:01 1316583                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes.so.5.4.1
+7f03027c1000-7f03029c0000 ---p 00009000 08:01 1316583                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes.so.5.4.1
+7f03029c0000-7f03029c1000 r--p 00008000 08:01 1316583                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes.so.5.4.1
+7f03029c1000-7f03029c2000 rw-p 00009000 08:01 1316583                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciscinotes.so.5.4.1
+7f03029c2000-7f0302a27000 r-xp 00000000 08:01 1316576                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects.so.5.4.1
+7f0302a27000-7f0302c27000 ---p 00065000 08:01 1316576                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects.so.5.4.1
+7f0302c27000-7f0302c28000 r--p 00065000 08:01 1316576                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects.so.5.4.1
+7f0302c28000-7f0302c2a000 rw-p 00066000 08:01 1316576                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_objects.so.5.4.1
+7f0302c2a000-7f0302ce6000 rw-p 00000000 00:00 0 
+7f0302ce6000-7f0302ceb000 r-xp 00000000 08:01 1316476                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding.so.5.4.1
+7f0302ceb000-7f0302eea000 ---p 00005000 08:01 1316476                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding.so.5.4.1
+7f0302eea000-7f0302eeb000 r--p 00004000 08:01 1316476                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding.so.5.4.1
+7f0302eeb000-7f0302eec000 rw-p 00005000 08:01 1316476                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciaction_binding.so.5.4.1
+7f0302eec000-7f0302ef6000 r-xp 00000000 08:01 1316534                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole.so.5.4.1
+7f0302ef6000-7f03030f5000 ---p 0000a000 08:01 1316534                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole.so.5.4.1
+7f03030f5000-7f03030f6000 r--p 00009000 08:01 1316534                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole.so.5.4.1
+7f03030f6000-7f03030f7000 rw-p 0000a000 08:01 1316534                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libsciconsole.so.5.4.1
+7f03030f7000-7f0303109000 r-xp 00000000 08:01 1316558                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export.so.5.4.1
+7f0303109000-7f0303308000 ---p 00012000 08:01 1316558                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export.so.5.4.1
+7f0303308000-7f0303309000 r--p 00011000 08:01 1316558                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export.so.5.4.1
+7f0303309000-7f030330a000 rw-p 00012000 08:01 1316558                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphic_export.so.5.4.1
+7f030330a000-7f0303365000 r-xp 00000000 08:01 1316607                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics.so.5.4.1
+7f0303365000-7f0303565000 ---p 0005b000 08:01 1316607                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics.so.5.4.1
+7f0303565000-7f0303567000 r--p 0005b000 08:01 1316607                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics.so.5.4.1
+7f0303567000-7f0303569000 rw-p 0005d000 08:01 1316607                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigraphics.so.5.4.1
+7f0303569000-7f030356a000 rw-p 00000000 00:00 0 
+7f030356a000-7f0303576000 r-xp 00000000 08:01 1316445                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscirenderer.so.5.4.1
+7f0303576000-7f0303775000 ---p 0000c000 08:01 1316445                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscirenderer.so.5.4.1
+7f0303775000-7f0303776000 r--p 0000b000 08:01 1316445                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscirenderer.so.5.4.1
+7f0303776000-7f0303777000 rw-p 0000c000 08:01 1316445                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscirenderer.so.5.4.1
+7f0303777000-7f03037bf000 r-xp 00000000 08:01 1316587                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui.so.5.4.1
+7f03037bf000-7f03039bf000 ---p 00048000 08:01 1316587                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui.so.5.4.1
+7f03039bf000-7f03039c0000 r--p 00048000 08:01 1316587                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui.so.5.4.1
+7f03039c0000-7f03039c1000 rw-p 00049000 08:01 1316587                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscigui.so.5.4.1
+7f03039c1000-7f03039c2000 r-xp 00000000 08:01 1316565                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab.so.0.0.0
+7f03039c2000-7f0303bc2000 ---p 00001000 08:01 1316565                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab.so.0.0.0
+7f0303bc2000-7f0303bc3000 r--p 00001000 08:01 1316565                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab.so.0.0.0
+7f0303bc3000-7f0303bc4000 rw-p 00002000 08:01 1316565                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libscilab.so.0.0.0
+7f0303bc4000-7f0303bfc000 r-xp 00000000 08:01 1316513                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libjavasci2.so.5.4.1
+7f0303bfc000-7f0303dfc000 ---p 00038000 08:01 1316513                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libjavasci2.so.5.4.1
+7f0303dfc000-7f0303dfd000 r--p 00038000 08:01 1316513                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libjavasci2.so.5.4.1
+7f0303dfd000-7f0303dfe000 rw-p 00039000 08:01 1316513                    /home/hkyten/information/scilab-5.4.1/lib/scilab/libjavasci2.so.5.4.1
+7f0303dfe000-7f0303dff000 ---p 00000000 00:00 0 
+7f0303dff000-7f0303eff000 rw-p 00000000 00:00 0                          [stack:3751]
+7f0303eff000-7f0303f02000 ---p 00000000 00:00 0 
+7f0303f02000-7f0304000000 rw-p 00000000 00:00 0                          [stack:3750]
+7f0304000000-7f0304021000 rw-p 00000000 00:00 0 
+7f0304021000-7f0308000000 ---p 00000000 00:00 0 
+7f0308092000-7f0308095000 ---p 00000000 00:00 0 
+7f0308095000-7f0308193000 rw-p 00000000 00:00 0                          [stack:3749]
+7f0308193000-7f0308196000 ---p 00000000 00:00 0 
+7f0308196000-7f0308294000 rw-p 00000000 00:00 0                          [stack:3748]
+7f0308294000-7f0308297000 ---p 00000000 00:00 0 
+7f0308297000-7f0308395000 rw-p 00000000 00:00 0                          [stack:3744]
+7f0308395000-7f0308398000 ---p 00000000 00:00 0 
+7f0308398000-7f0308496000 rw-p 00000000 00:00 0                          [stack:3743]
+7f0308496000-7f0308499000 ---p 00000000 00:00 0 
+7f0308499000-7f0308597000 rw-p 00000000 00:00 0                          [stack:3740]
+7f0308597000-7f030859b000 r-xp 00000000 08:01 4205529                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libdt_socket.so
+7f030859b000-7f030879a000 ---p 00004000 08:01 4205529                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libdt_socket.so
+7f030879a000-7f030879b000 rw-p 00003000 08:01 4205529                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libdt_socket.so
+7f030879b000-7f030879e000 ---p 00000000 00:00 0 
+7f030879e000-7f030889c000 rw-p 00000000 00:00 0                          [stack:3738]
+7f030889c000-7f030889f000 ---p 00000000 00:00 0 
+7f030889f000-7f030899d000 rw-p 00000000 00:00 0                          [stack:3737]
+7f030899d000-7f03089a0000 ---p 00000000 00:00 0 
+7f03089a0000-7f0308a9e000 rw-p 00000000 00:00 0                          [stack:3736]
+7f0308a9e000-7f0308a9f000 ---p 00000000 00:00 0 
+7f0308a9f000-7f0309bc3000 rw-p 00000000 00:00 0                          [stack:3735]
+7f0309bc3000-7f0309d80000 r--s 039da000 08:01 3936385                    /opt/java/jdk1.7.0_15/jre/lib/rt.jar
+7f0309d80000-7f030ad94000 rw-p 00000000 00:00 0 
+7f030ad94000-7f030ad95000 ---p 00000000 00:00 0 
+7f030ad95000-7f030ae95000 rw-p 00000000 00:00 0                          [stack:3734]
+7f030ae95000-7f030ae96000 ---p 00000000 00:00 0 
+7f030ae96000-7f030af96000 rw-p 00000000 00:00 0                          [stack:3733]
+7f030af96000-7f030af97000 ---p 00000000 00:00 0 
+7f030af97000-7f030b0c1000 rw-p 00000000 00:00 0                          [stack:3732]
+7f030b0c1000-7f030b32a000 rw-p 00000000 00:00 0 
+7f030b32a000-7f030b335000 rw-p 00000000 00:00 0 
+7f030b335000-7f030b353000 rw-p 00000000 00:00 0 
+7f030b353000-7f030b37d000 rw-p 00000000 00:00 0 
+7f030b37d000-7f030b5e5000 rw-p 00000000 00:00 0 
+7f030b5e5000-7f030b5fb000 rw-p 00000000 00:00 0 
+7f030b5fb000-7f030b72f000 rw-p 00000000 00:00 0 
+7f030b72f000-7f030b730000 rw-p 00000000 00:00 0 
+7f030b730000-7f030b9a0000 rwxp 00000000 00:00 0 
+7f030b9a0000-7f030e730000 rw-p 00000000 00:00 0 
+7f030e730000-7f030e74a000 r-xp 00000000 08:01 4205543                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libzip.so
+7f030e74a000-7f030e94a000 ---p 0001a000 08:01 4205543                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libzip.so
+7f030e94a000-7f030e94b000 rw-p 0001a000 08:01 4205543                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libzip.so
+7f030e94b000-7f030e957000 r-xp 00000000 08:01 6950444                    /lib/x86_64-linux-gnu/libnss_files-2.15.so
+7f030e957000-7f030eb56000 ---p 0000c000 08:01 6950444                    /lib/x86_64-linux-gnu/libnss_files-2.15.so
+7f030eb56000-7f030eb57000 r--p 0000b000 08:01 6950444                    /lib/x86_64-linux-gnu/libnss_files-2.15.so
+7f030eb57000-7f030eb58000 rw-p 0000c000 08:01 6950444                    /lib/x86_64-linux-gnu/libnss_files-2.15.so
+7f030eb58000-7f030eb62000 r-xp 00000000 08:01 6950448                    /lib/x86_64-linux-gnu/libnss_nis-2.15.so
+7f030eb62000-7f030ed62000 ---p 0000a000 08:01 6950448                    /lib/x86_64-linux-gnu/libnss_nis-2.15.so
+7f030ed62000-7f030ed63000 r--p 0000a000 08:01 6950448                    /lib/x86_64-linux-gnu/libnss_nis-2.15.so
+7f030ed63000-7f030ed64000 rw-p 0000b000 08:01 6950448                    /lib/x86_64-linux-gnu/libnss_nis-2.15.so
+7f030ed64000-7f030ed7b000 r-xp 00000000 08:01 6950438                    /lib/x86_64-linux-gnu/libnsl-2.15.so
+7f030ed7b000-7f030ef7a000 ---p 00017000 08:01 6950438                    /lib/x86_64-linux-gnu/libnsl-2.15.so
+7f030ef7a000-7f030ef7b000 r--p 00016000 08:01 6950438                    /lib/x86_64-linux-gnu/libnsl-2.15.so
+7f030ef7b000-7f030ef7c000 rw-p 00017000 08:01 6950438                    /lib/x86_64-linux-gnu/libnsl-2.15.so
+7f030ef7c000-7f030ef7e000 rw-p 00000000 00:00 0 
+7f030ef7e000-7f030ef86000 r-xp 00000000 08:01 6950440                    /lib/x86_64-linux-gnu/libnss_compat-2.15.so
+7f030ef86000-7f030f185000 ---p 00008000 08:01 6950440                    /lib/x86_64-linux-gnu/libnss_compat-2.15.so
+7f030f185000-7f030f186000 r--p 00007000 08:01 6950440                    /lib/x86_64-linux-gnu/libnss_compat-2.15.so
+7f030f186000-7f030f187000 rw-p 00008000 08:01 6950440                    /lib/x86_64-linux-gnu/libnss_compat-2.15.so
+7f030f187000-7f030f582000 r--p 00000000 08:01 2628141                    /usr/lib/locale/locale-archive
+7f030f582000-7f030f585000 r-xp 00000000 08:01 4205550                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libnpt.so
+7f030f585000-7f030f784000 ---p 00003000 08:01 4205550                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libnpt.so
+7f030f784000-7f030f785000 rw-p 00002000 08:01 4205550                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libnpt.so
+7f030f785000-7f030f7be000 r-xp 00000000 08:01 4205527                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libjdwp.so
+7f030f7be000-7f030f9bd000 ---p 00039000 08:01 4205527                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libjdwp.so
+7f030f9bd000-7f030f9bf000 rw-p 00038000 08:01 4205527                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libjdwp.so
+7f030f9bf000-7f030f9e8000 r-xp 00000000 08:01 4205533                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libjava.so
+7f030f9e8000-7f030fbe8000 ---p 00029000 08:01 4205533                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libjava.so
+7f030fbe8000-7f030fbea000 rw-p 00029000 08:01 4205533                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libjava.so
+7f030fbea000-7f030fbf7000 r-xp 00000000 08:01 4205518                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libverify.so
+7f030fbf7000-7f030fdf6000 ---p 0000d000 08:01 4205518                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libverify.so
+7f030fdf6000-7f030fdf8000 rw-p 0000c000 08:01 4205518                    /opt/java/jdk1.7.0_15/jre/lib/amd64/libverify.so
+7f030fdf8000-7f030fdff000 r-xp 00000000 08:01 6950483                    /lib/x86_64-linux-gnu/librt-2.15.so
+7f030fdff000-7f030fffe000 ---p 00007000 08:01 6950483                    /lib/x86_64-linux-gnu/librt-2.15.so
+7f030fffe000-7f030ffff000 r--p 00006000 08:01 6950483                    /lib/x86_64-linux-gnu/librt-2.15.so
+7f030ffff000-7f0310000000 rw-p 00007000 08:01 6950483                    /lib/x86_64-linux-gnu/librt-2.15.so
+7f0310000000-7f03101ec000 rw-p 00000000 00:00 0 
+7f03101ec000-7f0314000000 ---p 00000000 00:00 0 
+7f0314063000-7f031408b000 rw-p 00000000 00:00 0 
+7f031408b000-7f031408c000 ---p 00000000 00:00 0 
+7f031408c000-7f0314197000 rw-p 00000000 00:00 0                          [stack:3731]
+7f0314197000-7f03141b5000 rw-p 00000000 00:00 0 
+7f03141b5000-7f03142b0000 r-xp 00000000 08:01 6950421                    /lib/x86_64-linux-gnu/libm-2.15.so
+7f03142b0000-7f03144af000 ---p 000fb000 08:01 6950421                    /lib/x86_64-linux-gnu/libm-2.15.so
+7f03144af000-7f03144b0000 r--p 000fa000 08:01 6950421                    /lib/x86_64-linux-gnu/libm-2.15.so
+7f03144b0000-7f03144b1000 rw-p 000fb000 08:01 6950421                    /lib/x86_64-linux-gnu/libm-2.15.so
+7f03144b1000-7f0314ef8000 r-xp 00000000 08:01 4205541                    /opt/java/jdk1.7.0_15/jre/lib/amd64/server/libjvm.so
+7f0314ef8000-7f03150f8000 ---p 00a47000 08:01 4205541                    /opt/java/jdk1.7.0_15/jre/lib/amd64/server/libjvm.so
+7f03150f8000-7f031519b000 rw-p 00a47000 08:01 4205541                    /opt/java/jdk1.7.0_15/jre/lib/amd64/server/libjvm.so
+7f031519b000-7f03151d7000 rw-p 00000000 00:00 0 
+7f03151d7000-7f031538c000 r-xp 00000000 08:01 6950379                    /lib/x86_64-linux-gnu/libc-2.15.so
+7f031538c000-7f031558b000 ---p 001b5000 08:01 6950379                    /lib/x86_64-linux-gnu/libc-2.15.so
+7f031558b000-7f031558f000 r--p 001b4000 08:01 6950379                    /lib/x86_64-linux-gnu/libc-2.15.so
+7f031558f000-7f0315591000 rw-p 001b8000 08:01 6950379                    /lib/x86_64-linux-gnu/libc-2.15.so
+7f0315591000-7f0315596000 rw-p 00000000 00:00 0 
+7f0315596000-7f0315598000 r-xp 00000000 08:01 6950394                    /lib/x86_64-linux-gnu/libdl-2.15.so
+7f0315598000-7f0315798000 ---p 00002000 08:01 6950394                    /lib/x86_64-linux-gnu/libdl-2.15.so
+7f0315798000-7f0315799000 r--p 00002000 08:01 6950394                    /lib/x86_64-linux-gnu/libdl-2.15.so
+7f0315799000-7f031579a000 rw-p 00003000 08:01 6950394                    /lib/x86_64-linux-gnu/libdl-2.15.so
+7f031579a000-7f03157b0000 r-xp 00000000 08:01 4330388                    /opt/java/jdk1.7.0_15/jre/lib/amd64/jli/libjli.so
+7f03157b0000-7f03159b0000 ---p 00016000 08:01 4330388                    /opt/java/jdk1.7.0_15/jre/lib/amd64/jli/libjli.so
+7f03159b0000-7f03159b1000 rw-p 00016000 08:01 4330388                    /opt/java/jdk1.7.0_15/jre/lib/amd64/jli/libjli.so
+7f03159b1000-7f03159c9000 r-xp 00000000 08:01 6950475                    /lib/x86_64-linux-gnu/libpthread-2.15.so
+7f03159c9000-7f0315bc8000 ---p 00018000 08:01 6950475                    /lib/x86_64-linux-gnu/libpthread-2.15.so
+7f0315bc8000-7f0315bc9000 r--p 00017000 08:01 6950475                    /lib/x86_64-linux-gnu/libpthread-2.15.so
+7f0315bc9000-7f0315bca000 rw-p 00018000 08:01 6950475                    /lib/x86_64-linux-gnu/libpthread-2.15.so
+7f0315bca000-7f0315bce000 rw-p 00000000 00:00 0 
+7f0315bce000-7f0315bf0000 r-xp 00000000 08:01 6950355                    /lib/x86_64-linux-gnu/ld-2.15.so
+7f0315c0d000-7f0315c17000 rw-p 00000000 00:00 0 
+7f0315c17000-7f0315ccd000 rw-p 00000000 00:00 0 
+7f0315ccd000-7f0315cd0000 ---p 00000000 00:00 0 
+7f0315cd0000-7f0315dd2000 rw-p 00000000 00:00 0                          [stack:3729]
+7f0315dd7000-7f0315dd8000 rw-s 00000000 00:04 72930                      /dev/zero (deleted)
+7f0315dd8000-7f0315dda000 r--s 00002000 08:01 1188915                    /home/hkyten/information/scilab-5.4.1/share/scilab/modules/javasci/jar/org.scilab.modules.javasci.jar
+7f0315dda000-7f0315ddb000 r--s 00001000 08:01 1184608                    /home/hkyten/information/scilab-5.4.1/share/scilab/modules/jvm/jar/org.scilab.modules.jvm.jar
+7f0315ddb000-7f0315ddc000 r--s 00008000 08:01 1181178                    /home/hkyten/information/scilab-5.4.1/share/scilab/modules/types/jar/org.scilab.modules.types.jar
+7f0315ddc000-7f0315de1000 r--s 0002b000 08:01 2229524                    /home/hkyten/workspace/gintshell/java/libs/gson-2.2.3.jar
+7f0315de1000-7f0315de4000 r--s 0003c000 08:01 2229526                    /home/hkyten/workspace/gintshell/java/libs/gson-2.2.3-javadoc.jar
+7f0315de4000-7f0315dec000 rw-s 00000000 08:01 5246601                    /tmp/hsperfdata_hkyten/3723
+7f0315dec000-7f0315ded000 rw-p 00000000 00:00 0 
+7f0315ded000-7f0315dee000 r--p 00000000 00:00 0 
+7f0315dee000-7f0315df0000 rw-p 00000000 00:00 0 
+7f0315df0000-7f0315df1000 r--p 00022000 08:01 6950355                    /lib/x86_64-linux-gnu/ld-2.15.so
+7f0315df1000-7f0315df3000 rw-p 00023000 08:01 6950355                    /lib/x86_64-linux-gnu/ld-2.15.so
+7fff0ecbd000-7fff0ecde000 rw-p 00000000 00:00 0                          [stack]
+7fff0edff000-7fff0ee00000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:38632 -Djava.library.path=/home/hkyten/information/scilab-5.4.1/lib/scilab:/home/hkyten/information/scilab-5.4.1/lib/scilab -Dfile.encoding=UTF-8 
+java_command: org.kilar.hybridIS.neuralIS.NeuralISScilab
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+LD_LIBRARY_PATH=/home/hkyten/information/scilab-5.4.1/lib/scilab:/home/hkyten/information/scilab-5.4.1/lib/thirdparty
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x8a5d70], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0x8a5d70], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGFPE: [libjvm.so+0x741e50], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGPIPE: [libjvm.so+0x741e50], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGXFSZ: [libjvm.so+0x741e50], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGILL: [libjvm.so+0x741e50], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x7417a0], sa_mask[0]=0x00000004, sa_flags=0x10000004
+SIGHUP: [libjvm.so+0x743b30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGINT: [libjvm.so+0x743b30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGTERM: [libjvm.so+0x743b30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGQUIT: [libjvm.so+0x743b30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+
+
+---------------  S Y S T E M  ---------------
+
+OS:wheezy/sid
+
+uname:Linux 3.5.0-26-generic #42-Ubuntu SMP Fri Mar 8 23:18:20 UTC 2013 x86_64
+libc:glibc 2.15 NPTL 2.15 
+rlimit: STACK 8192k, CORE 0k, NPROC 62598, NOFILE 4096, AS infinity
+load average:0,52 0,39 0,21
+
+/proc/meminfo:
+MemTotal:        8089792 kB
+MemFree:         4482020 kB
+Buffers:           79400 kB
+Cached:          1920308 kB
+SwapCached:            0 kB
+Active:          1999144 kB
+Inactive:        1318044 kB
+Active(anon):    1325936 kB
+Inactive(anon):   119708 kB
+Active(file):     673208 kB
+Inactive(file):  1198336 kB
+Unevictable:       31416 kB
+Mlocked:           31424 kB
+SwapTotal:       7595004 kB
+SwapFree:        7595004 kB
+Dirty:                60 kB
+Writeback:             0 kB
+AnonPages:       1349616 kB
+Mapped:           214276 kB
+Shmem:            122344 kB
+Slab:             115124 kB
+SReclaimable:      75256 kB
+SUnreclaim:        39868 kB
+KernelStack:        4624 kB
+PageTables:        49112 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    11639900 kB
+Committed_AS:    4731028 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      367816 kB
+VmallocChunk:   34359365272 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       59392 kB
+DirectMap2M:     8245248 kB
+
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, ht, tsc, tscinvbit
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 800.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx lahf_lm arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4589.71
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 800.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx lahf_lm arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4589.71
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 800.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx lahf_lm arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4589.71
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 800.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx lahf_lm arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4589.71
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 8089792k(4482020k free), swap 7595004k(7595004k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (23.7-b01) for linux-amd64 JRE (1.7.0_15-b03), built on Feb 15 2013 13:03:43 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Sun Apr 21 10:08:21 2013
+elapsed time: 2 seconds
+

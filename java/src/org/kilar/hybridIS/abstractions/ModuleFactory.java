@@ -8,6 +8,7 @@ import org.kilar.hybridIS.fuzzyIS.FuzzyISScilab;
 import org.kilar.hybridIS.fuzzyIS.ModuleConfigFuzzy;
 import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.Project;
+import org.kilar.hybridIS.general.Util;
 import org.kilar.hybridIS.neuralIS.ModuleConfigNeural;
 import org.kilar.hybridIS.neuralIS.NeuralISScilab;
 import org.kilar.hybridIS.productionIS.ModuleConfigProduction;
@@ -30,7 +31,7 @@ public class ModuleFactory {
 	 */
 	static public Module produce(String path, Project parent){
 		Module m = produce(path);
-		m.config.setParent(parent);
+		m.setParent(parent);
 		return m;
 	}
 	
@@ -72,11 +73,13 @@ public class ModuleFactory {
 			ModuleConfigProduction config;
 			try {
 				config = g.fromJson(new FileReader(new File(path)), ModuleConfigProduction.class);
+				
 			} catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
 				Logger.error("Ошибка чтения файла модуля");
 				return null;
 			}
 			module = new ProductionISConcrete(config);
+			((ProductionIS)module).setCode(Util.getFileTextFull(new File(new File(path).getParent(), config.getCode())));
 		} else if(basicConfig.type.equalsIgnoreCase(ModuleType.Fuzzy)){
 			ModuleConfigFuzzy config;
 			try {

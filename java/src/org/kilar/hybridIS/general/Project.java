@@ -6,10 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.Set;
 
 import org.kilar.hybridIS.abstractions.*;
 
@@ -26,6 +31,8 @@ public class Project implements CertaintyCalculator{
 	private ProjectConfig config;
 	private Integrator integrator;
 	private List<Module> modules;
+	/** input name -> number in list  */
+	private Map<String, Integer> inputToNum;
 	
 	/**
 	 * existing project opening
@@ -61,6 +68,7 @@ public class Project implements CertaintyCalculator{
 			if(m == null ){
 				throw new Exception(); 
 			}
+			m.setName(moduleName);
 			if(m.getConfig().getInputLength() != config.getInputLength() 
 					|| m.getConfig().getOutputLength() != config.getOutputLength() ){
 				Logger.error("Не совпадает количество входных или выходных параметров!");
@@ -72,6 +80,11 @@ public class Project implements CertaintyCalculator{
 		integrator = IntegratorFactory.produce(new File(path, config.getIntegrator()).getPath());
 		if(integrator == null){
 			throw new Exception();
+		}
+		integrator.setName(config.getIntegrator());
+		inputToNum = new HashMap<>();
+		for(int i = 0; i < getInputLength(); ++i){
+			inputToNum.put(getInDataNames()[i], i);
 		}
 		Logger.info("Проект успешно открыт");
 	}
@@ -183,4 +196,78 @@ public class Project implements CertaintyCalculator{
 		List<Double> ret = integrator.calculate(integratorInput, modules);
 		return ret;
 	}
+	
+	/**
+	 * Reads data from dataResource
+	 * @return
+	 */
+	public List<List<Double>> calculate(){
+		List<List<Double>>  ret = new ArrayList<>(), input = getData();
+		for(List<Double> data : input){
+			ret.add(calculate(data));
+		}
+		return ret;
+	}
+	
+	public List<List<Double> > getData() throws RuntimeException{
+		File source = new File (path, config.getDataResource());
+		List<List<Double> > ret = new ArrayList<>();
+		List<Double> cur = new ArrayList<>();
+		/** router[i] = p <==> current input name [i]  == real input name [k]  */
+		int[] router = new int[getInputLength()];
+		Scanner sc;
+		try {
+			sc = new Scanner(source);
+		} catch (FileNotFoundException e) {
+			Logger.error("Не могу открыть файл с данными для запуска, файл" + source.getPath() + "не найден");
+			throw new RuntimeException();
+		}
+		try{
+			int n = sc.nextInt(), k = sc.nextInt();
+			if(k != getInputLength()){
+				Logger.error("Неверная длина вектора входных данных");
+				sc.close();
+				throw new RuntimeException();
+			}
+			//reading names
+			Set<Integer> set = new HashSet<>();
+			for(int i = 0; i < k; ++i){
+				String name = sc.next();
+				Integer route = inputToNum.get(name);
+				if(route == null){
+					Logger.error("Неизвестная входная переменная (" + name + ")");
+					sc.close();
+					throw new RuntimeException();
+				}
+				router[i] = route;
+				if(set.contains(route)){
+					Logger.error("Переопределение входной переменной (" + name + ")");
+					sc.close();
+					throw new RuntimeException();
+				}
+				set.add(route);
+			}
+			//reading data
+			for(int cnt = 0; cnt < n; ++cnt){
+				cur.clear();
+				for(int i = 0; i < k; ++i){
+					double data = sc.nextDouble();
+					cur.add(data);
+				}
+				ret.add(cur);
+			}
+		} catch (InputMismatchException e){
+			Logger.error("Неверный формат входных данных");
+			sc.close();
+			throw new RuntimeException();
+		} catch (NoSuchElementException e){
+			Logger.error("Не найден очередной элемент данных");
+			sc.close();
+			throw new RuntimeException();
+		}
+		
+		sc.close();
+		return ret; 
+	}
+	
 }

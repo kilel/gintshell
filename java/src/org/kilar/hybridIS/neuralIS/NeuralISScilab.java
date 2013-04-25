@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.kilar.hybridIS.abstractions.ModuleType;
 import org.kilar.hybridIS.abstractions.NeuralIS;
+import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.ScilabAdapter;
 import org.kilar.hybridIS.general.Util;
 import org.scilab.modules.javasci.JavasciException;
@@ -18,13 +19,10 @@ import org.scilab.modules.types.ScilabType;
  */
 public class NeuralISScilab extends NeuralIS {
 	
-	private Scilab scilab;
-	
 	public NeuralISScilab(ModuleConfigNeural config) {
 		super(config);
 		ScilabAdapter.initialize();
-		
-		scilab = ScilabAdapter.getScilab();
+		ScilabAdapter.open();
 		String str = null;
 		str += "rand('seed', 0);";
 		str += "N = [";
@@ -36,27 +34,27 @@ public class NeuralISScilab extends NeuralIS {
 		str += "];";
 		str += "W = ann_FF_init(N)";
 		
-		scilab.exec(str);
-		
+		ScilabAdapter.exec(str);
+		ScilabAdapter.close();
 	}
 
 	@Override
 	public List<Double> calculate(List<Double> input) {
-		
-		String str = null;
+		String str = "";
 		List<Double> output = null;
 		
-		str += "";
+		str = "output = 1";
 		
-		//scilab.exec(str);
-		
-		try {
-			ScilabType out = scilab.get("output");
+		ScilabAdapter.exec(str);
+
+		/*try {
+			ScilabType out = ScilabAdapter.get("output");
 			//output = (List<Double>) out.getSerializedObject();
 			//[TODO] not working
 		} catch (JavasciException e) {
-			e.printStackTrace();
-		}
+			Logger.error("Общая ошибка работы нейросети");
+			throw new RuntimeException();
+		}*/
 		
 		//return output;
 		return Util.getZeroList(config.getOutputLength());
@@ -66,11 +64,14 @@ public class NeuralISScilab extends NeuralIS {
 	public void train(List<List<Double>> trainingInput,
 			List<Double> trainingOutput) {
 		
+		
 		try {
-			ScilabType W = scilab.get("W");
-		} catch (JavasciException e) {
-			e.printStackTrace();
+			ScilabType W = ScilabAdapter.get("W");
+		} catch (JavasciException e1) {
+			Logger.error("Общая ошибка работы нейросети");
+			throw new RuntimeException();
 		}
+		
 		
 		String str = null;
 		
@@ -95,10 +96,11 @@ public class NeuralISScilab extends NeuralIS {
 		str += "], ";
 		
 		try {
-			str += scilab.get("N") + ", ";
-			str += scilab.get("W") + ", ";
+			str += ScilabAdapter.get("N") + ", ";
+			str += ScilabAdapter.get("W") + ", ";
 		} catch (JavasciException e) {
-			e.printStackTrace();
+			Logger.error("Общая ошибка работы нейросети");
+			throw new RuntimeException();
 		}
 
 		str += "[0.5, 0.05], ";
@@ -107,7 +109,7 @@ public class NeuralISScilab extends NeuralIS {
 		
 		str += ");";
 		
-		scilab.exec(str);
+		ScilabAdapter.exec(str);
 		
 	}
 	

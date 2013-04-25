@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -21,32 +22,23 @@ import javax.swing.KeyStroke;
 import javax.swing.SpringLayout;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import org.kilar.hybridIS.abstractions.Module;
+import org.kilar.hybridIS.abstractions.ModuleType;
 import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.Project;
-import org.kilar.hybridIS.general.ProjectConfig;
+import org.kilar.hybridIS.general.Util;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.kilar.hybridIS.productionIS.*;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-
-import sun.org.mozilla.javascript.internal.json.JsonParser;
-
 import java.awt.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,12 +48,14 @@ import javax.swing.JLabel;
 import javax.swing.event.CaretListener;
 import javax.swing.event.CaretEvent;
 import javax.swing.SwingConstants;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
 
 public class MainWindow {
 
 	private JFrame frame;
-	private JTextArea consoleOutput;
-	private JTextArea consoleInput;
+	private JTextArea consoleLog;
+	private JTextArea consoleOut;
 	private JMenuItem menuItem_2;
 	private JMenuBar menuBar;
 	private JTextArea codeArea;
@@ -69,10 +63,14 @@ public class MainWindow {
 	private JScrollPane scrollPane_2;
 	private JTextArea text;
 	private JLabel labelNumStr;
-	
 	private JTree tree;
 	private DefaultMutableTreeNode root;
+	
 	private Project project;
+	
+	private File opennedFile = null;
+	private String tempSavedText = "";
+	private TreePath currPath = null;
 	
 
 	/**
@@ -98,20 +96,76 @@ public class MainWindow {
 		initialize();
 		initProjects();
 	}
-
+	
+	private void calculate(){
+		List<List<Double> > result = project.calculate();
+		String s = "";
+		for(List<Double> out : result){
+			for(Double value : out){
+				s += value + "\t"; 
+			}
+			s += "\n";
+		}
+		consoleOut.setText(s);
+		Util.saveToFile(new File(project.getPath(), "project.outputData"), consoleOut.getText());
+	}
+	
+	private void save(){
+		if(tempSavedText.equals(codeArea.getText())){
+			return;
+		}
+		Logger.info("Сохраняю файл " + opennedFile.getName());
+		Util.saveToFile(opennedFile, codeArea.getText());
+		tempSavedText = codeArea.getText();
+		updateLog();
+	}
+	
+	private boolean openFile(File newFile){
+		if(opennedFile != null){
+			if(opennedFile.getName().equals(newFile.getName()))
+				return false;
+			if(!tempSavedText.equals(codeArea.getText())){
+				int answer = JOptionPane.showConfirmDialog(
+						null, "Сохранить изменения в файле?", 
+						"Запрос сохранения", JOptionPane.YES_NO_CANCEL_OPTION);
+				if(answer == JOptionPane.OK_OPTION){
+					save();
+				} else if(answer == JOptionPane.CANCEL_OPTION){
+					tree.setSelectionPath(currPath);
+					return false;
+				}
+			}	
+		}
+		String s = Util.getFileTextFull(newFile);
+		codeArea.setText(s);
+		tempSavedText = s;
+		opennedFile = newFile;
+		updateLog();
+		return true;
+	}
+	
 	private void updateLog(){
-		consoleOutput.setText(Logger.get());
+		consoleLog.setText(Logger.get());
+		Util.saveToFile(new File(project.getPath(), "project.logger"), consoleLog.getText());
 	}
 	private void refreshTree(){
-		
+		root.setUserObject(project.getName()); 
+		for(Module module : project.getModules()){
+			addToRoot(module.getName());
+			if(module.getType().equalsIgnoreCase(ModuleType.Production)){
+				addToRoot(((ModuleConfigProduction)module.getConfig()).getCode());
+			}
+			
+		}
+		addToRoot(project.getIntegratorName());
+		addToRoot("config");
+		tree.expandPath(new TreePath(root));
+		updateLog();
 	}
 	/**
-	 * Loads projects to the tree, if can
+	 * Loads last project to the tree, if can
 	 */
 	private void initProjects(){
-		//projects = new ArrayList<>();
-		Gson gson = new Gson();
-		//[TODO]
 		File projConfig;
 		Logger.info("Поиск последних проектов...");
 		projConfig = new File("gintshell.config");
@@ -123,7 +177,8 @@ public class MainWindow {
 				File f = new File(path);
 				if(f.exists()){
 					openProject(path.trim());
-					break;
+					scanner.close();
+					return;
 				}
 			}
 			scanner.close();
@@ -131,13 +186,13 @@ public class MainWindow {
 			try {
 				projConfig.createNewFile();
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				Logger.error("Ошибка создания конфигурационного файла");
 			}
 		} catch (Exception e ){
-			//[TODO]
+			e.printStackTrace();
 		}
-		
-		tree.expandPath(new TreePath(root));
+		Logger.info("Не найденs проекты");
+		updateLog();
 	}
 	
 	private void openProject(String path){
@@ -149,13 +204,11 @@ public class MainWindow {
 			return;
 		}
 		updateLog();
-		root.setUserObject(project.getName()); 
-		for(Module module : project.getModules()){
-			DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(module.getName());
-			root.add(newNode);
-		}
-		root.add(new DefaultMutableTreeNode(project.getIntegratorName()));
-		root.add(new DefaultMutableTreeNode("config"));
+		refreshTree();
+	}
+	
+	private void addToRoot(Object o){
+		root.add(new DefaultMutableTreeNode(o));
 	}
 	
 	private void addChildsToNode(DefaultMutableTreeNode node, File file){
@@ -217,6 +270,14 @@ public class MainWindow {
 		splitPane.setLeftComponent(scrollPane);
 
 		tree = new JTree();
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				Logger.info("Выбран файл " + e.getPath().getLastPathComponent());
+				if(openFile(new File(project.getPath(), e.getPath().getLastPathComponent().toString())))
+					currPath = e.getPath();
+				updateLog();
+			}
+		});
 		scrollPane.setViewportView(tree);
 		root = new DefaultMutableTreeNode("Проекты");
 		tree.setModel(new DefaultTreeModel(root	));
@@ -291,9 +352,7 @@ public class MainWindow {
 				//TODO adding a new project
 				NewProjectDialog fc = new NewProjectDialog(frame);
 				fc.showDialog();
-				
-				
-				
+								
 			}
 		});
 		menuNewProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -301,24 +360,34 @@ public class MainWindow {
 		menuNew.add(menuNewProject);
 
 		JMenuItem menuNewModule = new JMenuItem("Модуль");
+		menuNewModule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
 		menuNewModule.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				InputEvent.CTRL_MASK));
 		menuNew.add(menuNewModule);
 
 		JMenuItem menuOpen = new JMenuItem("Открыть...");
+		menuOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
 		menuOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
 				InputEvent.CTRL_MASK));
 		menu.add(menuOpen);
 
 		JMenuItem menuItem = new JMenuItem("Сохранить...");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				save();
+			}
+		});
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				InputEvent.CTRL_MASK));
 		menu.add(menuItem);
-
-		JMenuItem menuItem_1 = new JMenuItem("Сохранить как...");
-		menuItem_1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-				InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
-		menu.add(menuItem_1);
 		
 		JMenu menu_1 = new JMenu("Запуск");
 		
@@ -327,28 +396,9 @@ public class MainWindow {
 		menuItem_2 = new JMenuItem("Запустить");
 		menuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Logger.clear();
-				List<String> in = new ArrayList<String>();
-				List<String> out = new ArrayList<String>();
-				List<Double> inVal = new ArrayList<>();
-				inVal.add(0.5);
-				inVal.add(0.3);
-				in.add("java");
-				in.add("proxy");
-				out.add("out1");
-				out.add("out2");
-				ProdCodeParser analyser = new ProdCodeParser(codeArea.getText(), in.toArray(new String[0]), out.toArray(new String[0]));
-				analyser.isValid();
+				Logger.info("Запускаю модули на исполнение");
+				calculate();
 				updateLog();
-				try {
-					analyser.calculate(inVal);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					Logger.error(e1.getLocalizedMessage());
-				}
-				Logger.info(analyser.toString());
-				updateLog();
-				//[TODO]
 			}
 		});
 		menuItem_2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
@@ -360,10 +410,11 @@ public class MainWindow {
 		labelNumStr.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 12));
 		menuBar.add(labelNumStr);
 
-		consoleOutput = createTextAreaTab(tabbedPanebottom, "Вывод");
-		consoleOutput.setEditable(false);
-		consoleInput = createTextAreaTab(tabbedPanebottom, "Консоль");
-		frame.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{codeArea, scrollPane_1, panel_1, frame.getContentPane(), splitPane, scrollPane, tree, panelBottom, tabbedPanebottom, panel, scrollPane_2, text, menuBar, menu, menuNew, splitPane_1, menuNewProject, menuNewModule, menuOpen, menuItem, menuItem_1, menu_1, menuItem_2}));
+		consoleLog = createTextAreaTab(tabbedPanebottom, "Лог");
+		consoleLog.setEditable(false);
+		consoleOut = createTextAreaTab(tabbedPanebottom, "Результат расчётов");
+		consoleOut.setEditable(false);
+		frame.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{codeArea, scrollPane_1, panel_1, frame.getContentPane(), splitPane, scrollPane, tree, panelBottom, tabbedPanebottom, panel, scrollPane_2, text, menuBar, menu, menuNew, splitPane_1, menuNewProject, menuNewModule, menuOpen, menuItem, menu_1, menuItem_2}));
 
 	}
 

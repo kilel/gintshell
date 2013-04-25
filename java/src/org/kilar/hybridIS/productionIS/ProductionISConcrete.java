@@ -6,6 +6,7 @@ import org.kilar.hybridIS.abstractions.ModuleConfig;
 import org.kilar.hybridIS.abstractions.ProductionIS;
 import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.ProjectConfig;
+import org.kilar.hybridIS.general.Util;
 
 public class ProductionISConcrete extends ProductionIS {
 
@@ -16,13 +17,13 @@ public class ProductionISConcrete extends ProductionIS {
 
 	@Override
 	public List<Double> calculate(List<Double> input) {
-		ProjectConfig con = config.getParent().getConfig();
-		ProdCodeParser parser = new ProdCodeParser(((ModuleConfigProduction)config).getCode(), con.getInNames(), con.getOutNames());
+		ProjectConfig con = getParent().getConfig();
+		ProdCodeParser parser = new ProdCodeParser(getCode(), con.getInNames(), con.getOutNames());
 		try {
 			return parser.calculate(input);
 		} catch (Exception e) {
 			Logger.error("Ошибка в модуле " +  getName());
-			return null;
+			return Util.getZeroList(getConfig().getOutputLength());
 		}
 	}
 

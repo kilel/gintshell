@@ -1,9 +1,12 @@
 package org.kilar.hybridIS.general;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Util {
 	
@@ -12,6 +15,17 @@ public class Util {
 		for(int i = 0; i < length; ++i)
 			out.add(0d);
 		return out;
+	}
+	
+	public static void saveToFile(File file, String s){
+		try {
+			FileWriter wr = new FileWriter(file);
+			wr.write(s);
+			wr.close();
+		} catch (IOException e) {
+			Logger.error("Не могу записать изменения в файл");
+			throw new RuntimeException();
+		}
 	}
 	
 	public static boolean isFileNameValid(String name){
@@ -43,5 +57,20 @@ public class Util {
 		} catch (IOException e) {
 			return false;
 		}
+	}
+	
+	static public String getFileTextFull(File file){
+		String ret = "";
+		Scanner sc;
+		try {
+			sc = new Scanner(file);
+			while(sc.hasNextLine()){
+				ret += sc.nextLine() + "\n";
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
 	}
 }

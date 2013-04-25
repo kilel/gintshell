@@ -1,5 +1,4 @@
  {
-    "name":"Test neural1",
     "type":"neural",
     "inputLength" : "2",
     "outputLength" : "2",
