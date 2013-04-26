@@ -1,7 +1,7 @@
 gintshell
 =
 This is term project in VyatSU (Vyatka State University), created by Kislistyn Ilya and Akhmetova Olga to save the world.
-Creates a java inteface for gibrid intellectual system with unique language.
+Creates a java inteface for the Hybrid Intellectual System.
 
 Current progress:
 
