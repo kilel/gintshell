@@ -1,4 +1,5 @@
  {
+ 	"name":"production",
     "type":"production",
     "inputLength" : "2",
     "outputLength" : "2",

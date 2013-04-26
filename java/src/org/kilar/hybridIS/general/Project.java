@@ -60,6 +60,11 @@ public class Project implements CertaintyCalculator{
 		} catch (FileNotFoundException e) {
 			// checked e.printStackTrace();
 		}
+		if(config.getInNames().length != config.getInputLength() 
+				|| config.getOutNames().length != config.getOutputLength()){
+			Logger.error("Длина входных или выходных данных не соответствует длине, указанной в параметрах");
+			throw new Exception();
+		}
 		Logger.info("Начинаю инициализацию модулей");
 		modules = new ArrayList<>();
 		for(String moduleName : config.getModules()){
@@ -94,14 +99,8 @@ public class Project implements CertaintyCalculator{
 	 * @param name
 	 * @param path
 	 */
-	public Project(String name, String path, int inSize, int outSize) {
-		setName(name);
-		this.path = path;
-		modules = new LinkedList<Module>();
-		config.setInNames(new String[0]);
-		config.setOutNames(new String[0]);
-		config.setOutputLength(outSize);
-		config.setInputLength(inSize);
+	public Project(ProjectConfig config) {
+		this.config = config; 
 	}
 
 	public void addModule(Module module) {
@@ -123,8 +122,11 @@ public class Project implements CertaintyCalculator{
 		return null;
 	}
 
-	Module getModule(String name) {
+	public Module getModule(String name) {
 		ListIterator<Module> it = getModuleIterator(name);
+		if(it == null){
+			return null;
+		}
 		if (it.hasNext()) {
 			it.next();
 			return it.previous();
@@ -141,6 +143,10 @@ public class Project implements CertaintyCalculator{
 
 	public String getIntegratorName() {
 		return this.integrator.getName();
+	}
+	
+	public Integrator getIntegrator() {
+		return this.integrator;
 	}
 
 	public String getName() {
@@ -183,8 +189,8 @@ public class Project implements CertaintyCalculator{
 		}
 	}
 	
-	public File getPath(){
-		return new File(path);
+	public String getPath(){
+		return path;
 	}
 	
 	@Override
@@ -265,6 +271,8 @@ public class Project implements CertaintyCalculator{
 			sc.close();
 			throw new RuntimeException();
 		}
+		
+		
 		
 		sc.close();
 		return ret; 

@@ -1,5 +1,5 @@
  {
-    "name":"Test project",
+    "name":"sampleProject",
     "integrator":"integr",
     "dataResource":"running data",
     "inputLength" : "2",

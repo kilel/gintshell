@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
+
 public class Util {
 	
 	public static List<Double> getZeroList(int length){
@@ -16,7 +19,14 @@ public class Util {
 			out.add(0d);
 		return out;
 	}
-	
+	public static void saveObjectToFile(Object obj, File dest) throws IOException{
+		dest.createNewFile();
+		Gson g = new Gson();
+		JsonWriter wr = new JsonWriter(new FileWriter(dest));
+		wr.setIndent("\t");
+		g.toJson(obj, obj.getClass(), wr);
+		wr.close();
+	}
 	public static void saveToFile(File file, String s){
 		try {
 			FileWriter wr = new FileWriter(file);

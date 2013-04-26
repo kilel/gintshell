@@ -2,8 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libs/gson-2.2.3-javadoc.jar"/>
-	<classpathentry kind="lib" path="libs/gson-2.2.3.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.3.jar" sourcepath="libs/gson-2.2.3-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/gintshell/libs/gson-2.2.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="/home/hkyten/information/scilab-5.4.1/share/scilab/modules/types/jar/org.scilab.modules.types.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/hkyten/information/scilab-5.4.1/lib/scilab"/>

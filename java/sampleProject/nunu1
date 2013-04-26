@@ -1,7 +1,8 @@
  {
+ 	"name":"nunu1",
     "type":"neural",
     "inputLength" : "2",
     "outputLength" : "2",
     
-    "layers":["31", "3", "455"]
+    "layers":["31", "3", "455"] 
 }

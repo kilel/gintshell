@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,10 +26,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import org.kilar.hybridIS.abstractions.IntegratorConfig;
 import org.kilar.hybridIS.abstractions.Module;
 import org.kilar.hybridIS.abstractions.ModuleType;
+import org.kilar.hybridIS.abstractions.ProductionIS;
 import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.Project;
+import org.kilar.hybridIS.general.ProjectConfig;
 import org.kilar.hybridIS.general.Util;
 
 import java.awt.event.ActionListener;
@@ -107,7 +112,17 @@ public class MainWindow {
 			s += "\n";
 		}
 		consoleOut.setText(s);
-		Util.saveToFile(new File(project.getPath(), "project.outputData"), consoleOut.getText());
+		Util.saveToFile(new File(project.getPath(), "project.outputData"), s);
+	}
+	
+	@SuppressWarnings("unused")
+	private void refreshIntegrator(){
+		//TODO
+	}
+	
+	@SuppressWarnings("unused")
+	private void refreshModule(Module module){
+		//TODO
 	}
 	
 	private void save(){
@@ -117,6 +132,25 @@ public class MainWindow {
 		Logger.info("Сохраняю файл " + opennedFile.getName());
 		Util.saveToFile(opennedFile, codeArea.getText());
 		tempSavedText = codeArea.getText();
+		
+		//refresh project
+		Logger.info("Перезагружаю проект после изменения соержимого");
+		openProject(project.getPath());
+		
+		/*
+		//TODO future realises: refresh module or code of module or integrator....
+		if(opennedFile.getName().equals(project.getIntegratorName())){
+			refreshIntegrator();
+		}
+		Module m = project.getModule(opennedFile.getName()) ; 
+		if( m != null){
+			refreshModule(m);
+		}
+		//TODO refresh code
+		
+		//TODO refresh config
+		*/
+		
 		updateLog();
 	}
 	
@@ -144,24 +178,119 @@ public class MainWindow {
 		return true;
 	}
 	
+	@SuppressWarnings("unused")
+	private void saveProject(){
+		Logger.info("Сохраняю проект");
+		String root = project.getPath();
+		File config = new File(root, "config");
+		try {
+			//save config
+			Util.saveObjectToFile(project.getConfig(), config);
+			//save integrator
+			Util.saveObjectToFile(project.getIntegrator().getConfig(), new File(root, project.getIntegratorName()));
+			//save modules
+			for(Module m : project.getModules()){
+				Util.saveObjectToFile(m.getConfig(), new File(root, m.getName()));
+				if(m.getType().equals(ModuleType.Production)){
+					Util.saveToFile(new File(root, ((ModuleConfigProduction)m.getConfig()).getCode()), ((ProductionIS)m).getCode());
+				}
+			}
+		} catch (IOException e) {
+			Logger.error("Ошибка сохранения проекта");
+			return;
+		}
+		//TODO test
+		
+	}
+	
+	/**
+	 * @param path
+	 * @return true if project created successfully
+	 */
+	private boolean createProject(String path){
+		File root = new File(path);
+		Logger.info("Пытаюсь создать проект по пути " + path);
+		root.mkdirs();
+		root.mkdir();
+		if(!root.exists()){
+			Logger.error("Корневой каталог проекта не существует");
+			return false;
+		}
+		if(!root.isDirectory()){
+			Logger.error("По указанному пути находится не каталог, а файл");
+			return false;
+		}
+		
+		String integrName = "integrator";
+		IntegratorConfig iconfig = new IntegratorConfig();
+		iconfig.setName(integrName);
+		iconfig.setType("basic");
+		File integrator = new File(root.getPath(), integrName);
+		
+		File dataResource = new File(root.getPath(),"dataResource");
+		String toDataResource = "0 0";
+		
+		File prConfig = new File(root.getPath(), "config");
+		ProjectConfig config = new ProjectConfig();
+		config.setName(root.getName());
+		config.setIntegrator(integrName);
+		config.setDataResource(dataResource.getName());
+		config.setInputLength(0);
+		config.setOutputLength(0);
+		config.setInNames(new String[0]);
+		config.setOutNames(new String[0]);
+		config.setModules(new String[0]);
+		
+		//save integrator via Gson
+		try {
+			Util.saveObjectToFile(iconfig, integrator);
+		} catch (IOException e1) {
+			Logger.error("Не удалось создать файл интегратора");
+			e1.printStackTrace();
+			return false;
+		}
+		//save dataresource 
+		try {
+			dataResource.createNewFile();
+			Util.saveToFile(dataResource, toDataResource);
+		} catch (IOException e) {
+			Logger.error("Не удалось создать файл со стартовыми данными");
+			e.printStackTrace();
+			return false;
+		}
+		
+		//save project via Gson
+		try {
+			Util.saveObjectToFile(config, prConfig);
+		} catch (IOException e) {
+			Logger.error("Не удалось создать файл конфига для проекта");
+			e.printStackTrace();
+			return false;
+		}
+		Logger.info("Проект успешно создан");
+		updateLog();
+		return true;
+	}
+	
 	private void updateLog(){
 		consoleLog.setText(Logger.get());
 		Util.saveToFile(new File(project.getPath(), "project.logger"), consoleLog.getText());
 	}
 	private void refreshTree(){
-		root.setUserObject(project.getName()); 
+		root = new DefaultMutableTreeNode(project.getName());
+		tree.setModel(new DefaultTreeModel(root));
 		for(Module module : project.getModules()){
 			addToRoot(module.getName());
 			if(module.getType().equalsIgnoreCase(ModuleType.Production)){
 				addToRoot(((ModuleConfigProduction)module.getConfig()).getCode());
 			}
-			
 		}
 		addToRoot(project.getIntegratorName());
 		addToRoot("config");
 		tree.expandPath(new TreePath(root));
 		updateLog();
 	}
+	
 	/**
 	 * Loads last project to the tree, if can
 	 */
@@ -196,13 +325,15 @@ public class MainWindow {
 	}
 	
 	private void openProject(String path){
+		Logger.info("Открываю проект " + path);
 		try {
 			project = new Project(path);
 		} catch (Exception e) {
-			Logger.error("Ошибка создания проекта");
+			Logger.error("Ошибка открытия проекта");
 			updateLog();
 			return;
 		}
+		Logger.info("Проект открыт");
 		updateLog();
 		refreshTree();
 	}
@@ -211,6 +342,7 @@ public class MainWindow {
 		root.add(new DefaultMutableTreeNode(o));
 	}
 	
+	@SuppressWarnings("unused")
 	private void addChildsToNode(DefaultMutableTreeNode node, File file){
 		ArrayList<String> directories = new ArrayList<>(), files = new ArrayList<>();
 		for(File child : file.listFiles()){
@@ -349,9 +481,16 @@ public class MainWindow {
 		JMenuItem menuNewProject = new JMenuItem("Проект");
 		menuNewProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO adding a new project
 				NewProjectDialog fc = new NewProjectDialog(frame);
 				fc.showDialog();
+				if(fc.isPathSelected()){
+					String p = fc.getFullPath();
+					Logger.info("Сигнал создания проекта" + p);
+					if(createProject(p)){						
+						openProject(p);
+					}
+				}
+				updateLog();
 								
 			}
 		});
@@ -362,7 +501,7 @@ public class MainWindow {
 		JMenuItem menuNewModule = new JMenuItem("Модуль");
 		menuNewModule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				//TODO create dialog with radiobutton "production V neural" and name
 			}
 		});
 		menuNewModule.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -372,7 +511,13 @@ public class MainWindow {
 		JMenuItem menuOpen = new JMenuItem("Открыть...");
 		menuOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				JFileChooser chooser = new JFileChooser(new File(project.getPath()));
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int result = chooser.showDialog(null, "open");
+				if(result == JFileChooser.APPROVE_OPTION) {
+					openProject(chooser.getSelectedFile().getPath()); 
+				}
+				updateLog();
 			}
 		});
 		menuOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,

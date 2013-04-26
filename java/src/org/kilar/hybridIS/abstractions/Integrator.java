@@ -29,4 +29,8 @@ public abstract class Integrator {
 	public void setName(String value){
 		config.setName(value);
 	}
+	
+	public IntegratorConfig getConfig(){
+		return config;
+	}
 }

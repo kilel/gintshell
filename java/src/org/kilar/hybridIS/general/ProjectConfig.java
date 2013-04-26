@@ -66,7 +66,7 @@ public class ProjectConfig {
 		name = value;
 	}
 	
-	public void geDdataResource(String value){
+	public void setDataResource(String value){
 		dataResource = value;
 	}
 	

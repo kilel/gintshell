@@ -45,6 +45,20 @@ public class NewProjectDialog extends JDialog {
 	private boolean isPathSelected = false;
 	private JButton okButton;
 	private JButton cancelButton;
+	private String fullPath;
+	
+	public String getFullPath(){
+		if(isPathSelected)
+			try {
+				return (new File(areaPath.getText(), areaName.getText())).getCanonicalPath();
+			} catch (IOException e) {
+				Logger.error("Что-то пошло не так при получении имени файла");
+				e.printStackTrace();
+				return null;
+			}
+		else return null;
+	}
+	
 	public NewProjectDialog(JFrame parent){
 		super(parent, "Открытие проекта", true);
 		initialize();
@@ -102,6 +116,7 @@ public class NewProjectDialog extends JDialog {
 			labelProjectNameFull.setForeground(Color.BLUE);
 		else
 			labelProjectNameFull.setForeground(Color.RED);
+		isPathSelected = isValid;
 		return isValid;
 	}
 	
@@ -139,7 +154,6 @@ public class NewProjectDialog extends JDialog {
 		JButton buttonBrowse = new JButton("Обзор...");
 		buttonBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
 				JFileChooser fc = new JFileChooser();
 				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				
@@ -209,8 +223,8 @@ public class NewProjectDialog extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(isValidFullPath()){
-							isPathSelected = true;
-							return;
+							if(isPathSelected == true)
+								dispose();
 						} 
 						
 					}
@@ -221,6 +235,13 @@ public class NewProjectDialog extends JDialog {
 			}
 			{
 				cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						isPathSelected = false;
+						dispose();
+						//TODO
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
