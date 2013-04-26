@@ -18,9 +18,9 @@ Current progress:
 6)testing and fixing bugs
 
 
-
+-
 What do you need to launch gintshell?
-
+-=
 1)JRE 1.7
 
 2)Eclipse IDE. 
