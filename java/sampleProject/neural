@@ -1,9 +1,11 @@
- {
- 	"name":"neural",
-    "type":"neural",
-    "inputLength" : "2",
-    "outputLength" : "2",
-
-    "layers":["31", "3", "334"]
-
+{
+	"layers": [
+		31,
+		3,
+		334
+	],
+	"inputLength": 2,
+	"outputLength": 2,
+	"name": "neural",
+	"type": "neural"
 }

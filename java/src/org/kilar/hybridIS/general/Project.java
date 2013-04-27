@@ -17,6 +17,10 @@ import java.util.Scanner;
 import java.util.Set;
 
 import org.kilar.hybridIS.abstractions.*;
+import org.kilar.hybridIS.neuralIS.ModuleConfigNeural;
+import org.kilar.hybridIS.neuralIS.NeuralISScilab;
+import org.kilar.hybridIS.productionIS.ModuleConfigProduction;
+import org.kilar.hybridIS.productionIS.ProductionISConcrete;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -105,6 +109,12 @@ public class Project implements CertaintyCalculator{
 
 	public void addModule(Module module) {
 		modules.add(module);
+		List<String> mod = new ArrayList<>();
+		for(String m : config.getModules()){
+			mod.add(m);
+		}
+		mod.add(module.getName());
+		config.setModules(mod.toArray(new String[0]));
 	}
 
 	public void delModule(String name) {
@@ -180,13 +190,8 @@ public class Project implements CertaintyCalculator{
 	public int getOutputLength(){
 		return config.getOutputLength();
 	}
-	public void setPath(File value){
-		try {
-			path = value.getCanonicalPath();
-		} catch (IOException e) {
-			Logger.error("Не могу сменить путь проекта на " + value.getPath());
-			return;
-		}
+	public void setPath(String value){
+		path = value;
 	}
 	
 	public String getPath(){

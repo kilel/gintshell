@@ -1,10 +1,22 @@
- {
-    "name":"sampleProject",
-    "integrator":"integr",
-    "dataResource":"running data",
-    "inputLength" : "2",
-    "outputLength" : "2",
-    "modules":["neural", "production", "nunu1"],
-    "outNames":["out1", "out2"],
-    "inNames":["java", "proxy"]
+{
+	"name": "sampleProject",
+	"modules": [
+		"neural",
+		"production",
+		"nunu1",
+		"aaa",
+		"aasdsdsd"
+	],
+	"outNames": [
+		"out1",
+		"out2"
+	],
+	"inNames": [
+		"java",
+		"proxy"
+	],
+	"integrator": "integr",
+	"dataResource": "running data",
+	"inputLength": 2,
+	"outputLength": 2
 }

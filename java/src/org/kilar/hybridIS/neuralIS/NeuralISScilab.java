@@ -1,8 +1,11 @@
 package org.kilar.hybridIS.neuralIS;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.kilar.hybridIS.abstractions.Module;
+import org.kilar.hybridIS.abstractions.ModuleConfig;
 import org.kilar.hybridIS.abstractions.ModuleType;
 import org.kilar.hybridIS.abstractions.NeuralIS;
 import org.kilar.hybridIS.general.Logger;
@@ -10,8 +13,11 @@ import org.kilar.hybridIS.general.ScilabAdapter;
 import org.kilar.hybridIS.general.Util;
 import org.scilab.modules.javasci.JavasciException;
 import org.scilab.modules.javasci.Scilab;
+import org.scilab.modules.types.ScilabDouble;
+import org.scilab.modules.types.ScilabList;
 import org.scilab.modules.types.ScilabTList;
 import org.scilab.modules.types.ScilabType;
+import org.scilab.modules.types.ScilabTypeEnum;
 
 /**
  * @author trylar
@@ -19,7 +25,7 @@ import org.scilab.modules.types.ScilabType;
  */
 public class NeuralISScilab extends NeuralIS {
 	
-	public NeuralISScilab(ModuleConfigNeural config) {
+	public NeuralISScilab(ModuleConfig config) {
 		super(config);
 		ScilabAdapter.initialize();
 		ScilabAdapter.open();
@@ -27,7 +33,7 @@ public class NeuralISScilab extends NeuralIS {
 		str += "rand('seed', 0);";
 		str += "N = [";
 		str += Integer.toString(config.getInputLength());
-		for (int size : config.getLayers()){
+		for (int size : ((ModuleConfigNeural) config).getLayers()){
 			str += ", " + Integer.toString(size);
 		}
 		str += ", " + Integer.toString(config.getOutputLength());
@@ -40,38 +46,24 @@ public class NeuralISScilab extends NeuralIS {
 
 	@Override
 	public List<Double> calculate(List<Double> input) {
-		String str = "";
-		List<Double> output = null;
+		String query = "";
+		List<Double> ret = new ArrayList<>();
+		query = "output = [1, 1]";
 		
-		str = "output = 1";
-		
-		ScilabAdapter.exec(str);
-
-		/*try {
-			ScilabType out = ScilabAdapter.get("output");
-			//output = (List<Double>) out.getSerializedObject();
-			//[TODO] not working
-		} catch (JavasciException e) {
-			Logger.error("Общая ошибка работы нейросети");
-			throw new RuntimeException();
-		}*/
-		
-		//return output;
-		return Util.getZeroList(config.getOutputLength());
+		ScilabAdapter.open();
+		ScilabAdapter.exec(query);
+		ScilabDouble sciResult =(ScilabDouble) ScilabAdapter.get("output");
+		ScilabAdapter.close();
+		for(Double val : sciResult.getRealPart()[0]){//too unsafe
+			ret.add(val);
+		}
+		Logger.info("Результат вычислений модуля " + getName() + " = " + Arrays.toString(sciResult.getRealPart()[0]));
+		return ret;
 	}
 
 	@Override
-	public void train(List<List<Double>> trainingInput,
-			List<Double> trainingOutput) {
-		
-		
-		try {
-			ScilabType W = ScilabAdapter.get("W");
-		} catch (JavasciException e1) {
-			Logger.error("Общая ошибка работы нейросети");
-			throw new RuntimeException();
-		}
-		
+	public void train(List<List<Double>> trainingInput, List<Double> trainingOutput) {
+		ScilabType W = ScilabAdapter.get("W");
 		
 		String str = null;
 		
@@ -95,18 +87,11 @@ public class NeuralISScilab extends NeuralIS {
 		}
 		str += "], ";
 		
-		try {
-			str += ScilabAdapter.get("N") + ", ";
-			str += ScilabAdapter.get("W") + ", ";
-		} catch (JavasciException e) {
-			Logger.error("Общая ошибка работы нейросети");
-			throw new RuntimeException();
-		}
+		str += ScilabAdapter.get("N") + ", ";
+		str += ScilabAdapter.get("W") + ", ";
 
 		str += "[0.5, 0.05], ";
-		
 		str += "350";
-		
 		str += ");";
 		
 		ScilabAdapter.exec(str);

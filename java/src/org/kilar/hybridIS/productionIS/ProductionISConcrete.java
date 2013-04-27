@@ -1,5 +1,6 @@
 package org.kilar.hybridIS.productionIS;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.kilar.hybridIS.abstractions.ModuleConfig;
@@ -19,8 +20,11 @@ public class ProductionISConcrete extends ProductionIS {
 	public List<Double> calculate(List<Double> input) {
 		ProjectConfig con = getParent().getConfig();
 		ProdCodeParser parser = new ProdCodeParser(getCode(), con.getInNames(), con.getOutNames());
+		List<Double> ret;
 		try {
-			return parser.calculate(input);
+			ret = parser.calculate(input);
+			Logger.info("Результат вычислений модуля " + getName() + " = " + Arrays.toString(ret.toArray(new Double[0])));
+			return ret;
 		} catch (Exception e) {
 			Logger.error("Ошибка в модуле " +  getName());
 			return Util.getZeroList(getConfig().getOutputLength());

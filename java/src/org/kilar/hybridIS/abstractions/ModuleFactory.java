@@ -3,6 +3,8 @@ package org.kilar.hybridIS.abstractions;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.kilar.hybridIS.fuzzyIS.FuzzyISScilab;
 import org.kilar.hybridIS.fuzzyIS.ModuleConfigFuzzy;
@@ -23,6 +25,35 @@ import com.google.gson.JsonSyntaxException;
  *
  */
 public class ModuleFactory {
+	
+	static public Module produce(String name, String type, Project parent){
+		ModuleConfig cfg;
+		Module m;
+		if(type.equals(ModuleType.Production)) {
+			cfg = new ModuleConfigProduction();
+			m = new ProductionISConcrete(cfg);
+			
+			((ModuleConfigProduction) cfg).setCode(name + ".code");
+			((ProductionIS) m).setCode("");
+			m.setParent(parent);
+		} else if(type.equals(ModuleType.Production)) {
+			cfg = new ModuleConfigNeural();
+			m = new NeuralISScilab(cfg);
+			
+			List<Integer> layers = new ArrayList<>();
+			layers.add(parent.getConfig().getInputLength());
+			layers.add(parent.getConfig().getOutputLength());
+			((ModuleConfigNeural) cfg).setLayers(layers.toArray(new Integer[0]));
+		} else {
+			throw new RuntimeException();
+		}
+		cfg.setName(name);
+		cfg.setType(type);
+		cfg.setOutputLength(parent.getConfig().getOutputLength());
+		cfg.setInputLength(parent.getConfig().getInputLength());
+
+		return m;
+	}
 	
 	/**
 	 * creates module from given path linked to the project

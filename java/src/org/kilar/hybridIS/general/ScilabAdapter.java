@@ -43,13 +43,13 @@ public class ScilabAdapter {
 		scilab.exec(query);
 	}
 	
-	public static ScilabType get(String name) throws JavasciException{
+	public static ScilabType get(String name){
 		try {
 			return scilab.get(name);
 		} catch (JavasciException e) {
 			Logger.error("Ошибка считывания переменной из Scilab");
 			e.printStackTrace();
-			throw e;
+			throw new RuntimeException();
 		}
 	}
 	

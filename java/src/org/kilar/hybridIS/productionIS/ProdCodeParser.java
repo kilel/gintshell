@@ -149,7 +149,7 @@ public class ProdCodeParser {
 		List<Integer> ret = new ArrayList<>();
 		// code = prepareCode(code);
 		int len = code.length();
-		while(code.charAt(start) < 33)
+		while(start < len && code.charAt(start) < 33)
 			++start;
 		for (int i = start; i < end; ++i) {
 			int next = getLexemaEnd(i);

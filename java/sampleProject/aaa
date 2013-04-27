@@ -1,7 +1,7 @@
 {
-	"code": "production-code",
+	"code": "aaa.code",
 	"inputLength": 2,
 	"outputLength": 2,
-	"name": "production",
+	"name": "aaa",
 	"type": "production"
 }

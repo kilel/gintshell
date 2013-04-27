@@ -28,6 +28,7 @@ import javax.swing.tree.TreePath;
 
 import org.kilar.hybridIS.abstractions.IntegratorConfig;
 import org.kilar.hybridIS.abstractions.Module;
+import org.kilar.hybridIS.abstractions.ModuleFactory;
 import org.kilar.hybridIS.abstractions.ModuleType;
 import org.kilar.hybridIS.abstractions.ProductionIS;
 import org.kilar.hybridIS.general.Logger;
@@ -115,16 +116,6 @@ public class MainWindow {
 		Util.saveToFile(new File(project.getPath(), "project.outputData"), s);
 	}
 	
-	@SuppressWarnings("unused")
-	private void refreshIntegrator(){
-		//TODO
-	}
-	
-	@SuppressWarnings("unused")
-	private void refreshModule(Module module){
-		//TODO
-	}
-	
 	private void save(){
 		if(tempSavedText.equals(codeArea.getText())){
 			return;
@@ -146,9 +137,9 @@ public class MainWindow {
 		if( m != null){
 			refreshModule(m);
 		}
-		//TODO refresh code
+		//refresh code
 		
-		//TODO refresh config
+		// refresh config
 		*/
 		
 		updateLog();
@@ -178,18 +169,21 @@ public class MainWindow {
 		return true;
 	}
 	
-	@SuppressWarnings("unused")
 	private void saveProject(){
 		Logger.info("Сохраняю проект");
 		String root = project.getPath();
 		File config = new File(root, "config");
 		try {
 			//save config
+			Logger.info("Сохраняю конфигурацию");
 			Util.saveObjectToFile(project.getConfig(), config);
 			//save integrator
+			Logger.info("Сохраняю интегратор");
 			Util.saveObjectToFile(project.getIntegrator().getConfig(), new File(root, project.getIntegratorName()));
 			//save modules
+			Logger.info("Сохраняю модули:");
 			for(Module m : project.getModules()){
+				Logger.info("Сохраняю модуль " + m.getName());
 				Util.saveObjectToFile(m.getConfig(), new File(root, m.getName()));
 				if(m.getType().equals(ModuleType.Production)){
 					Util.saveToFile(new File(root, ((ModuleConfigProduction)m.getConfig()).getCode()), ((ProductionIS)m).getCode());
@@ -199,8 +193,6 @@ public class MainWindow {
 			Logger.error("Ошибка сохранения проекта");
 			return;
 		}
-		//TODO test
-		
 	}
 	
 	/**
@@ -490,8 +482,7 @@ public class MainWindow {
 						openProject(p);
 					}
 				}
-				updateLog();
-								
+				updateLog();		
 			}
 		});
 		menuNewProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -500,9 +491,21 @@ public class MainWindow {
 
 		JMenuItem menuNewModule = new JMenuItem("Модуль");
 		menuNewModule.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				//TODO create dialog with radiobutton "production V neural" and name
+				NewModuleDialog dialog = new NewModuleDialog(frame);
+				dialog.show();
+				if(dialog.isValidName()){
+					String name = dialog.getModuleName(), type = dialog.getModuleType();
+					Logger.info("Сигнал создания модуля " + name + " типа " + type);
+					project.addModule(ModuleFactory.produce(name,  type, project));
+					saveProject();
+					openProject(project.getPath());
+				}
+				updateLog();
 			}
+			
+			
 		});
 		menuNewModule.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				InputEvent.CTRL_MASK));
@@ -543,6 +546,7 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				Logger.info("Запускаю модули на исполнение");
 				calculate();
+				Logger.info("Выполнение модулей завершено");
 				updateLog();
 			}
 		});

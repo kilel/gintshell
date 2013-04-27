@@ -52,11 +52,15 @@ public class NewProjectDialog extends JDialog {
 			try {
 				return (new File(areaPath.getText(), areaName.getText())).getCanonicalPath();
 			} catch (IOException e) {
-				Logger.error("Что-то пошло не так при получении имени файла");
-				e.printStackTrace();
-				return null;
+				//Logger.error("Что-то пошло не так при получении имени файла");
+				//e.printStackTrace();
+				//return null;
+				throw new RuntimeException();
 			}
-		else return null;
+		else {
+			//return null;
+			throw new RuntimeException();
+		}
 	}
 	
 	public NewProjectDialog(JFrame parent){
@@ -116,7 +120,7 @@ public class NewProjectDialog extends JDialog {
 			labelProjectNameFull.setForeground(Color.BLUE);
 		else
 			labelProjectNameFull.setForeground(Color.RED);
-		isPathSelected = isValid;
+		//isPathSelected = isValid;
 		return isValid;
 	}
 	
@@ -222,9 +226,9 @@ public class NewProjectDialog extends JDialog {
 				okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(isValidFullPath()){
-							if(isPathSelected == true)
-								dispose();
+						if(isValidFullPath() == true){
+							isPathSelected = true;
+							dispose();
 						} 
 						
 					}
