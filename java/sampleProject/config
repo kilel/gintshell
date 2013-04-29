@@ -4,8 +4,8 @@
 		"neural",
 		"production",
 		"nunu1",
-		"aaa",
-		"aasdsdsd"
+		"aasdsdsd",
+		"new neural"
 	],
 	"outNames": [
 		"out1",
@@ -17,6 +17,10 @@
 	],
 	"integrator": "integr",
 	"dataResource": "running data",
+	"trainData": [
+		"trainData",
+		"trainOut"
+	],
 	"inputLength": 2,
 	"outputLength": 2
 }

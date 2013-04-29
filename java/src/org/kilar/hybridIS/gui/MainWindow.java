@@ -59,8 +59,8 @@ import javax.swing.event.TreeSelectionEvent;
 
 public class MainWindow {
 
-	private JFrame frame;
 	private JTextArea consoleLog;
+	private JFrame frame;
 	private JTextArea consoleOut;
 	private JMenuItem menuItem_2;
 	private JMenuBar menuBar;
@@ -104,6 +104,14 @@ public class MainWindow {
 	}
 	
 	private void calculate(){
+		for(Module m : project.getModules()){
+			if(m.getType().equals(ModuleType.Production)){
+				if(!((ProductionIS) m).isValid()){
+					Logger.error("Продукционный модуль " + m.getName() + " не прошёл проверку на валидность");
+					return;
+				}
+			}
+		}
 		List<List<Double> > result = project.calculate();
 		String s = "";
 		for(List<Double> out : result){
@@ -221,12 +229,17 @@ public class MainWindow {
 		
 		File dataResource = new File(root.getPath(),"dataResource");
 		String toDataResource = "0 0";
+		File trainData = new File(root.getPath(),"trainData");
+		String toTrainData = "0 0";
+		File trainOut = new File(root.getPath(),"trainOut");
+		String totrainOut = "0 0";
 		
 		File prConfig = new File(root.getPath(), "config");
 		ProjectConfig config = new ProjectConfig();
 		config.setName(root.getName());
 		config.setIntegrator(integrName);
 		config.setDataResource(dataResource.getName());
+		config.setTrainData(new String[]{trainData.getName(), trainOut.getName()});
 		config.setInputLength(0);
 		config.setOutputLength(0);
 		config.setInNames(new String[0]);
@@ -244,9 +257,13 @@ public class MainWindow {
 		//save dataresource 
 		try {
 			dataResource.createNewFile();
+			trainData.createNewFile();
+			trainOut.createNewFile();
 			Util.saveToFile(dataResource, toDataResource);
+			Util.saveToFile(trainData, toTrainData);
+			Util.saveToFile(trainOut, totrainOut);
 		} catch (IOException e) {
-			Logger.error("Не удалось создать файл со стартовыми данными");
+			Logger.error("Не удалось создать файлы с данными");
 			e.printStackTrace();
 			return false;
 		}
@@ -269,17 +286,32 @@ public class MainWindow {
 		Util.saveToFile(new File(project.getPath(), "project.logger"), consoleLog.getText());
 	}
 	private void refreshTree(){
-		root = new DefaultMutableTreeNode(project.getName());
+		root.removeAllChildren();
+		root.setUserObject(project.getName());
 		tree.setModel(new DefaultTreeModel(root));
+		DefaultMutableTreeNode modules = new DefaultMutableTreeNode("Модули"), 
+				data = new DefaultMutableTreeNode("Данные");
+		
 		for(Module module : project.getModules()){
-			addToRoot(module.getName());
+			modules.add(new DefaultMutableTreeNode(module.getName()));
+			//addToRoot(module.getName());
 			if(module.getType().equalsIgnoreCase(ModuleType.Production)){
-				addToRoot(((ModuleConfigProduction)module.getConfig()).getCode());
+				//addToRoot(((ModuleConfigProduction)module.getConfig()).getCode());
+				modules.add(new DefaultMutableTreeNode(((ModuleConfigProduction)module.getConfig()).getCode()));
 			}
 		}
+		data.add(new DefaultMutableTreeNode(project.getConfig().getDataResource()));
+		data.add(new DefaultMutableTreeNode(project.getConfig().getTrainData()[0]));
+		data.add(new DefaultMutableTreeNode(project.getConfig().getTrainData()[1]));
+		root.add(modules);
+		root.add(data);
 		addToRoot(project.getIntegratorName());
 		addToRoot("config");
 		tree.expandPath(new TreePath(root));
+		tree.expandRow(2);
+		tree.expandRow(1);
+		
+		
 		updateLog();
 	}
 	
@@ -297,6 +329,8 @@ public class MainWindow {
 				path = path.trim();
 				File f = new File(path);
 				if(f.exists()){
+					openProject(path.trim());
+					saveProject();
 					openProject(path.trim());
 					scanner.close();
 					return;
@@ -497,6 +531,11 @@ public class MainWindow {
 				dialog.show();
 				if(dialog.isValidName()){
 					String name = dialog.getModuleName(), type = dialog.getModuleType();
+					if((new File(project.getPath(), name)).exists()){
+						Logger.error("объект с таким именем уже существует, не могу создать.");
+						updateLog();
+						return;
+					}
 					Logger.info("Сигнал создания модуля " + name + " типа " + type);
 					project.addModule(ModuleFactory.produce(name,  type, project));
 					saveProject();
@@ -504,7 +543,6 @@ public class MainWindow {
 				}
 				updateLog();
 			}
-			
 			
 		});
 		menuNewModule.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,

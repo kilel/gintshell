@@ -5,7 +5,7 @@ else{
 	out1 = -0.4;
 }
 
-if(proxy){
+if(proxy){ 
 	out1 = 0.3;
 	out2 = 0.7;  
 }

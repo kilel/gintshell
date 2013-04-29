@@ -1,17 +1,33 @@
 package org.kilar.hybridIS.neuralIS;
 
-import java.util.List;
-
 import org.kilar.hybridIS.abstractions.ModuleConfig;
 
 public class ModuleConfigNeural extends ModuleConfig{
-	private Integer[] layers;
+	private int[] layers;
+	private double[] studyRate;
+	private int studyCycles;
 	
-	public Integer[] getLayers(){
+	public double[] getStudyRate() {
+		return studyRate;
+	}
+
+	public void setStudyRate(double[] studyRate) {
+		this.studyRate = studyRate;
+	}
+
+	public int getStudyCycles() {
+		return studyCycles;
+	}
+
+	public void setStudyCycles(int studyCycles) {
+		this.studyCycles = studyCycles;
+	}
+
+	public int[] getLayers(){
 		return layers;
 	}
 	
-	public void setLayers(Integer[] value){
+	public void setLayers(int[] value){
 		layers = value;
 	}
 }

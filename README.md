@@ -17,6 +17,8 @@ Current progress:
 
 6)testing and fixing bugs
 
+7)neural network is now working
+
 
 -
 What do you need to launch gintshell?

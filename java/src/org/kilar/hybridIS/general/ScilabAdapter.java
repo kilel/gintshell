@@ -26,12 +26,25 @@ public class ScilabAdapter {
 	public static Scilab getScilab() {
 		return scilab;
 	}
+	
+	public static boolean set(String varName, ScilabType value){
+		try {
+			return scilab.put(varName, value);
+		} catch (JavasciException e) {
+			Logger.error("Ошибка установки переменной: " + varName );
+			e.printStackTrace();
+			throw new RuntimeException("Ошибка установки переменной: " + varName);
+		}
+	}
+	
 	public static void open(){
+		initialize();
 		try {
 			scilab.open();
 		} catch (JavasciException e) {
 			Logger.error("Ошибка открытия scilab: " + e.getMessage() );
 			e.printStackTrace();
+			//throw new RuntimeException("Ошибка открытия scilab: " + e.getMessage());
 		}
 	}
 	
@@ -49,7 +62,7 @@ public class ScilabAdapter {
 		} catch (JavasciException e) {
 			Logger.error("Ошибка считывания переменной из Scilab");
 			e.printStackTrace();
-			throw new RuntimeException();
+			throw new RuntimeException("Ошибка считывания переменной из Scilab");
 		}
 	}
 	

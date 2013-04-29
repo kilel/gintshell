@@ -30,5 +30,12 @@ public class ProductionISConcrete extends ProductionIS {
 			return Util.getZeroList(getConfig().getOutputLength());
 		}
 	}
+	
+	@Override
+	public boolean isValid(){
+		ProjectConfig con = getParent().getConfig();
+		ProdCodeParser parser = new ProdCodeParser(getCode(), con.getInNames(), con.getOutNames());
+		return parser.isValid();
+	}
 
 }

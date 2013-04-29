@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.kilar.hybridIS.neuralIS.ModuleConfigNeural;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
 
@@ -77,10 +79,26 @@ public class Util {
 			while(sc.hasNextLine()){
 				ret += sc.nextLine() + "\n";
 			}
+			sc.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ret;
+	}
+	
+	public static String ListToString(Object li){
+		if(List.class.isInstance(li)){
+			String out = "["; 
+			List<Object> a = (List<Object>) li;
+			for(int i = 0; i < a.size(); ++i){
+				if(i != 0)
+					out += ",";
+				out += ListToString(a.get(i));
+			}
+			return out + "]";
+		}
+		else return li.toString();
+		
 	}
 }

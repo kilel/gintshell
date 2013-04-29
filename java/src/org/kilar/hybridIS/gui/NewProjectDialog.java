@@ -1,43 +1,33 @@
 package org.kilar.hybridIS.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
-import javax.swing.JLabel;
-import javax.swing.JFormattedTextField;
-
-import org.kilar.hybridIS.general.Logger;
-import org.kilar.hybridIS.general.Util;
-
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
-
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.border.EmptyBorder;
+
+import org.kilar.hybridIS.general.Util;
 
 public class NewProjectDialog extends JDialog {
 
+	private static final long serialVersionUID = -2557654064794946458L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField areaPath;
 	private JTextField areaName;
@@ -45,7 +35,7 @@ public class NewProjectDialog extends JDialog {
 	private boolean isPathSelected = false;
 	private JButton okButton;
 	private JButton cancelButton;
-	private String fullPath;
+
 	
 	public String getFullPath(){
 		if(isPathSelected)

@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import oracle.jrockit.jfr.tools.ConCatRepository;
-
 import com.google.gson.Gson;
 
 public class ProjectConfig {
@@ -15,6 +13,7 @@ public class ProjectConfig {
 	private String[] inNames;
 	private String integrator;
 	private String dataResource;
+	private String[] trainData;
 	private int inputLength;
 	private int outputLength;
 	
@@ -28,6 +27,14 @@ public class ProjectConfig {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public String[] getTrainData() {
+		return trainData;
+	}
+
+	public void setTrainData(String[] testData) {
+		this.trainData = testData;
 	}
 	
 	public String getName(){

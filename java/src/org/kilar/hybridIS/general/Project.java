@@ -3,12 +3,10 @@ package org.kilar.hybridIS.general;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -16,11 +14,11 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
-import org.kilar.hybridIS.abstractions.*;
-import org.kilar.hybridIS.neuralIS.ModuleConfigNeural;
-import org.kilar.hybridIS.neuralIS.NeuralISScilab;
-import org.kilar.hybridIS.productionIS.ModuleConfigProduction;
-import org.kilar.hybridIS.productionIS.ProductionISConcrete;
+import org.kilar.hybridIS.abstractions.CertaintyCalculator;
+import org.kilar.hybridIS.abstractions.Integrator;
+import org.kilar.hybridIS.abstractions.IntegratorFactory;
+import org.kilar.hybridIS.abstractions.Module;
+import org.kilar.hybridIS.abstractions.ModuleFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -35,8 +33,6 @@ public class Project implements CertaintyCalculator{
 	private ProjectConfig config;
 	private Integrator integrator;
 	private List<Module> modules;
-	/** input name -> number in list  */
-	private Map<String, Integer> inputToNum;
 	
 	/**
 	 * existing project opening
@@ -91,10 +87,6 @@ public class Project implements CertaintyCalculator{
 			throw new Exception();
 		}
 		integrator.setName(config.getIntegrator());
-		inputToNum = new HashMap<>();
-		for(int i = 0; i < getInputLength(); ++i){
-			inputToNum.put(getInDataNames()[i], i);
-		}
 		Logger.info("Проект успешно открыт");
 	}
 	
@@ -201,6 +193,8 @@ public class Project implements CertaintyCalculator{
 	@Override
 	public List<Double> calculate(List<Double> input) {
 		List<List<Double>> integratorInput = new ArrayList<List<Double>>();
+		Logger.info("Новое вычисление:");
+		Logger.info("x = " + Util.ListToString(input));
 		for (Module module : modules) {
 			integratorInput.add(module.calculate(input));
 		}
@@ -220,12 +214,10 @@ public class Project implements CertaintyCalculator{
 		return ret;
 	}
 	
-	public List<List<Double> > getData() throws RuntimeException{
-		File source = new File (path, config.getDataResource());
+	private List<List<Double> > getData(String dataPath, String[] dataNames){
+		File source = new File (path, dataPath);
 		List<List<Double> > ret = new ArrayList<>();
-		List<Double> cur = new ArrayList<>();
-		/** router[i] = p <==> current input name [i]  == real input name [k]  */
-		int[] router = new int[getInputLength()];
+		List<Double> cur;
 		Scanner sc;
 		try {
 			sc = new Scanner(source);
@@ -240,27 +232,9 @@ public class Project implements CertaintyCalculator{
 				sc.close();
 				throw new RuntimeException();
 			}
-			//reading names
-			Set<Integer> set = new HashSet<>();
-			for(int i = 0; i < k; ++i){
-				String name = sc.next();
-				Integer route = inputToNum.get(name);
-				if(route == null){
-					Logger.error("Неизвестная входная переменная (" + name + ")");
-					sc.close();
-					throw new RuntimeException();
-				}
-				router[i] = route;
-				if(set.contains(route)){
-					Logger.error("Переопределение входной переменной (" + name + ")");
-					sc.close();
-					throw new RuntimeException();
-				}
-				set.add(route);
-			}
 			//reading data
 			for(int cnt = 0; cnt < n; ++cnt){
-				cur.clear();
+				cur = new ArrayList<>();
 				for(int i = 0; i < k; ++i){
 					double data = sc.nextDouble();
 					cur.add(data);
@@ -276,11 +250,20 @@ public class Project implements CertaintyCalculator{
 			sc.close();
 			throw new RuntimeException();
 		}
-		
-		
-		
 		sc.close();
 		return ret; 
+	}
+	
+	public List<List<Double> > getData() {
+		return getData(config.getDataResource(), config.getInNames());	
+	}
+	
+	public List<List<Double> > getTrainData() {
+		return getData(config.getTrainData()[0], config.getInNames());	
+	}
+	
+	public List<List<Double> > getTrainOutData() {
+		return getData(config.getTrainData()[1], config.getOutNames());	
 	}
 	
 }

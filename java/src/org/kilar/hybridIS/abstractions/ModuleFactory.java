@@ -3,8 +3,6 @@ package org.kilar.hybridIS.abstractions;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.kilar.hybridIS.fuzzyIS.FuzzyISScilab;
 import org.kilar.hybridIS.fuzzyIS.ModuleConfigFuzzy;
@@ -31,27 +29,27 @@ public class ModuleFactory {
 		Module m;
 		if(type.equals(ModuleType.Production)) {
 			cfg = new ModuleConfigProduction();
-			m = new ProductionISConcrete(cfg);
-			
-			((ModuleConfigProduction) cfg).setCode(name + ".code");
-			((ProductionIS) m).setCode("");
-			m.setParent(parent);
-		} else if(type.equals(ModuleType.Production)) {
+		} else if(type.equals(ModuleType.Neural)) {
 			cfg = new ModuleConfigNeural();
-			m = new NeuralISScilab(cfg);
-			
-			List<Integer> layers = new ArrayList<>();
-			layers.add(parent.getConfig().getInputLength());
-			layers.add(parent.getConfig().getOutputLength());
-			((ModuleConfigNeural) cfg).setLayers(layers.toArray(new Integer[0]));
 		} else {
 			throw new RuntimeException();
 		}
+
 		cfg.setName(name);
 		cfg.setType(type);
 		cfg.setOutputLength(parent.getConfig().getOutputLength());
 		cfg.setInputLength(parent.getConfig().getInputLength());
-
+		if(type.equals(ModuleType.Production)) {
+			((ModuleConfigProduction) cfg).setCode(name + ".code");
+			m = new ProductionISConcrete(cfg);
+			((ProductionIS) m).setCode("");
+		} else if(type.equals(ModuleType.Neural)) {
+			((ModuleConfigNeural) cfg).setLayers(new int[0]);
+			m = new NeuralISScilab(cfg);
+		} else {
+			throw new RuntimeException();
+		}		
+		m.setParent(parent);
 		return m;
 	}
 	
@@ -63,6 +61,9 @@ public class ModuleFactory {
 	static public Module produce(String path, Project parent){
 		Module m = produce(path);
 		m.setParent(parent);
+		if(m.getType().equals(ModuleType.Neural)){
+			((NeuralIS) m).train(parent.getTrainData(), parent.getTrainOutData());
+		}
 		return m;
 	}
 	

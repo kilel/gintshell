@@ -2,11 +2,10 @@ package org.kilar.hybridIS.productionIS;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.Pair;
 import org.kilar.hybridIS.general.Util;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * @author hkyten
@@ -17,7 +16,6 @@ public class ProdCodeParser {
 	private String code;
 	private int len;
 	private List<Double> inValues, outValues;
-	private final double INVALID_VALUE = 42;
 	private boolean isValidationCheckGoes = false; 
 
 	

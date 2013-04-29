@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 
 public class NewModuleDialog extends JDialog {
 
+	private static final long serialVersionUID = 6741265910842852620L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField fieldName;
 	private boolean isValidName = false;

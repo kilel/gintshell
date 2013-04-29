@@ -19,4 +19,6 @@ public abstract class ProductionIS extends Module{
 		return code;
 	}
 	
+	public abstract boolean isValid();
+	
 }

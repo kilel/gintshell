@@ -8,5 +8,5 @@ public abstract class NeuralIS extends Module{
 	public NeuralIS(ModuleConfig config) {
 		super(config);
 	}
-	public abstract void train(List<List<Double>> trainingInput, List<Double> trainingOutput);
+	public abstract void train(List<List<Double>> trainingInput, List<List<Double>> trainingOutput);
 }

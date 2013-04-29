@@ -1,6 +1,5 @@
 package org.kilar.hybridIS.productionIS;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.kilar.hybridIS.general.Logger;
