@@ -39,6 +39,7 @@ public class ModuleFactory {
 		cfg.setType(type);
 		cfg.setOutputLength(parent.getConfig().getOutputLength());
 		cfg.setInputLength(parent.getConfig().getInputLength());
+		///
 		if(type.equals(ModuleType.Production)) {
 			((ModuleConfigProduction) cfg).setCode(name + ".code");
 			m = new ProductionISConcrete(cfg);
@@ -48,7 +49,8 @@ public class ModuleFactory {
 			m = new NeuralISScilab(cfg);
 		} else {
 			throw new RuntimeException();
-		}		
+		}	
+		///
 		m.setParent(parent);
 		return m;
 	}
@@ -92,6 +94,7 @@ public class ModuleFactory {
 		Logger.info("Имя " + basicConfig.getName() + ", тип " + basicConfig.getType());
 		Logger.info("Пытаюсь считать расширенную конфигурацию модуля...");
 		Module module = null;
+		///
 		if(basicConfig.type.equalsIgnoreCase(ModuleType.Neural)){
 			ModuleConfigNeural config;
 			try {
@@ -134,6 +137,7 @@ public class ModuleFactory {
 			Logger.error("Неизвестный тип модуля");
 			return null;
 		}
+		///
 		Logger.info("Готово");
 		Logger.info("Модуль " + module.getName() + " загружен");
 		return module;

@@ -54,7 +54,7 @@ public class NewProjectDialog extends JDialog {
 	}
 	
 	public NewProjectDialog(JFrame parent){
-		super(parent, "Открытие проекта", true);
+		super(parent, "Создание проекта", true);
 		initialize();
 	}
 	/**

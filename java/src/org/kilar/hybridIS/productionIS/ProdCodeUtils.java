@@ -25,7 +25,12 @@ public class ProdCodeUtils {
 		int n = a.size();
 		for(int i = 0; i < n; ++i){
 			double ta = a.get(i), tb = b.get(i);
-			a.set(i,ta + tb - ta*tb);
+			if(ta * tb < 0){
+				a.set(i,ta + tb + ta*tb);
+			} else if(ta + tb > 0)
+				a.set(i,ta + tb - Math.abs(ta*tb));
+			else 
+				a.set(i,ta + tb + Math.abs(ta*tb));
 		}
 		return a;
 	}
@@ -76,7 +81,6 @@ public class ProdCodeUtils {
 		}
 		return pos;
 	}
-	
 	
 	public static int getNumStr(String code, int position) {
 		int numStr = 0;

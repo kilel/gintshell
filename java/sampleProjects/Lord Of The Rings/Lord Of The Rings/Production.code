@@ -1,0 +1,193 @@
+if (isTall) {
+	Gandalf = 0.2;
+	Frodo = -1;
+	Sam = -1;
+	Aragorn = 0.2;
+	Gimly = -1;
+	Boromir = 0.2;
+	Legolas = 0.2;	
+}
+else {    
+	Gandalf = -1;
+	Frodo = 0.2;
+	Sam  = 0.2;
+	Aragorn = -1;
+	Gimly = 0.2;
+	Boromir = -1;
+	Legolas = -1;
+}
+
+if (isFromRoyalFamily) {
+	Gandalf = -1;
+	Frodo = -1;
+	Sam = -1;
+	Aragorn = 0.2;
+	Gimly = 0.2;
+	Boromir = 0.2;
+	Legolas = 0.2;
+}
+else {
+	Gandalf = 0.2;
+	Frodo = 0.2;
+	Sam = 0.2;
+	Aragorn = -1;
+	Gimly = -1;
+	Boromir = -1;
+	Legolas = -1;
+}
+
+if (Weapon.Sword) {
+	Gandalf = 0.2;
+	Frodo = -1;
+	Sam = -1;
+	Aragorn = 0.2;
+	Gimly = -1;
+	Boromir = 0.2;
+	Legolas = -1;
+}
+else { 
+	Gandalf = 0.2;
+	Frodo = 0.2;
+	Sam = 0.2;
+	Aragorn = -1;
+	Gimly = 0.2;
+	Boromir = -1;
+	Legolas = 0.2;
+}
+
+if (haveLongHair) {
+	Legolas = 0.2;
+	Frodo = -1;
+	Sam = -1;
+	Gimly = 0.2;
+	Gandalf = 0.2;
+	Boromir = -1;
+	Aragorn = 0.2;  
+}
+else { 
+	Legolas = -1;
+	Frodo = 0.2;
+	Sam = 0.2;
+	Gimly = -1;
+	Gandalf = -1;
+	Boromir = 0.2;
+	Aragorn = -1;
+}
+
+if (Weapon.Dagger) {
+	Legolas = 0.2;
+	Frodo = 0.2;
+	Sam = -1;
+	Gimly = -1;
+	Gandalf = -1;
+	Boromir = -1;
+	Aragorn = -1;
+}
+else { 
+	Frodo = -1;
+}
+
+if (Weapon.Axe) {
+	Gimly = 1;
+	Sam = -1;
+	Gandalf = -1;
+	Boromir = -1;
+	Legolas = -1;
+	Frodo = -1;
+	Aragorn = -1;
+}
+else {
+	Gimly = -1;
+}
+	 
+if (Weapon.Staff) {
+	Gimly = -1;
+	Sam = -1;
+	Gandalf = 1;
+	Boromir = -1;
+	Legolas = -1;
+	Frodo = -1;
+	Aragorn = -1;
+}
+else {
+	Gandalf = -1;
+}
+
+if (Weapon.Bow) {
+	Legolas = 0.2;
+	Boromir =  0.2;
+ }
+else {
+	Legolas = -1;
+	Boromir = -1;
+}
+
+if (isGoneToTheValinor) {
+	Frodo = 0.2;
+	Gandalf = 0.2;
+	Legolas = 0.2;
+	Aragorn = -1;
+	Sam = -1;
+	Gimly = -1;
+	Boromir = -1;
+ }
+else {
+	Aragorn = 0.2;
+	Sam = 0.2;
+	Gimly = 0.2;
+	Boromir = 0.2;
+	Frodo = -1;
+	Gandalf = -1;
+	Legolas = -1;
+}
+
+if (!isBeardy) {
+	Aragorn = -1;
+	Sam = 0.2;
+	Gimly = -1;
+	Boromir = -1;
+	Frodo = 0.2;
+	Gandalf = -1;
+	Legolas = 0.2;
+ }
+else {
+	Aragorn = 0.2;
+	Sam = -1;
+	Gimly = 0.2;
+	Boromir = 0.2;
+	Frodo = -1;
+	Gandalf = 0.2;
+	Legolas = -1;
+}
+
+if (Class.Warrior) { 
+	Gandalf = -1;
+	Frodo = -1;
+	Sam = -1;
+	Aragorn = 0.2;
+	Gimly = 0.2;
+	Boromir = 0.2;
+	Legolas = 0.2;
+ }
+
+if (Class.Mage) {
+	Gandalf = 0.2;
+	Frodo = -1;
+	Sam = -1;
+	Aragorn = -1;
+	Gimly = -1;
+	Boromir = -1;
+	Legolas = -1;
+ } else {
+	Gandalf = -1;
+ }
+
+if (Class.Stranger) {
+	Gandalf = 0.2;
+	Frodo = 0.2; 
+	Sam = 0.2;
+	Aragorn = 0.2;
+	Gimly = -1;
+	Boromir = -1;
+	Legolas = -1;
+} 

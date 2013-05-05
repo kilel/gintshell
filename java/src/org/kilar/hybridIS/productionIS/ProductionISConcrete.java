@@ -13,7 +13,6 @@ public class ProductionISConcrete extends ProductionIS {
 
 	public ProductionISConcrete(ModuleConfig config) {
 		super(config);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

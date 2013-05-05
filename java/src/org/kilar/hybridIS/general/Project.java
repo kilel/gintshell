@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -60,31 +61,29 @@ public class Project implements CertaintyCalculator{
 		} catch (FileNotFoundException e) {
 			// checked e.printStackTrace();
 		}
-		if(config.getInNames().length != config.getInputLength() 
-				|| config.getOutNames().length != config.getOutputLength()){
-			Logger.error("Длина входных или выходных данных не соответствует длине, указанной в параметрах");
-			throw new Exception();
-		}
+		config.setInputLength(config.getInNames().length);
+		config.setOutputLength(config.getOutNames().length);
+		
 		Logger.info("Начинаю инициализацию модулей");
 		modules = new ArrayList<>();
 		for(String moduleName : config.getModules()){
 			File moduleFile = new File(path, moduleName);
 			Module m = ModuleFactory.produce(moduleFile.getPath(), this);
 			if(m == null ){
-				throw new Exception(); 
+				throw new Exception("Ошибка создания модуля"); 
 			}
-			m.setName(moduleName);
+			m.setName(moduleName);getClass();
 			if(m.getConfig().getInputLength() != config.getInputLength() 
 					|| m.getConfig().getOutputLength() != config.getOutputLength() ){
-				Logger.error("Не совпадает количество входных или выходных параметров!");
-				throw new Exception();
+				Logger.error("Не совпадает количество входных или выходных параметров в модуле " + m.getName());
+				//throw new Exception();
 			}
 			modules.add(m);
 		}
 		Logger.info("Инициализация модулей прошла успешно");
 		integrator = IntegratorFactory.produce(new File(path, config.getIntegrator()).getPath());
 		if(integrator == null){
-			throw new Exception();
+			throw new Exception("Ошибка создания интегратора");
 		}
 		integrator.setName(config.getIntegrator());
 		Logger.info("Проект успешно открыт");
@@ -221,13 +220,14 @@ public class Project implements CertaintyCalculator{
 		Scanner sc;
 		try {
 			sc = new Scanner(source);
+			sc.useLocale(Locale.US);
 		} catch (FileNotFoundException e) {
 			Logger.error("Не могу открыть файл с данными для запуска, файл" + source.getPath() + "не найден");
 			throw new RuntimeException();
 		}
 		try{
 			int n = sc.nextInt(), k = sc.nextInt();
-			if(k != getInputLength()){
+			if(k != dataNames.length){
 				Logger.error("Неверная длина вектора входных данных");
 				sc.close();
 				throw new RuntimeException();

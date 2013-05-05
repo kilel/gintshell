@@ -1,0 +1,14 @@
+{
+	"layers": [
+		10
+	],
+	"studyRate": [
+		5.0,
+		0.0
+	],
+	"studyCycles": 1000,
+	"inputLength": 16,
+	"outputLength": 9,
+	"name": "Neural",
+	"type": "neural"
+}

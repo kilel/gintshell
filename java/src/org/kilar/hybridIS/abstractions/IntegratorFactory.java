@@ -30,12 +30,14 @@ public class IntegratorFactory {
 			return null; 
 		}
 		Integrator integrator;
+		///
 		if(config.getType().equalsIgnoreCase(IntegratorType.Basic)){
 			integrator = new IntegratorBasic(config);
 		} else {
 			Logger.error("Неизвестный тип  интегратора");
 			return null;
 		}
+		///
 		Logger.info("Готово");
 		Logger.info("Интегратор " + integrator.getName() + " загружен");
 		return integrator;

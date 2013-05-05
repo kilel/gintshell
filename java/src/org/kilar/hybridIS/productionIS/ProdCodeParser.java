@@ -32,7 +32,7 @@ public class ProdCodeParser {
 		isValidationCheckGoes = true;
 		int n = inputNames.length;
 		for(int i = 0; i < n; ++i)
-			in.add(0d);
+			in.add(0d);//getzerolist
 		try{
 			calculate(in);
 			Logger.info("Синтаксическая проверка пройдена успешно\n");
@@ -61,7 +61,7 @@ public class ProdCodeParser {
 		List<Double> temp = new ArrayList<>(),
 				out = new ArrayList<>();
 		for(int i = 0; i < outputNames.length; ++i)
-			out.add(0d);
+			out.add(0d);//TODO getzerolis
 		
 		for(int i = 0; i < size - 1; ++i){
 			temp = calculate(spl.get(i), spl.get(i + 1), scale);
@@ -69,8 +69,6 @@ public class ProdCodeParser {
 		}
 		return out;
 	}
-	
-	
 	
 	public List<Double> calculate(List<Double> input) throws Exception {
 		
@@ -104,7 +102,7 @@ public class ProdCodeParser {
 			return calculate(i, endIf, Math.min(scale, sc));
 		}
 		//else
-		i++;
+		i = endIf;
 		i = ProdCodeUtils.getNextNonSpace(code, i, len);
 		if(i + 4 < len && code.subSequence(i, i+4).equals("else")){
 			i+=3;
@@ -283,7 +281,11 @@ public class ProdCodeParser {
 	private Pair<Integer, Double> getTerm(int start) throws Exception{
 		start = ProdCodeUtils.getNextNonSpace(code, start, len);
 		double res = 0;
-		if(code.charAt(start) == '('){
+		if(code.charAt(start) == '!'){
+			Pair<Integer, Double> ret = getTerm(start);
+			ret.second = -ret.second;
+			return ret;
+		} else if(code.charAt(start) == '('){
 			res = calcCondition(start);
 			start = ProdCodeUtils.getOtherBracket(code, start);
 		} else {
@@ -361,6 +363,4 @@ public class ProdCodeParser {
 		return out;
 	
 	}
-		
-	
 }

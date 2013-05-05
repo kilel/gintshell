@@ -1,0 +1,7 @@
+{
+	"code": "Production.code",
+	"inputLength": 16,
+	"outputLength": 9,
+	"name": "Production",
+	"type": "production"
+}

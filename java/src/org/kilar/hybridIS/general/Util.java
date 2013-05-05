@@ -4,8 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.StringWriter;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.kilar.hybridIS.neuralIS.ModuleConfigNeural;
@@ -31,6 +36,7 @@ public class Util {
 	}
 	public static void saveToFile(File file, String s){
 		try {
+			file.createNewFile();
 			FileWriter wr = new FileWriter(file);
 			wr.write(s);
 			wr.close();
@@ -82,7 +88,7 @@ public class Util {
 			sc.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return ret;
 	}
@@ -99,6 +105,29 @@ public class Util {
 			return out + "]";
 		}
 		else return li.toString();
-		
+	}
+	
+	public static String ListToScilabArray(List<List<Double>> li){
+		String s = "[";
+		DecimalFormat formatter = new DecimalFormat("#.####");
+		formatter.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+		for(List<Double> el : li){
+			for(Double o : el){
+				s += formatter.format(o) + " ";
+				
+			}
+			s += ";";
+		}
+		return s + "]";
+	}
+	
+	public static String ListToScilabVector(List<Double> li){
+		String s = "[";
+		DecimalFormat formatter = new DecimalFormat("#.####");
+		formatter.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+		for(Object o : li){
+			s += formatter.format(o) + " ";
+		}
+		return s + "]";
 	}
 }

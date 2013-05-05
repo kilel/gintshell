@@ -8,6 +8,7 @@ import java.awt.SystemColor;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -88,6 +89,7 @@ public class MainWindow {
 				try {
 					MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
+					window.initProjects();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -100,7 +102,6 @@ public class MainWindow {
 	 */
 	public MainWindow() {
 		initialize();
-		initProjects();
 	}
 	
 	private void calculate(){
@@ -198,7 +199,7 @@ public class MainWindow {
 				}
 			}
 		} catch (IOException e) {
-			Logger.error("Ошибка сохранения проекта");
+			Logger.error("Ошибка сохранения проекта " + e.getMessage());
 			return;
 		}
 	}
@@ -283,7 +284,8 @@ public class MainWindow {
 	
 	private void updateLog(){
 		consoleLog.setText(Logger.get());
-		Util.saveToFile(new File(project.getPath(), "project.logger"), consoleLog.getText());
+		if(project != null)
+			Util.saveToFile(new File(project.getPath(), "project.logger"), consoleLog.getText());
 	}
 	private void refreshTree(){
 		root.removeAllChildren();
@@ -291,7 +293,7 @@ public class MainWindow {
 		tree.setModel(new DefaultTreeModel(root));
 		DefaultMutableTreeNode modules = new DefaultMutableTreeNode("Модули"), 
 				data = new DefaultMutableTreeNode("Данные");
-		
+
 		for(Module module : project.getModules()){
 			modules.add(new DefaultMutableTreeNode(module.getName()));
 			//addToRoot(module.getName());
@@ -320,7 +322,7 @@ public class MainWindow {
 	 */
 	private void initProjects(){
 		File projConfig;
-		Logger.info("Поиск последних проектов...");
+		Logger.info("Поиск последнего проекта...");
 		projConfig = new File("gintshell.config");
 		try{
 			Scanner scanner = new Scanner(projConfig);
@@ -329,10 +331,8 @@ public class MainWindow {
 				path = path.trim();
 				File f = new File(path);
 				if(f.exists()){
-					openProject(path.trim());
-					saveProject();
-					openProject(path.trim());
 					scanner.close();
+					openProject(path.trim());
 					return;
 				}
 			}
@@ -346,22 +346,31 @@ public class MainWindow {
 		} catch (Exception e ){
 			e.printStackTrace();
 		}
-		Logger.info("Не найденs проекты");
+		Logger.info("Не найден проект");
 		updateLog();
 	}
 	
 	private void openProject(String path){
+		Util.saveToFile(new File("gintshell.config"), path);
 		Logger.info("Открываю проект " + path);
+		frame.setVisible(false);
+		ProjectLoadingWindow pw = new ProjectLoadingWindow();
+		pw.show(true);
+		pw.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		
 		try {
 			project = new Project(path);
 		} catch (Exception e) {
-			Logger.error("Ошибка открытия проекта");
+			Logger.error("Ошибка открытия проекта" + e.getMessage());
 			updateLog();
 			return;
 		}
+		frame.setVisible(true);
+		pw.setVisible(false);
 		Logger.info("Проект открыт");
 		updateLog();
 		refreshTree();
+		saveProject();
 	}
 	
 	private void addToRoot(Object o){
@@ -549,7 +558,7 @@ public class MainWindow {
 				InputEvent.CTRL_MASK));
 		menuNew.add(menuNewModule);
 
-		JMenuItem menuOpen = new JMenuItem("Открыть...");
+		JMenuItem menuOpen = new JMenuItem("Открыть проект");
 		menuOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser(new File(project.getPath()));
@@ -565,7 +574,7 @@ public class MainWindow {
 				InputEvent.CTRL_MASK));
 		menu.add(menuOpen);
 
-		JMenuItem menuItem = new JMenuItem("Сохранить...");
+		JMenuItem menuItem = new JMenuItem("Сохранить проект");
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				save();
@@ -579,11 +588,18 @@ public class MainWindow {
 		
 		menuBar.add(menu_1);
 		
-		menuItem_2 = new JMenuItem("Запустить");
+		menuItem_2 = new JMenuItem("Запустить на выполнение");
 		menuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Logger.info("Запускаю модули на исполнение");
-				calculate();
+				try{
+					save();
+					calculate();
+				} catch (RuntimeException es){
+					Logger.error("Ошибка при вычислении");
+					updateLog();
+					return;
+				}
 				Logger.info("Выполнение модулей завершено");
 				updateLog();
 			}

@@ -1,0 +1,39 @@
+{
+	"name": "Lord Of The Rings",
+	"modules": [
+		"Production",
+		"Neural"
+	],
+	"outNames": [
+		"Aragorn",
+		"Boromir",
+		"Frodo",
+		"Gandalf",
+		"Gimly",
+		"Legolas",
+		"Sam"
+	],
+	"inNames": [
+		"isGoneToTheValinor",
+		"isTall",
+		"Weapon.Bow",
+		"Weapon.Dagger",
+		"Weapon.Staff",
+		"Weapon.Sword",
+		"Weapon.Axe",
+		"isFromRoyalFamily",
+		"isBeardy",
+		"haveLongHair",
+		"Class.Warrior",
+		"Class.Mage",
+		"Class.Stranger"
+	],
+	"integrator": "integrator",
+	"dataResource": "dataResource",
+	"trainData": [
+		"trainData",
+		"trainOut"
+	],
+	"inputLength": 13,
+	"outputLength": 7
+}

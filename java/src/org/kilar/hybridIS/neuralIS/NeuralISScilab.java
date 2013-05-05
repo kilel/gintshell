@@ -22,7 +22,7 @@ import org.scilab.modules.types.ScilabType;
 public class NeuralISScilab extends NeuralIS {
 	private ScilabDouble speedParam;
 	ScilabInteger layers, cycles;
-	public ScilabType weigths;
+	public ScilabType weights;
 	
 	public NeuralISScilab(ModuleConfig config) {
 		super(config);
@@ -35,11 +35,11 @@ public class NeuralISScilab extends NeuralIS {
 		for(int i = 0; i < l.length; ++i) {
 			lay[i+1] = l[i];
 		}
-		Logger.warn("Не установлены весовые коэффициенты нейронной сети " + getName() + ". Устанавливаю по умолчанию");
+		//Logger.warn("Не установлены весовые коэффициенты нейронной сети " + getName() + ". Устанавливаю по умолчанию");
 		String sciInit = "layers = " + Arrays.toString(lay) + ";";
 		sciInit += "weights = ann_FF_init(layers);";
 		ScilabAdapter.exec(sciInit);
-		weigths = ScilabAdapter.get("weights");
+		weights = ScilabAdapter.get("weights");
 
 		layers = TypeTransformerScilab.getInt(lay);
 		if(curConf.getStudyRate() != null){
@@ -49,7 +49,7 @@ public class NeuralISScilab extends NeuralIS {
 			speedParam = TypeTransformerScilab.getDouble(new double[] {0.5, 0});
 			curConf.setStudyRate(new double[] {0.5, 0});
 		}
-		if(curConf.getStudyCycles() < 100){
+		if(curConf.getStudyCycles() > 100){
 			cycles = TypeTransformerScilab.getInt(new int[]{curConf.getStudyCycles()});
 		} else {
 			cycles = TypeTransformerScilab.getInt(new int[]{1000});
@@ -63,11 +63,12 @@ public class NeuralISScilab extends NeuralIS {
 		ScilabAdapter.open();
 		String query = "";
 		List<Double> ret = new ArrayList<>();
-		query = "data = " + Util.ListToString(input) + ";";
-		ScilabAdapter.set("weights", weigths);
+		ScilabAdapter.exec("data = " + Util.ListToScilabVector(input) + ";");
+		//ScilabAdapter.exec("data = (data + 1)/ 2;");
+		ScilabAdapter.set("weights", weights);
 		ScilabAdapter.set("layers", layers);
-		query += "result = ann_FF_run(data', layers, weights);";
-		ScilabAdapter.exec(query);
+		ScilabAdapter.exec("result = ann_FF_run(data', layers, weights);");
+		ScilabAdapter.exec("result = result * 2 - 1;");
 		ScilabDouble sciResult =(ScilabDouble) ScilabAdapter.get("result");
 		ScilabAdapter.close();
 		for(double[] val : sciResult.getRealPart()){//too unsafe
@@ -80,53 +81,23 @@ public class NeuralISScilab extends NeuralIS {
 	@Override
 	public void train(List<List<Double>> trainingInput, List<List<Double>> trainingOutput) {
 		ScilabAdapter.open();
-		String init = "data = " + Util.ListToString(trainingInput) + "; ";
-		init += "out = " + Util.ListToString(trainingOutput) + ";";
-		ScilabAdapter.set("weights", weigths);
+		String init;
+		ScilabAdapter.exec("data = " + Util.ListToScilabArray(trainingInput) + "; ");
+		//ScilabAdapter.exec("data = (data + 1)/ 2;");
+		ScilabAdapter.exec("out = " + Util.ListToScilabArray(trainingOutput) + ";");
+		ScilabAdapter.exec("out = (out + 1)/ 2;");
+		ScilabAdapter.set("weights", weights);
 		ScilabAdapter.set("layers", layers);
 		ScilabAdapter.set("speed", speedParam);
 		ScilabAdapter.set("cycles", cycles);
-		init += "weights = ann_FF_Std_online(data', out, layers, weights, speed, cycles);";
+		init = "weights2 = ann_FF_Std_online(data', out', layers, weights, speed, cycles);";
 		ScilabAdapter.exec(init);
-		weigths = ScilabAdapter.get("weights");
+		weights = ScilabAdapter.get("weights2");
+		
 		ScilabAdapter.close();
 	}
 	
-	@SuppressWarnings("unused")
 	public static void main(String[] argc){
-		//System.loadLibrary("javasci2");
-		ScilabMList weigths;
-		
-		/*ScilabAdapter.initialize();
-		ScilabAdapter.open();
-		String sciInit = "layers = [2,2,1];";
-		
-		sciInit += "weights = ann_FF_init(layers);";
-		ScilabAdapter.exec(sciInit );
-		weigths = (ScilabMList) ScilabAdapter.get("weights");
-		ScilabAdapter.close();
-		try {
-			Util.saveObjectToFile(weigths, new File("/home/hkyten/aaaaaaaa"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-		
-
-		List<Double> list = new ArrayList<Double>();
-		list.add(3d);
-		list.add(5d);
-		list.add(5d);
-		ModuleConfigNeural nc = new ModuleConfigNeural();
-		nc.setName("qwe");
-		nc.setInputLength(3);
-		nc.setOutputLength(3);
-		nc.setLayers(new int[]{2,3,4});
-		nc.setType(ModuleType.Neural);
-		NeuralISScilab neuralISScilab = new NeuralISScilab(nc);
-		neuralISScilab.calculate(list);
-		//neuralISScilab.train(<<1, 0, 0, 0, 0>, <0, 1, 0, 0, 0>, <0, 0, 1, 0, 0>, <0, 0, 0, 1, 0>, <0, 0, 0, 0, 1>>, <1, 1, 1, 0, 0>);
 		
 	}
 

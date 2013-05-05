@@ -179,7 +179,7 @@ public class NewModuleDialog extends JDialog {
 	}
 	
 	public NewModuleDialog(JFrame parent){
-		super(parent, "Открытие проекта", true);
+		super(parent, "Создание нового модуля", true);
 		initialize();
 	}
 	
