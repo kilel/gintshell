@@ -133,6 +133,9 @@ public class MainWindow {
 		Util.saveToFile(opennedFile, codeArea.getText());
 		tempSavedText = codeArea.getText();
 		
+		if(opennedFile.getName().equals(project.getConfig().getDataResource())){
+			return;
+		}
 		//refresh project
 		Logger.info("Перезагружаю проект после изменения соержимого");
 		openProject(project.getPath());
@@ -355,7 +358,7 @@ public class MainWindow {
 		Logger.info("Открываю проект " + path);
 		frame.setVisible(false);
 		ProjectLoadingWindow pw = new ProjectLoadingWindow();
-		pw.show(true);
+		pw.setVisible(true);
 		pw.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		
 		try {

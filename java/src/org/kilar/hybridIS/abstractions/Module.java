@@ -1,15 +1,6 @@
 package org.kilar.hybridIS.abstractions;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
-import org.kilar.hybridIS.general.Logger;
 import org.kilar.hybridIS.general.Project;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 
 /**
  * @author hkyten
